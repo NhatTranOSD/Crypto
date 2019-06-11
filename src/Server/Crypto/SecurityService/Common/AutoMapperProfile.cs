@@ -14,6 +14,7 @@ namespace SecurityService.Common
         public AutoMapperProfile()
         {
             CreateMap<IdentityResult, CreateUserResponse>();
+            CreateMap<SignInResult, LoginResponse>();
         }
 
     }

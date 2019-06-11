@@ -14,5 +14,9 @@ namespace SecurityService.Models
 
         public string Address { get; set; }
 
+        public string JwtRole { get; set; }
+
+        public string JwtToken { get; set; }
+
     }
 }

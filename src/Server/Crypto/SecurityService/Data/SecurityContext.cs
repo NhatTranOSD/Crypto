@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SecurityService.Models;
 using System;
 using System.Collections.Generic;
@@ -7,13 +9,11 @@ using System.Threading.Tasks;
 
 namespace SecurityService.Data
 {
-    public class SecurityContext : DbContext
+    public class SecurityContext : IdentityDbContext<ApplicationUser>
     {
         public SecurityContext(DbContextOptions<SecurityContext> options) : base(options)
         {
         }
-
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

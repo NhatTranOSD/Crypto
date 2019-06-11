@@ -8,6 +8,8 @@ namespace SecurityService.Models.ResponseModels
 {
     public class CreateUserResponse : IdentityResult
     {
+        public string Token { get; set; }
 
+        public new IEnumerable<IdentityError> Errors { get; set; }
     }
 }

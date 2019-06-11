@@ -32,5 +32,18 @@ namespace SecurityService.Controllers
 
             return Ok(result);
         }
+
+        [Route("Login")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest requestModel)
+        {
+            if (requestModel == null || !ModelState.IsValid) return BadRequest("Invlid model");
+
+            var result = await _identityService.Login(requestModel.UserName, requestModel.PassWord);
+
+            return Ok(result);
+        }
     }
 }

@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SecurityService.Common;
 
 namespace SecurityService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
         // GET api/values
+        [Authorize(Roles = JwtRole.Admin)]
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
@@ -18,6 +22,7 @@ namespace SecurityService.Controllers
         }
 
         // GET api/values/5
+        [Authorize(Roles = JwtRole.User)]
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {

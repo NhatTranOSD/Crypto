@@ -10,5 +10,7 @@ namespace SecurityService.Interfaces
     public interface IIdentityService
     {
         Task<CreateUserResponse> Create(string firstName, string lastName, string email, string password);
+
+        Task<LoginResponse> Login(string userName, string password);
     }
 }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +18,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using SecurityService.Data;
 using SecurityService.Interfaces;
+using SecurityService.Logging;
 using SecurityService.Models;
 using SecurityService.Services;
+using SecurityService.Settings;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace SecurityService
@@ -37,56 +43,38 @@ namespace SecurityService
         [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add authentication services
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddCookie()
-                .AddOpenIdConnect("Auth0", options =>
-                {
-                    // Set the authority to your Auth0 domain
-                    options.Authority = $"https://{Configuration["Auth0:Domain"]}";
-
-                    // Configure the Auth0 Client ID and Client Secret
-                    options.ClientId = Configuration["Auth0:ClientId"];
-                    options.ClientSecret = Configuration["Auth0:ClientSecret"];
-
-                    // Set response type to code
-                    options.ResponseType = "code";
-
-                    // Configure the scope
-                    options.Scope.Clear();
-                    options.Scope.Add("openid");
-
-                    // Set the callback path, so Auth0 will call back to http://localhost:3000/callback
-                    // Also ensure that you have added the URL as an Allowed Callback URL in your Auth0 dashboard 
-                    options.CallbackPath = new PathString("/callback");
-
-                    // Configure the Claims Issuer to be Auth0
-                    options.ClaimsIssuer = "Auth0";
-                });
-
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                               .AllowAnyMethod()
-                               .AllowAnyHeader();
-                    });
-            });
-
             services.AddDbContext<SecurityContext>(options =>
-                                                   options.UseSqlServer(Configuration.GetConnectionString("SecurityDBConnection")));
+                                       options.UseSqlServer(Configuration.GetConnectionString("SecurityDBConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                                                        .AddEntityFrameworkStores<SecurityContext>();
+            CreateIdentityIfNotCreated(services);
 
             services.AddTransient<IIdentityService, IdentityService>();
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+
+            // configure strongly typed settings objects
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -109,9 +97,12 @@ namespace SecurityService
                 options.User.RequireUniqueEmail = false;
             });
 
+            IdentityModelEventSource.ShowPII = true;
+
             // Add AutoMapper
             services.AddAutoMapper();
 
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -121,9 +112,31 @@ namespace SecurityService
             });
         }
 
+        private static void CreateIdentityIfNotCreated(IServiceCollection services)
+        {
+            var sp = services.BuildServiceProvider();
+            using (var scope = sp.CreateScope())
+            {
+                var existingUserManager = scope.ServiceProvider
+                    .GetService<UserManager<ApplicationUser>>();
+                if (existingUserManager == null)
+                {
+                    services.AddIdentity<ApplicationUser, IdentityRole>()
+                        .AddEntityFrameworkStores<SecurityContext>()
+                                        .AddDefaultTokenProviders();
+                }
+            }
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -146,6 +159,8 @@ namespace SecurityService
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            //app.UseCookiePolicy();
+
             app.UseAuthentication();
 
             app.UseMvc();
