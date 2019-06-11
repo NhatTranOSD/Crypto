@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apis", "Apis", "{0B4C4432-7F28-4786-BBD0-37E7306D7C12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityService", "SecurityService\SecurityService.csproj", "{AE6FBA26-106B-43EB-948B-BF637091DEFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityService", "SecurityService\SecurityService.csproj", "{AE6FBA26-106B-43EB-948B-BF637091DEFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalletService", "WalletService\WalletService.csproj", "{3DCA1F43-6ED7-4427-9A5A-23BDD93160BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtherscanApiModule", "EtherscanApiModule\EtherscanApiModule.csproj", "{CC5C119D-3AB8-41D6-84B5-0F17B5CC13D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{C692A38A-3E18-4710-BC84-1DED3948B668}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +23,25 @@ Global
 		{AE6FBA26-106B-43EB-948B-BF637091DEFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE6FBA26-106B-43EB-948B-BF637091DEFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE6FBA26-106B-43EB-948B-BF637091DEFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DCA1F43-6ED7-4427-9A5A-23BDD93160BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DCA1F43-6ED7-4427-9A5A-23BDD93160BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DCA1F43-6ED7-4427-9A5A-23BDD93160BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DCA1F43-6ED7-4427-9A5A-23BDD93160BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC5C119D-3AB8-41D6-84B5-0F17B5CC13D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC5C119D-3AB8-41D6-84B5-0F17B5CC13D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC5C119D-3AB8-41D6-84B5-0F17B5CC13D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC5C119D-3AB8-41D6-84B5-0F17B5CC13D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C692A38A-3E18-4710-BC84-1DED3948B668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C692A38A-3E18-4710-BC84-1DED3948B668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C692A38A-3E18-4710-BC84-1DED3948B668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C692A38A-3E18-4710-BC84-1DED3948B668}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AE6FBA26-106B-43EB-948B-BF637091DEFF} = {0B4C4432-7F28-4786-BBD0-37E7306D7C12}
+		{3DCA1F43-6ED7-4427-9A5A-23BDD93160BA} = {0B4C4432-7F28-4786-BBD0-37E7306D7C12}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5DF0537B-013F-4EDA-B085-4E8B6BEF3A89}

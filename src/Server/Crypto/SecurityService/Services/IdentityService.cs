@@ -41,15 +41,6 @@ namespace SecurityService.Services
             _logger = logger;
         }
 
-        public async Task<bool> IsValid(string email)
-        {
-            var identityResult = await _userManager.FindByEmailAsync(email);
-
-            if (identityResult != null) return true;
-
-            return false;
-        }
-
         public async Task<CreateUserResponse> Create(string firstName, string lastName, string email, string password)
         {
             _logger.LogInformation("Create new User");
@@ -91,6 +82,7 @@ namespace SecurityService.Services
 
                 if (user != null)
                 {
+                    code = code.Replace(" ", "+");
                     IdentityResult result = await _userManager.ConfirmEmailAsync(user, code);
                     return result.Succeeded ? true : false;
                 }

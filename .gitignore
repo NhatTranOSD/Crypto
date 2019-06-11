@@ -17,6 +17,16 @@
 
 /src/Server/Crypto/SecurityService/bin
 /src/Server/Crypto/SecurityService/obj
+
+/src/Server/Crypto/Common/bin
+/src/Server/Crypto/Common/obj
+
+/src/Server/Crypto/EtherscanApiModule/bin
+/src/Server/Crypto/EtherscanApiModule/obj
+
+/src/Server/Crypto/WalletService/bin
+/src/Server/Crypto/WalletService/obj
+
 /src/Client/ClientApp/node_modules
 /src/Client/ClientApp/.vscode
 /src/Server/Crypto/.vs
