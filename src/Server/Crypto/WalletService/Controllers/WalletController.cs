@@ -26,14 +26,18 @@ namespace WalletService.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> GetInfoByUserId(string userId)
         {
-            return Ok();
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _walletService.GetInfoByUserId(userId);
+
+            return Ok(result);
         }
 
         [Route("Create")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<WalletResponseModel>> Create(CreateRequestModel requestModel)
+        public async Task<ActionResult<bool>> Create(CreateRequestModel requestModel)
         {
             if (!ModelState.IsValid) return BadRequest();
 

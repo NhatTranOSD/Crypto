@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   authApi: 'https://localhost:5001/',
+  walletApi: 'https://localhost:5002/',
 };
 
 /*
