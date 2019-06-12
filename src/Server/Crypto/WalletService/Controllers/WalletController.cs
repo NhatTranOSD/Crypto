@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WalletService.Interfaces;
+using WalletService.Models.RequestModels;
+using WalletService.Models.ResponseModels;
 
 namespace WalletService.Controllers
 {
@@ -11,6 +14,12 @@ namespace WalletService.Controllers
     [ApiController]
     public class WalletController : ControllerBase
     {
+        private readonly IWalletService _walletService;
+        public WalletController(IWalletService walletService)
+        {
+            _walletService = walletService;
+        }
+
         [Route("{userId}")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -24,9 +33,13 @@ namespace WalletService.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Create(string userId)
+        public async Task<ActionResult<WalletResponseModel>> Create(CreateRequestModel requestModel)
         {
-            return Ok();
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _walletService.CreateWallet(requestModel);
+
+            return Ok(result);
         }
 
         [Route("{id}/Update")]

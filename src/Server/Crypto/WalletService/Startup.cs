@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Common.Settings;
 using EtherscanApiModule.Interfaces;
 using EtherscanApiModule.Services;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using WalletService.Data;
+using WalletService.Interfaces;
 
 namespace WalletService
 {
@@ -29,6 +31,7 @@ namespace WalletService
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        [Obsolete]
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<WalletContext>(options =>
@@ -38,9 +41,13 @@ namespace WalletService
 
             services.AddCors();
 
+            // Add AutoMapper
+            services.AddAutoMapper();
+
             services.Configure<EtherscanSettings>(options => Configuration.GetSection("EtherscanSettings").Bind(options));
 
             services.AddHttpClient<IAccountService, AccountService>();
+            services.AddTransient<IWalletService, Services.WalletService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

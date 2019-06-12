@@ -7,11 +7,15 @@ namespace WalletService.Models
 {
     public class WalletCurrency
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         public CurrencyType CurrencyType { get; set; }
 
-        public string WalletId { get; set; }
+        public string Balance { get; set; }
+
+        public DateTime UpdatedDate { get; set; }
+
+        public Guid WalletId { get; set; }
 
         public Wallet Wallet { get; set; }
     }

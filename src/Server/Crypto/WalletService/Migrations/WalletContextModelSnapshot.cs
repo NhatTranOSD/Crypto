@@ -21,12 +21,10 @@ namespace WalletService.Migrations
 
             modelBuilder.Entity("WalletService.Models.Wallet", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("UserId");
 
@@ -37,12 +35,16 @@ namespace WalletService.Migrations
 
             modelBuilder.Entity("WalletService.Models.WalletCurrency", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Balance");
 
                     b.Property<int>("CurrencyType");
 
-                    b.Property<string>("WalletId");
+                    b.Property<DateTime>("UpdatedDate");
+
+                    b.Property<Guid>("WalletId");
 
                     b.HasKey("Id");
 
@@ -55,7 +57,8 @@ namespace WalletService.Migrations
                 {
                     b.HasOne("WalletService.Models.Wallet", "Wallet")
                         .WithMany("WalletCurrencys")
-                        .HasForeignKey("WalletId");
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
