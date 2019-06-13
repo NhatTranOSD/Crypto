@@ -30,8 +30,6 @@
 /src/Server/Crypto/ShoppingService/bin
 /src/Server/Crypto/ShoppingService/obj
 
-ShoppingService
-
 /src/Client/ClientApp/node_modules
 /src/Client/ClientApp/.vscode
 /src/Server/Crypto/.vs
