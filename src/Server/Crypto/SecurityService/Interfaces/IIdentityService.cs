@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using SecurityService.Models.ResponseModels;
+using SecurityService.Entities.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SecurityService.Interfaces;
-using SecurityService.Models.RequestModels;
-using SecurityService.Models.ResponseModels;
+using SecurityService.Entities.RequestModels;
+using SecurityService.Entities.ResponseModels;
 
 namespace SecurityService.Controllers
 {

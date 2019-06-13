@@ -1,0 +1,110 @@
+<div class="">
+    <button (click)="createOpen(editcontent)" class="btn btn-sm btn-info">Add product</button>
+</div>
+<br>
+<table class="table table-striped bg-white">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Logo</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of productService.products; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+                <img [src]="product.pictureUri" class="mr-2" style="width: 30px">
+            </td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price | number }} FCO</td>
+            <td>
+                <button (click)="editOpen(editcontent, product)" type="button" class="btn btn-sm btn-info">Edit </button>|
+                <button (click)="deleteComfirm(product, comfirmcontent)" type="button" class="btn btn-sm btn-danger">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!-- Create Modal -->
+<ng-template #editcontent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{productFormTitle}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <form [formGroup]="productForm">
+                <div class="form-group">
+                    <label for="name">Product Name</label>
+                    <input [name]=true type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.name.errors }" />
+                    <div *ngIf="formSubmitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">Product Name is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.price.errors }" />
+                    <div *ngIf="formSubmitted && f.price.errors" class="invalid-feedback">
+                        <div *ngIf="f.price.errors.required">Product description is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.description.errors }" />
+                    <div *ngIf="formSubmitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Product description is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="pictureUri">Product PictureUri</label>
+                    <input type="text" formControlName="pictureUri" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.pictureUri.errors }" />
+                    <div *ngIf="formSubmitted && f.pictureUri.errors" class="invalid-feedback">
+                        <div *ngIf="f.pictureUri.errors.required">Product pictureUri is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="modal-footer">
+                        <img *ngIf="formLoading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                        />
+                        <button [disabled]="formLoading" type="button" class="btn btn-outline-info" (click)="formSave()">Save</button>
+                        <button [disabled]="formLoading" type="button" class="btn btn-outline-dark" (click)="closeModal('CreateClose')">Close</button>
+                    </div>
+                </div>
+                <div *ngIf="createError" class="alert alert-danger">{{createError}}</div>
+            </form>
+        </form>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info" (click)="modal.close('Save click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+    </div> -->
+</ng-template>
+
+<!-- Product Modal -->
+<ng-template #comfirmcontent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{productFormTitle}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        Do you want to delete this product?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info" (click)="deleteComfirmed()">Yes</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">No</button>
+    </div>
+</ng-template>

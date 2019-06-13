@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SecurityService.Models.ResponseModels
+namespace SecurityService.Entities.ResponseModels
 {
     public class LoginResponse : SignInResult
     {

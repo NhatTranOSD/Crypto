@@ -24,7 +24,7 @@ using SecurityService.Common;
 using SecurityService.Data;
 using SecurityService.Interfaces;
 using SecurityService.Logging;
-using SecurityService.Models;
+using SecurityService.Entities;
 using SecurityService.Services;
 using SecurityService.Settings;
 using Swashbuckle.AspNetCore.Swagger;

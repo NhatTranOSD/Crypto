@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WalletService.Interfaces;
-using WalletService.Models.RequestModels;
-using WalletService.Models.ResponseModels;
+using WalletService.Entities.RequestModels;
+using WalletService.Entities.ResponseModels;
 
 namespace WalletService.Controllers
 {

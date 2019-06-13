@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WalletService.Data;
 using WalletService.Interfaces;
-using WalletService.Models;
-using WalletService.Models.RequestModels;
-using WalletService.Models.ResponseModels;
+using WalletService.Entities;
+using WalletService.Entities.RequestModels;
+using WalletService.Entities.ResponseModels;
 
 namespace WalletService.Services
 {
@@ -66,7 +66,7 @@ namespace WalletService.Services
             {
                 IList<Wallet> responseWallet = await _walletContext.Wallets
                                                 .Include(w => w.WalletCurrencys)
-                                                .Where(x => x.UserId == userId).ToListAsync();
+                                                .Where(x => x.UserId == userId).OrderByDescending(x=>x.CreatedDate).ToListAsync();
 
                 IList<WalletResponseModel> responseModel = _mapper.Map<IList<WalletResponseModel>>(responseWallet);
 

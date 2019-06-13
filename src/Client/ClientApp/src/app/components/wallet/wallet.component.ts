@@ -17,6 +17,9 @@ export class WalletComponent implements OnInit {
   public selectedWallet: Wallet;
   public currencyDisplayName = CurrencyDisplayName;
 
+  public isCollapsed = false;
+  public selectedCurrencyType: number;
+
   constructor(private walletService: WalletService) { }
 
   ngOnInit() {
@@ -24,17 +27,20 @@ export class WalletComponent implements OnInit {
   }
 
   public createWallet(): void {
-    this.loading = true;
-    this.walletService.createWallet(1).pipe(first())
-      .subscribe(
-        data => {
-          this.loading = false;
-          this.ngOnInit();
-        },
-        error => {
-          this.error = error;
-          this.loading = false;
-        });
+
+    if (this.selectedCurrencyType) {
+      this.loading = true;
+      this.walletService.createWallet(this.selectedCurrencyType).pipe(first())
+        .subscribe(
+          data => {
+            this.loading = false;
+            this.ngOnInit();
+          },
+          error => {
+            this.error = error;
+            this.loading = false;
+          });
+    }
   }
 
   public getWalletInfo(): void {

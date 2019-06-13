@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using SecurityService.Models;
-using SecurityService.Models.ResponseModels;
+using SecurityService.Entities;
+using SecurityService.Entities.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

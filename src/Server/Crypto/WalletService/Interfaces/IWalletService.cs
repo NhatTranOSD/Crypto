@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WalletService.Models.RequestModels;
-using WalletService.Models.ResponseModels;
+using WalletService.Entities.RequestModels;
+using WalletService.Entities.ResponseModels;
 
 namespace WalletService.Interfaces
 {

@@ -35,7 +35,15 @@
                         </a>
                     </div>
                     <!-- <button (click)="createWallet()" class="btn btn-sm btn-success">Add new Currency</button> -->
-                    <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal">Add new Currency</button>
+                    <div class="input-group">
+                        <select [(ngModel)]="selectedCurrencyType" class="custom-select" id="inputGroupSelect04">
+                          <option value="0">FCO</option>
+                          <option value="1">ETH</option>
+                        </select>
+                        <div class="input-group-append">
+                            <button [disabled]="selectedCurrencyType == null" (click)="createWallet()" class="btn btn-outline-secondary" type="button">Add new Currency</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -60,36 +68,57 @@
 
                 <hr>
                 <h2>Transaction List</h2>
-                <div class="list-group">
-                    <div class="list-group-item list-group-item-action">
-                        Transaction 1
+                <div class="list-group bg-light">
+                    <div class="list-group-item list-group-item-action" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                        <div class="row">
+                            <div class="col-2">
+                                <img class="card-img-top" src="https://cdn0.iconfinder.com/data/icons/mobile-device/512/dollar-usd-round-keyboard-money-usa-latin-2-512.png" alt="Card image cap">
+                            </div>
+                            <div class="col-4">
+                                <p class="text-left">Sent tokens </p>
+                                <p class="text-left">#24 - 6/10/2019 at 18:06</p>
+                            </div>
+                            <div class="col-3">
+                                <span class="badge badge-info">Confirmed</span>
+                            </div>
+                            <div class="col-3">
+                                -0 ETH
+                            </div>
+                        </div>
+                        <div id="collapseExample" [ngbCollapse]="!isCollapsed">
+                            <div class="card bg-white border-0">
+                                <div class="card-body">
+                                    You can collapse this card by clicking Toggle
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="list-group-item list-group-item-action">
-                        Transaction 1
+                    <div class="list-group-item list-group-item-action" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                        <div class="row">
+                            <div class="col-2">
+                                <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg" alt="Card image cap">
+                            </div>
+                            <div class="col-4">
+                                <p class="text-left">Sent tokens </p>
+                                <p class="text-left">#24 - 6/10/2019 at 18:06</p>
+                            </div>
+                            <div class="col-3">
+                                <span class="badge badge-info">Confirmed</span>
+                            </div>
+                            <div class="col-3">
+                                -0 ETH
+                            </div>
+                        </div>
+                        <div id="collapseExample" [ngbCollapse]="!isCollapsed">
+                            <div class="card bg-white border-0">
+                                <div class="card-body">
+                                    You can collapse this card by clicking Toggle
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body">
-                <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
     </div>
 </div>

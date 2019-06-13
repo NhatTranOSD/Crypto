@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WalletService.Models
+namespace WalletService.Entities
 {
     public class Wallet
     {
@@ -18,7 +18,7 @@ namespace WalletService.Models
         //public string PrivateKey { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy }")]
-        public DateTime CreatedDate { get; } = DateTime.UtcNow;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public ICollection<WalletCurrency> WalletCurrencys { get; set; }
     }
