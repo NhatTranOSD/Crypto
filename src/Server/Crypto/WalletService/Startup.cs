@@ -48,6 +48,7 @@ namespace WalletService
 
             services.AddHttpClient<IAccountService, AccountService>();
             services.AddTransient<IWalletService, Services.WalletService>();
+            services.AddTransient<ITransactionService, TransactionService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

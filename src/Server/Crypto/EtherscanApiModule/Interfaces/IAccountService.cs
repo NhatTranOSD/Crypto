@@ -7,7 +7,7 @@ namespace EtherscanApiModule.Interfaces
 {
     public interface IAccountService
     {
-        Task<string> Balance(string address);
+        Task<string> ETHBalance(string address);
         Task<string> TokenBalance(string address, string tokenname, string contractaddress);
     }
 }

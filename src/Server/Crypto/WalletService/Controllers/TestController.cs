@@ -13,17 +13,21 @@ namespace WalletService.Controllers
     public class TestController : ControllerBase
     {
         private readonly IAccountService _accountService;
-        public TestController(IAccountService accountService)
+        private readonly ITransactionService _transactionService;
+        public TestController(IAccountService accountService, ITransactionService transactionService)
         {
             _accountService = accountService;
+            _transactionService = transactionService;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAsync()
+        public async Task<ActionResult<string>> GetAsync()
         {
-            var result = await _accountService.Balance("0x0B94369D5368acBB6674f11758Be01ae69CDc04f");
+            var result = await _accountService.ETHBalance("0x0B94369D5368acBB6674f11758Be01ae69CDc04f");
 
-            return null;
+            var price = _transactionService.GetEtherPrice();
+
+            return result;
         }
     }
 }
