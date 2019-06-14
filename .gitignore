@@ -15,6 +15,8 @@
 .history/*
 
 
+/src/Server/Apis/TraddingApi/node_modules
+
 /src/Server/Crypto/SecurityService/bin
 /src/Server/Crypto/SecurityService/obj
 
@@ -33,3 +35,4 @@
 /src/Client/ClientApp/node_modules
 /src/Client/ClientApp/.vscode
 /src/Server/Crypto/.vs
+/src/Server/Apis/TraddingApi/node_modules
