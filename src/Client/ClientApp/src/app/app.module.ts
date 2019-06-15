@@ -12,8 +12,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HeaderComponent } from './components/header/header.component';
 import { WalletComponent } from './components/wallet/wallet.component';
+import { ShopComponent } from './pages/shop/shop.component';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { QRCodeModule } from 'angularx-qrcode';
+
 
 @NgModule({
   declarations: [
@@ -23,13 +26,15 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     RegisterComponent,
     HeaderComponent,
     WalletComponent,
+    ShopComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    QRCodeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
