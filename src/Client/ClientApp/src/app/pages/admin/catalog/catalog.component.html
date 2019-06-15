@@ -10,6 +10,7 @@
             <th scope="col">Name</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
+            <th scope="col">stock</th>
             <th scope="col"></th>
         </tr>
     </thead>
@@ -22,6 +23,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.description }}</td>
             <td>{{ product.price | number }} FCO</td>
+            <th>{{ product.stock | number }}</th>
             <td>
                 <button (click)="editOpen(editcontent, product)" type="button" class="btn btn-sm btn-info">Edit </button>|
                 <button (click)="deleteComfirm(product, comfirmcontent)" type="button" class="btn btn-sm btn-danger">Delete</button>
@@ -31,7 +33,7 @@
 </table>
 
 
-<!-- Create Modal -->
+<!-- Create/Update Modal -->
 <ng-template #editcontent let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">{{productFormTitle}}</h4>
@@ -55,6 +57,14 @@
                     <input type="number" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.price.errors }" />
                     <div *ngIf="formSubmitted && f.price.errors" class="invalid-feedback">
                         <div *ngIf="f.price.errors.required">Product description is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" formControlName="stock" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.stock.errors }" />
+                    <div *ngIf="formSubmitted && f.stock.errors" class="invalid-feedback">
+                        <div *ngIf="f.stock.errors.required">Product stock is required</div>
                     </div>
                 </div>
 

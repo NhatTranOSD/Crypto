@@ -28,6 +28,7 @@ using SecurityService.Entities;
 using SecurityService.Services;
 using SecurityService.Settings;
 using Swashbuckle.AspNetCore.Swagger;
+using Common.Settings;
 
 namespace SecurityService
 {

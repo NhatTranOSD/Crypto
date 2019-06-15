@@ -15,6 +15,8 @@ namespace ShoppingService.Models.ResponseModels
 
         public Decimal Price { get; set; }
 
+        public int Stock { get; set; }
+
         public string PictureUri { get; set; }
     }
 }

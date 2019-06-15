@@ -29,8 +29,8 @@ export class ProductService {
 
   public createProduct(requestModel: ProductRequest): any {
     return this.http.post<boolean>(`${environment.shoppingApi}api/Product/Create`, requestModel)
-      .pipe(map(products => {
-        return products;
+      .pipe(map(data => {
+        return data;
       }));
   }
 

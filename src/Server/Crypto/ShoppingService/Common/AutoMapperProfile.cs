@@ -13,6 +13,7 @@ namespace ShoppingService.Common
         public AutoMapperProfile()
         {
             CreateMap<Product, ProductResponseModel>();
+            CreateMap<Order, OrderResponseModel>();
         }
     }
 }

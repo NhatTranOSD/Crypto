@@ -13,6 +13,8 @@ namespace ShoppingService.Models.RequestModels
 
         public Decimal Price { get; set; }
 
+        public int Stock { get; set; }
+
         public string PictureUri { get; set; }
     }
 }

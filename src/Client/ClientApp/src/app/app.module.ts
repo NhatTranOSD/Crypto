@@ -17,7 +17,6 @@ import { ShopComponent } from './pages/shop/shop.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angularx-qrcode';
 
-
 @NgModule({
   declarations: [
     AppComponent,

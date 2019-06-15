@@ -2,5 +2,6 @@ export class ProductRequest {
     name: string;
     description: string;
     price: number;
+    stock: number;
     pictureUri: string;
 }

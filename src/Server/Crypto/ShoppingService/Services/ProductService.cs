@@ -51,6 +51,7 @@ namespace ShoppingService.Services
                     Name = requestModel.Name,
                     PictureUri = requestModel.PictureUri,
                     Price = requestModel.Price,
+                    Stock = requestModel.Stock,
                 };
 
                 await _shoppingContext.Products.AddAsync(product);
@@ -78,6 +79,7 @@ namespace ShoppingService.Services
                     product.Description = requestModel.Description;
                     product.PictureUri = requestModel.PictureUri;
                     product.Price = requestModel.Price;
+                    product.Stock = requestModel.Stock;
                 }
 
                 _shoppingContext.Products.Update(product);

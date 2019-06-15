@@ -58,6 +58,7 @@ export class CatalogComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
+      stock: ['', Validators.required],
       pictureUri: ['', Validators.required]
     });
 
@@ -78,6 +79,7 @@ export class CatalogComponent implements OnInit {
       name: this.f.name.value,
       description: this.f.description.value,
       price: this.f.price.value,
+      stock: this.f.stock.value,
       pictureUri: this.f.pictureUri.value,
     };
 
@@ -90,6 +92,7 @@ export class CatalogComponent implements OnInit {
           }
           this.formLoading = false;
           this.formSubmitted = false;
+          this.createError = '';
         },
         error => {
           this.createError = error;
@@ -107,6 +110,7 @@ export class CatalogComponent implements OnInit {
       name: [item.name, Validators.required],
       description: [item.description, Validators.required],
       price: [item.price, Validators.required],
+      stock: [item.stock, Validators.required],
       pictureUri: [item.pictureUri, Validators.required]
     });
 
@@ -127,6 +131,7 @@ export class CatalogComponent implements OnInit {
       name: this.f.name.value,
       description: this.f.description.value,
       price: this.f.price.value,
+      stock: this.f.stock.value,
       pictureUri: this.f.pictureUri.value,
     };
 
@@ -138,6 +143,8 @@ export class CatalogComponent implements OnInit {
             this.productService.getProducts();
           }
           this.formLoading = false;
+          this.formSubmitted = false;
+          this.createError = '';
         },
         error => {
           this.createError = error;
