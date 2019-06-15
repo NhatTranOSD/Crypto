@@ -25,7 +25,7 @@ export class CatalogComponent implements OnInit {
   public editingProduct: Product;
   public deletingProduct: Product;
 
-  constructor(private productService: ProductService,
+  constructor(public productService: ProductService,
     // tslint:disable-next-line:align
     private modalService: NgbModal,
     // tslint:disable-next-line:align
