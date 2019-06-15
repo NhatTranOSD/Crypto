@@ -33,7 +33,7 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<ResponseModel> GetStatus(string txhash)
         {
-            string uri = AccountActions.BuildApi(_etherscanApi, EtherModules.TRANSACTION, EtherActions.GETSTATUS, new IParamStruct[] {
+            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.TRANSACTION, EtherActions.GETSTATUS, new IParamStruct[] {
                 new StringParamStruct(EtherParams.TXHASH, txhash)
             });
 
@@ -50,7 +50,7 @@ namespace EtherscanApiModule.Services
         /// <returns>price of ether</returns>
         public async Task<int> GetEtherPrice()
         {
-            string uri = AccountActions.BuildApi(_etherscanApi, EtherModules.STATS, EtherActions.ETHPRICE);
+            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.STATS, EtherActions.ETHPRICE);
 
             var responseString = await _httpClient.GetStringAsync(uri);
 

@@ -33,7 +33,7 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<string> ETHBalance(string address)
         {
-            string uri = AccountActions.BuildApi(_etherscanApi, EtherModules.ACCOUNT, EtherActions.BALANCE, new IParamStruct[] {
+            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.BALANCE, new IParamStruct[] {
                 new StringParamStruct(EtherParams.ADDRESS, address)
             });
 
@@ -53,7 +53,7 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<string> TokenBalance(string address, string tokenname, string contractaddress)
         {
-            string uri = AccountActions.BuildApi(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TOKENBALANCE, new IParamStruct[] {
+            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TOKENBALANCE, new IParamStruct[] {
                 new StringParamStruct(EtherParams.ADDRESS, address),
                 new StringParamStruct(EtherParams.TOKENNAME, tokenname),
                 new StringParamStruct(EtherParams.CONTRACTADDRESS, contractaddress),
@@ -77,7 +77,7 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<ResponseModel> TokenTxList(string address,string contractaddress, string startblock, string endblock, string sort)
         {
-            string uri = AccountActions.BuildApi(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TOKENTX, new IParamStruct[] {
+            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TOKENTX, new IParamStruct[] {
                 new StringParamStruct(EtherParams.ADDRESS, address),
                 new StringParamStruct(EtherParams.CONTRACTADDRESS, contractaddress),
                 new StringParamStruct(EtherParams.STARTBLOCK, startblock),
@@ -104,7 +104,7 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<ResponseModel> ETHTxList(string address,string startblock,string endblock,int page,int offset,string sort)
         {
-            string uri = AccountActions.BuildApi(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TXLIST, new IParamStruct[] {
+            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TXLIST, new IParamStruct[] {
                 new StringParamStruct(EtherParams.ADDRESS, address),
                 new StringParamStruct(EtherParams.STARTBLOCK, startblock),
                 new StringParamStruct(EtherParams.ENDBLOCK, endblock),
@@ -131,7 +131,7 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<ResponseModel> ETHTxListInternal(string txhash, string address = null, string startblock = null, string endblock = null, string sort = null)
         {
-            string uri = AccountActions.BuildApi(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TXLISTINTERNAL, new IParamStruct[] {
+            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TXLISTINTERNAL, new IParamStruct[] {
                 new StringParamStruct(EtherParams.TXHASH, txhash),
                 new StringParamStruct(EtherParams.ADDRESS, address),
                 new StringParamStruct(EtherParams.STARTBLOCK, startblock),
