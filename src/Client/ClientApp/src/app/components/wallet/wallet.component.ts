@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletService } from '../../services/wallet.service';
 import { first } from 'rxjs/operators';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 import { Wallet } from '../../models/Wallet.model';
 import { CurrencyDisplayName, WalletCurrency } from '../../models/WalletCurrency.model';
@@ -15,12 +16,13 @@ export class WalletComponent implements OnInit {
   public error = '';
   public wallets: Wallet[];
   public selectedWallet: Wallet;
+  public depositingWallet: Wallet;
   public currencyDisplayName = CurrencyDisplayName;
 
   public isCollapsed = false;
   public selectedCurrencyType: number;
 
-  constructor(private walletService: WalletService) { }
+  constructor(private modalService: NgbModal, private walletService: WalletService) { }
 
   ngOnInit() {
     this.getWalletInfo();
@@ -59,6 +61,11 @@ export class WalletComponent implements OnInit {
 
   public selectWallet(selectedItem: Wallet) {
     this.selectedWallet = selectedItem;
+  }
+
+  public depositCoin(content, wallet: Wallet) {
+    this.depositingWallet = wallet;
+    this.modalService.open(content);
   }
 
 }

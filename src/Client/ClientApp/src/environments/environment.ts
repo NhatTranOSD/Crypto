@@ -4,12 +4,12 @@
 
 export const environment = {
   production: false,
-  // authApi: 'https://localhost:5001/',
-  // walletApi: 'https://localhost:5002/',
-  // shoppingApi: 'https://localhost:5003/',
-  authApi: 'https://crypto-securityservice.azurewebsites.net/',
-  walletApi: 'https://crypto-walletservice.azurewebsites.net/',
-  shoppingApi: 'https://crypto-shoppingservice.azurewebsites.net/',
+  authApi: 'https://localhost:5001/',
+  walletApi: 'https://localhost:5002/',
+  shoppingApi: 'https://localhost:5003/',
+  // authApi: 'https://crypto-securityservice.azurewebsites.net/',
+  // walletApi: 'https://crypto-walletservice.azurewebsites.net/',
+  // shoppingApi: 'https://crypto-shoppingservice.azurewebsites.net/',
 };
 
 /*
