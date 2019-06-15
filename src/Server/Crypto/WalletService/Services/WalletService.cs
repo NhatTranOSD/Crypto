@@ -9,6 +9,8 @@ using WalletService.Interfaces;
 using WalletService.Entities;
 using WalletService.Entities.RequestModels;
 using WalletService.Entities.ResponseModels;
+using EtherscanApiModule.Interfaces;
+using EtherscanApiModule.Common;
 
 namespace WalletService.Services
 {
@@ -17,9 +19,12 @@ namespace WalletService.Services
         private readonly WalletContext _walletContext;
         private readonly IMapper _mapper;
 
-        public WalletService(WalletContext walletContext, IMapper mapper)
+        private IAccountService _accountService;
+
+        public WalletService(WalletContext walletContext, IAccountService accountService, IMapper mapper)
         {
             _walletContext = walletContext;
+            _accountService = accountService;
             _mapper = mapper;
         }
 
@@ -41,7 +46,7 @@ namespace WalletService.Services
                 // Init wallet
                 Wallet wallet = new Wallet()
                 {
-                    Address = "Api Will Generate",
+                    Address = "0x0B94369D5368acBB6674f11758Be01ae69CDc04f",
                     Id = Guid.NewGuid(),
                     UserId = requestModel.UserId,
                     WalletCurrencys = new List<WalletCurrency>() { walletCurrency }
@@ -66,9 +71,25 @@ namespace WalletService.Services
             {
                 IList<Wallet> responseWallet = await _walletContext.Wallets
                                                 .Include(w => w.WalletCurrencys)
-                                                .Where(x => x.UserId == userId).OrderByDescending(x=>x.CreatedDate).ToListAsync();
+                                                .Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedDate).ToListAsync();
 
                 IList<WalletResponseModel> responseModel = _mapper.Map<IList<WalletResponseModel>>(responseWallet);
+
+                foreach (var wallet in responseModel)
+                {
+                    foreach (var currency in wallet.WalletCurrencys)
+                    {
+                        if (currency.CurrencyType == CurrencyType.FCO)
+                        {
+                            currency.Balance = await _accountService.TokenBalance(wallet.Address, "", FCOToken.CONTRACT);
+                        }
+                        else if (currency.CurrencyType == CurrencyType.ETH)
+                        {
+                            currency.Balance = await _accountService.ETHBalance(wallet.Address);
+                        }
+
+                    }
+                }
 
                 return responseModel;
             }
