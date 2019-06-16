@@ -33,6 +33,7 @@
 /src/Server/Crypto/ShoppingService/obj
 
 /src/Client/ClientApp/node_modules
+/src/Client/ClientApp/dist
 /src/Client/ClientApp/.vscode
 /src/Server/Crypto/.vs
 /src/Server/Apis/TraddingApi/node_modules
