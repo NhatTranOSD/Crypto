@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using WalletService.Interfaces;
 using WalletService.Entities.RequestModels;
 using WalletService.Entities.ResponseModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WalletService.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize]
     public class WalletController : ControllerBase
     {
         private readonly IWalletService _walletService;

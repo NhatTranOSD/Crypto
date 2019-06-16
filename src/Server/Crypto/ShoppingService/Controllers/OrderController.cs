@@ -25,6 +25,7 @@ namespace ShoppingService.Controllers
 
         [Route("Orders")]
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<OrderResponseModel>>> Orders()

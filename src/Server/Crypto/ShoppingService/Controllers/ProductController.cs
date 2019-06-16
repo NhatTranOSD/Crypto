@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingService.Interfaces;
@@ -20,6 +21,7 @@ namespace ShoppingService.Controllers
             _productService = productService;
         }
 
+        [AllowAnonymous]
         [Route("Products")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -35,6 +37,7 @@ namespace ShoppingService.Controllers
 
         [Route("Create")]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> CreateProduct(ProductRequestModel requestModel)
@@ -47,6 +50,7 @@ namespace ShoppingService.Controllers
         }
 
         [Route("{id}/Update")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -60,6 +64,7 @@ namespace ShoppingService.Controllers
         }
 
         [Route("{id}/Delete")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
