@@ -42,7 +42,7 @@ namespace SecurityService.Services
             _logger = logger;
         }
 
-        public async Task<CreateUserResponse> Create(string firstName, string lastName, string email, string password)
+        public async Task<CreateUserResponse> Create(string firstName, string lastName, string email, string password, string hostname)
         {
             _logger.LogInformation("Create new User");
 
@@ -56,7 +56,10 @@ namespace SecurityService.Services
                 {
                     string confirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(appUser).Result;
 
-                    string callbackUrl = string.Format("https://localhost:5001/api/v1/Identity/ConfirmEmail/{0}?code={1}", appUser.Id, confirmationToken);
+                    string currentHost = $"https://{hostname}";
+                    string confirmUrl = currentHost + "/api/v1/Identity/ConfirmEmail/{0}?code={1}";
+
+                    string callbackUrl = string.Format(confirmUrl, appUser.Id, confirmationToken);
 
                     await _emailService.SendEmailAsync(email, "Confirm Email", callbackUrl);
                 }

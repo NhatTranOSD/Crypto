@@ -28,7 +28,9 @@ namespace SecurityService.Controllers
         {
             if (requestModel == null || !ModelState.IsValid) return BadRequest("Invlid model");
 
-            var result = await _identityService.Create(requestModel.FirstName, requestModel.LastName, requestModel.Email, requestModel.PassWord);
+            string host = Request.Host.Value;
+
+            var result = await _identityService.Create(requestModel.FirstName, requestModel.LastName, requestModel.Email, requestModel.PassWord, host);
 
             return Ok(result);
         }
