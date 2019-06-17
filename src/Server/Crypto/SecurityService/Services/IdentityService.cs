@@ -48,7 +48,7 @@ namespace SecurityService.Services
 
             try
             {
-                ApplicationUser appUser = new ApplicationUser { Email = email, UserName = email, FirstName = firstName, LastName = lastName, JwtRole = JwtRole.User };
+                ApplicationUser appUser = new ApplicationUser { Email = email, UserName = email, FirstName = firstName, LastName = lastName, JwtRole = JwtRole.User, EmailConfirmed = true };
 
                 IdentityResult identityResult = await _userManager.CreateAsync(appUser, password);
 
