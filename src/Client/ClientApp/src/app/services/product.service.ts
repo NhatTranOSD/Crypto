@@ -17,7 +17,7 @@ export class ProductService {
   }
 
   public getProducts(): any {
-    return this.http.get<Product[]>(`${environment.shoppingApi}api/Product/Products`)
+    this.http.get<Product[]>(`${environment.shoppingApi}api/Product/Products`)
       .subscribe(
         data => {
           this.products = data;

@@ -1,0 +1,86 @@
+<h3>Token <span class="text-secondary">[FCO]</span></h3>
+<hr>
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        <b>Overview</b> [ERC-20]
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-5">PRICE:</div>
+            <div class="col-5">$10 </div>
+            <div class="col-2">USD</div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-5">Total Supply:</div>
+            <div class="col-5">1000000 </div>
+            <div class="col-2">FCO</div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-5">Admin Holder Total:</div>
+            <div class="col-5">50000 </div>
+            <div class="col-2">FCO</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        <b>Profile Summary </b>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-3">Contract:</div>
+            <div class="col-9">0x6429acbf2a15ef0119aa347b8da5a2dbb6056f29 </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-3">Decimals:</div>
+            <div class="col-9">18 </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-3">Transfers: </div>
+            <div class="col-9">898,717 </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<h3>Transactions</h3>
+<hr>
+<table class="table table-striped bg-white">
+  <thead>
+    <tr>
+      <th scope="col-2">Txn Hash</th>
+      <th scope="col-2">Age</th>
+      <th scope="col-2">Account</th>
+      <th scope="col-2">Transfer Type</th>
+      <th scope="col-2">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of tokenService.tokenTxs" >
+        <td class="text-truncate" style="max-width: 100px;">{{item.hash}}</td>
+        <td>{{convertToDateTime(item.timeStamp)}}</td>
+        <td>tvnhat@gmail.com</td>
+        <td><span class="badge badge-info">In</span></td>
+        <td>10</td>
+    </tr>
+  </tbody>
+</table>

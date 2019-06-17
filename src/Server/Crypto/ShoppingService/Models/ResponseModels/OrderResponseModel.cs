@@ -10,7 +10,7 @@ namespace ShoppingService.Models.ResponseModels
     {
         public Guid Id { get; set; }
 
-        public DateTime CreatedDate { get; } = DateTime.UtcNow;
+        public DateTime CreatedDate { get; set; }
 
         public DateTime UpdatedDate { get; set; }
 

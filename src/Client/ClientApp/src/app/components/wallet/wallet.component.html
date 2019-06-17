@@ -38,8 +38,9 @@
                                         alt="Card image cap">
                                 </div>
                                 <div class="col-8">
-                                    <h4><b>{{currencyDisplayName[item.currencyType]}}</b></h4>Balance: {{item.balance}}
-                                    {{currencyDisplayName[item.currencyType]}}
+                                    <h4><b>{{currencyDisplayName[item.currencyType]}}</b></h4>
+                                    <h6>Balance: {{item.balance/1000000000000000000}}
+                                        {{currencyDisplayName[item.currencyType]}}</h6>
                                     <button (click)="depositCoin(depositContent, wallet)"
                                         class="btn btn-sm btn-success">Deposit</button>
                                 </div>
@@ -76,7 +77,7 @@
                     <div class="col-9">
                         <p>Address: {{selectedWallet.address}}</p>
                         <p>Currency: {{currencyDisplayName[selectedWallet.walletCurrencys[0].currencyType]}}</p>
-                        <p>Balance: {{selectedWallet.walletCurrencys[0].balance}}</p>
+                        <p>Balance: {{selectedWallet.walletCurrencys[0].balance/1000000000000000000}}</p>
                         <p>Contract: 0xd4048296e93478a31777e8d7ef2128e601a0eac5</p>
                     </div>
                 </div>

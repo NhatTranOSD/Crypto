@@ -26,6 +26,7 @@ namespace EtherscanApiModule.Common
         public static string TXLISTINTERNAL = "txlistinternal";
         public static string GETSTATUS = "getstatus";
         public static string ETHPRICE = "ethprice";
+        public static string TOKENSUPPLY = "tokensupply";
     }
 
     public static class EtherParams
@@ -37,6 +38,7 @@ namespace EtherscanApiModule.Common
         public static string ENDBLOCK = "endblock";
         public static string PAGE = "page";
         public static string OFFSET = "offset";
+        public static string SORT = "sort";
         public static string TXHASH = "txhash";
     }
 }

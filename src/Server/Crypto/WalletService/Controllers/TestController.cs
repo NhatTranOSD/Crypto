@@ -30,7 +30,9 @@ namespace WalletService.Controllers
 
             var status = await _transactionService.GetStatus("0x9579d5308bc29b2dbb1e760cd43fce4a4ae70b7cea753b4fd610c463e45bfc45");
 
-            var TXList = await _accountService.ETHTxList("0x0B94369D5368acBB6674f11758Be01ae69CDc04f", "1", "latest", 1, 100, "asc");
+            var tokenTxList = await _accountService.TokenTxList("0x0B94369D5368acBB6674f11758Be01ae69CDc04f", "0x6429acbf2a15ef0119aa347b8da5a2dbb6056f29", "1", "latest", "asc"); // Make default
+
+            var TXList = await _accountService.ETHTxList("0x0B94369D5368acBB6674f11758Be01ae69CDc04f", "1", "latest", 1, 15, "asc");
 
             return result;
         }

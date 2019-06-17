@@ -68,57 +68,5 @@ namespace WalletService.Controllers
         {
             return Ok();
         }
-
-        [Route("{address}/ETHBalance")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> ETHBalance(string address)
-        {
-            if (!ModelState.IsValid) return BadRequest();
-
-            var result = await _accountService.ETHBalance(address);
-
-            return Ok(result);
-        }
-
-        [Route("{address}/TokenBalance")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> TokenBalance(string address)
-        {
-            if (!ModelState.IsValid) return BadRequest();
-
-            var result = await _accountService.TokenBalance(address, "", "0x6429acbf2a15ef0119aa347b8da5a2dbb6056f29"); // Make default is FCO
-
-            return Ok(result);
-        }
-
-        [Route("{address}/TokenTxList")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> TokenTxList(string address)
-        {
-            if (!ModelState.IsValid) return BadRequest();
-
-            var result = await _accountService.TokenTxList(address, "0x6429acbf2a15ef0119aa347b8da5a2dbb6056f29", "1", "latest", "asc"); // Make default
-
-            return Ok(result);
-        }
-
-        [Route("{address}/ETHTxList")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> ETHTxList(string address)
-        {
-            if (!ModelState.IsValid) return BadRequest();
-
-            var result = await _accountService.ETHTxList(address, "1", "latest", 1, 100, "asc"); // Make default
-
-            return Ok(result);
-        }
     }
 }

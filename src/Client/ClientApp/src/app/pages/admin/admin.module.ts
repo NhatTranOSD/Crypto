@@ -8,9 +8,10 @@ import { AdminComponent } from './admin.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { HeaderComponent } from './header/header.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 @NgModule({
-  declarations: [AdminComponent, CatalogComponent, HeaderComponent, OrderListComponent],
+  declarations: [AdminComponent, CatalogComponent, HeaderComponent, OrderListComponent, TransactionListComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

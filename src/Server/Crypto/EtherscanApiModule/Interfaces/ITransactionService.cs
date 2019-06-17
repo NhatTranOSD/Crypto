@@ -11,5 +11,7 @@ namespace EtherscanApiModule.Interfaces
         Task<ResponseModel> GetEtherPrice();
 
         Task<ResponseModel> GetStatus(string txhash);
+
+        Task<ResponseModel> GetTokenSupply(string tokenname, string contractaddress);
     }
 }

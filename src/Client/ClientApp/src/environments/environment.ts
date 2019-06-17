@@ -7,6 +7,8 @@ export const environment = {
   // authApi: 'https://localhost:5001/',
   // walletApi: 'https://localhost:5002/',
   // shoppingApi: 'https://localhost:5003/',
+  contractAdress: '0x6429acbf2a15ef0119aa347b8da5a2dbb6056f29',
+  adminAddress: '0x0B94369D5368acBB6674f11758Be01ae69CDc04f',
   authApi: 'https://crypto-securityservice.azurewebsites.net/',
   walletApi: 'https://crypto-walletservice.azurewebsites.net/',
   shoppingApi: 'https://crypto-shoppingservice.azurewebsites.net/',

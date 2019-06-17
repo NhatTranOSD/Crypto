@@ -33,15 +33,24 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<ResponseModel> GetStatus(string txhash)
         {
-            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.TRANSACTION, EtherActions.GETSTATUS, new IParamStruct[] {
-                new StringParamStruct(EtherParams.TXHASH, txhash)
-            });
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.TRANSACTION, EtherActions.GETSTATUS, new IParamStruct[] {
+                                                        new StringParamStruct(EtherParams.TXHASH, txhash)
+                                                    });
 
-            var responseString = await _httpClient.GetStringAsync(uri);
+                var responseString = await _httpClient.GetStringAsync(uri);
 
-            ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+
         }
 
         /// <summary>
@@ -50,13 +59,47 @@ namespace EtherscanApiModule.Services
         /// <returns>price of ether</returns>
         public async Task<ResponseModel> GetEtherPrice()
         {
-            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.STATS, EtherActions.ETHPRICE);
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.STATS, EtherActions.ETHPRICE);
 
-            var responseString = await _httpClient.GetStringAsync(uri);
+                var responseString = await _httpClient.GetStringAsync(uri);
 
-            ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Returns the price of ether now
+        /// </summary>
+        /// <returns>price of ether</returns>
+        public async Task<ResponseModel> GetTokenSupply(string tokenname, string contractaddress)
+        {
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.STATS, EtherActions.TOKENSUPPLY, new IParamStruct[] {
+                                                        new StringParamStruct(EtherParams.TOKENNAME, tokenname),
+                                                        new StringParamStruct(EtherParams.CONTRACTADDRESS, contractaddress)
+                                                    });
+
+                var responseString = await _httpClient.GetStringAsync(uri);
+
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
         }
     }
 

@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CatalogComponent } from './catalog/catalog.component';
 import { AdminComponent } from './admin.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
+
 
 const routes: Routes = [
     {
@@ -14,10 +16,13 @@ const routes: Routes = [
             {
                 path: 'orders',
                 component: OrderListComponent,
+            },
+            {
+                path: 'transactions',
+                component: TransactionListComponent,
             }
         ]
     },
-    { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

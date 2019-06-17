@@ -33,15 +33,23 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<string> ETHBalance(string address)
         {
-            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.BALANCE, new IParamStruct[] {
-                new StringParamStruct(EtherParams.ADDRESS, address)
-            });
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.BALANCE, new IParamStruct[] {
+                                                        new StringParamStruct(EtherParams.ADDRESS, address)
+                                                    });
 
-            var responseString = await _httpClient.GetStringAsync(uri);
+                var responseString = await _httpClient.GetStringAsync(uri);
 
-            ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
 
-            return response.result.ToString();
+                return response.result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -53,17 +61,25 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<string> TokenBalance(string address, string tokenname, string contractaddress)
         {
-            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TOKENBALANCE, new IParamStruct[] {
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TOKENBALANCE, new IParamStruct[] {
                 new StringParamStruct(EtherParams.ADDRESS, address),
                 new StringParamStruct(EtherParams.TOKENNAME, tokenname),
                 new StringParamStruct(EtherParams.CONTRACTADDRESS, contractaddress),
             });
 
-            var responseString = await _httpClient.GetStringAsync(uri);
+                var responseString = await _httpClient.GetStringAsync(uri);
 
-            ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
 
-            return response.result.ToString();
+                return response.result.ToString();
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -75,9 +91,11 @@ namespace EtherscanApiModule.Services
         /// <param name="endblock">end looking there</param>
         /// <param name="sort">Sort asc/desc</param>
         /// <returns></returns>
-        public async Task<ResponseModel> TokenTxList(string address,string contractaddress, string startblock, string endblock, string sort)
+        public async Task<ResponseModel> TokenTxList(string address, string contractaddress, string startblock, string endblock, string sort)
         {
-            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TOKENTX, new IParamStruct[] {
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TOKENTX, new IParamStruct[] {
                 new StringParamStruct(EtherParams.ADDRESS, address),
                 new StringParamStruct(EtherParams.CONTRACTADDRESS, contractaddress),
                 new StringParamStruct(EtherParams.STARTBLOCK, startblock),
@@ -85,11 +103,17 @@ namespace EtherscanApiModule.Services
                 new StringParamStruct(EtherParams.OFFSET, sort),
             });
 
-            var responseString = await _httpClient.GetStringAsync(uri);
+                var responseString = await _httpClient.GetStringAsync(uri);
 
-            ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -102,22 +126,30 @@ namespace EtherscanApiModule.Services
         /// <param name="offset">Max records to return</param>
         /// <param name="sort">Sort asc/desc</param>
         /// <returns></returns>
-        public async Task<ResponseModel> ETHTxList(string address,string startblock,string endblock,int page,int offset,string sort)
+        public async Task<ResponseModel> ETHTxList(string address, string startblock, string endblock, int page, int offset, string sort)
         {
-            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TXLIST, new IParamStruct[] {
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TXLIST, new IParamStruct[] {
                 new StringParamStruct(EtherParams.ADDRESS, address),
                 new StringParamStruct(EtherParams.STARTBLOCK, startblock),
                 new StringParamStruct(EtherParams.ENDBLOCK, endblock),
                 new NumParamStruct(EtherParams.PAGE, page),
                 new NumParamStruct(EtherParams.OFFSET, offset),
-                new StringParamStruct(EtherParams.OFFSET, sort),
+                new StringParamStruct(EtherParams.SORT, sort),
             });
 
-            var responseString = await _httpClient.GetStringAsync(uri);
+                var responseString = await _httpClient.GetStringAsync(uri);
 
-            ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -131,7 +163,9 @@ namespace EtherscanApiModule.Services
         /// <returns></returns>
         public async Task<ResponseModel> ETHTxListInternal(string txhash, string address = null, string startblock = null, string endblock = null, string sort = null)
         {
-            string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TXLISTINTERNAL, new IParamStruct[] {
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.ACCOUNT, EtherActions.TXLISTINTERNAL, new IParamStruct[] {
                 new StringParamStruct(EtherParams.TXHASH, txhash),
                 new StringParamStruct(EtherParams.ADDRESS, address),
                 new StringParamStruct(EtherParams.STARTBLOCK, startblock),
@@ -139,11 +173,17 @@ namespace EtherscanApiModule.Services
                 new StringParamStruct(EtherParams.OFFSET, sort),
             });
 
-            var responseString = await _httpClient.GetStringAsync(uri);
+                var responseString = await _httpClient.GetStringAsync(uri);
 
-            ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
 
-            return response;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
         }
 
     }
