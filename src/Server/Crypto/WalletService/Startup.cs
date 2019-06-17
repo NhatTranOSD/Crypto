@@ -51,7 +51,7 @@ namespace WalletService
 
             services.AddHttpClient<IAccountService, AccountService>();
             services.AddTransient<IWalletService, Services.WalletService>();
-            services.AddTransient<ITransactionService, TransactionService>();
+            services.AddHttpClient<ITransactionService, TransactionService>();
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
