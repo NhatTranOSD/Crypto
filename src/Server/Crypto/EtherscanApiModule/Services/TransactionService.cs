@@ -48,13 +48,15 @@ namespace EtherscanApiModule.Services
         /// Returns the price of ether now
         /// </summary>
         /// <returns>price of ether</returns>
-        public async Task<int> GetEtherPrice()
+        public async Task<ResponseModel> GetEtherPrice()
         {
             string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.STATS, EtherActions.ETHPRICE);
 
             var responseString = await _httpClient.GetStringAsync(uri);
 
-            return Convert.ToInt32(responseString);
+            ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+
+            return response;
         }
     }
 

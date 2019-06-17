@@ -14,6 +14,7 @@ namespace WalletService.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly ITransactionService _transactionService;
+
         public TestController(IAccountService accountService, ITransactionService transactionService)
         {
             _accountService = accountService;
@@ -25,7 +26,11 @@ namespace WalletService.Controllers
         {
             var result = await _accountService.ETHBalance("0x0B94369D5368acBB6674f11758Be01ae69CDc04f");
 
-            var price = _transactionService.GetEtherPrice();
+            var price = await _transactionService.GetEtherPrice();
+
+            var status = await _transactionService.GetStatus("0x9579d5308bc29b2dbb1e760cd43fce4a4ae70b7cea753b4fd610c463e45bfc45");
+
+            var TXList = await _accountService.ETHTxList("0x0B94369D5368acBB6674f11758Be01ae69CDc04f", "1", "latest", 1, 100, "asc");
 
             return result;
         }

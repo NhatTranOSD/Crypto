@@ -43,7 +43,7 @@ namespace WalletService.Services
 
                 await _walletContext.WalletCurrencys.AddAsync(walletCurrency);
 
-                // Init wallet
+                // Init wallet, will generate here
                 Wallet wallet = new Wallet()
                 {
                     Address = "0x0B94369D5368acBB6674f11758Be01ae69CDc04f",
@@ -75,6 +75,7 @@ namespace WalletService.Services
 
                 IList<WalletResponseModel> responseModel = _mapper.Map<IList<WalletResponseModel>>(responseWallet);
 
+                // Get Balance for per wallet
                 foreach (var wallet in responseModel)
                 {
                     foreach (var currency in wallet.WalletCurrencys)
@@ -87,7 +88,6 @@ namespace WalletService.Services
                         {
                             currency.Balance = await _accountService.ETHBalance(wallet.Address);
                         }
-
                     }
                 }
 
