@@ -34,5 +34,6 @@
 
 /src/Client/ClientApp/node_modules
 /src/Client/ClientApp/.vscode
+/src/Client/ClientApp/dist
 /src/Server/Crypto/.vs
 /src/Server/Apis/TraddingApi/node_modules
