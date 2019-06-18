@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { WalletService } from '../../services/wallet.service';
 import { first } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { TokenService } from '../../services/token.service';
+import { environment } from '../../../environments/environment';
 
 import { Wallet } from '../../models/Wallet.model';
 import { CurrencyDisplayName, WalletCurrency } from '../../models/WalletCurrency.model';
+import { ComonFunctions } from '../../common/ComonFunctions';
+
 
 @Component({
   selector: 'app-wallet',
@@ -22,7 +26,10 @@ export class WalletComponent implements OnInit {
   public isCollapsed = false;
   public selectedCurrencyType: number;
 
-  constructor(private modalService: NgbModal, private walletService: WalletService) { }
+  constructor(private modalService: NgbModal,
+    private walletService: WalletService,
+    public tokenService: TokenService,
+    public comonFunctions: ComonFunctions) { }
 
   ngOnInit() {
     this.getWalletInfo();
@@ -61,6 +68,11 @@ export class WalletComponent implements OnInit {
 
   public selectWallet(selectedItem: Wallet) {
     this.selectedWallet = selectedItem;
+    if (selectedItem.walletCurrencys[0].currencyType === 0) {
+      this.tokenService.getTokenTransactions(this.selectedWallet.address, environment.contractAdress, 'asc');
+    } else {
+      this.tokenService.tokenTxs = null;
+    }
   }
 
   public depositCoin(content, wallet: Wallet) {

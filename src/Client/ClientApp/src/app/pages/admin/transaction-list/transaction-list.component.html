@@ -1,63 +1,63 @@
 <h3>Token <span class="text-secondary">[FCO]</span></h3>
 <hr>
 <div class="row">
-  <div class="col">
-    <div class="card">
-      <div class="card-header">
-        <b>Overview</b> [ERC-20]
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-5">PRICE:</div>
-            <div class="col-5">$10 </div>
-            <div class="col-2">USD</div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-5">Total Supply:</div>
-            <div class="col-5">{{tokenService.tokenSupply}} </div>
-            <div class="col-2">FCO</div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-5">Admin Holder Total:</div>
-            <div *ngIf="tokenService.adminBalance" class="col-5">{{tokenService.adminBalance}} </div>
-            <div class="col-2">FCO</div>
-          </div>
-        </li>
-      </ul>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <b>Overview</b> [ERC-20]
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-5">PRICE:</div>
+                        <div class="col-5">$10 </div>
+                        <div class="col-2">USD</div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-5">Total Supply:</div>
+                        <div class="col-5">{{tokenService.tokenSupply}} </div>
+                        <div class="col-2">FCO</div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-5">Admin Holder Total:</div>
+                        <div *ngIf="tokenService.adminBalance" class="col-5">{{tokenService.adminBalance}} </div>
+                        <div class="col-2">FCO</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <div class="card-header">
-        <b>Profile Summary </b>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-3">Contract:</div>
-            <div class="col-9">{{contractAdress}}</div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-3">Decimals:</div>
-            <div class="col-9">18 </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="row">
-            <div class="col-3">Transfers: </div>
-            <div *ngIf="tokenService.tokenTxs" class="col-9">{{tokenService.tokenTxs.length}} </div>
-          </div>
-        </li>
-      </ul>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <b>Profile Summary </b>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-3">Contract:</div>
+                        <div class="col-9"><span class="text-highlight">{{contractAdress}}</span></div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-3">Decimals:</div>
+                        <div class="col-9">18 </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-3">Transfers: </div>
+                        <div *ngIf="tokenService.tokenTxs" class="col-9">{{tokenService.tokenTxs.length}} </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 
 <br>
@@ -65,24 +65,25 @@
 <h3>Transactions</h3>
 <hr>
 <table class="table table-striped bg-white">
-  <thead>
-    <tr>
-      <th scope="col-2">Txn Hash</th>
-      <th scope="col-2">Time Stamp</th>
-      <th scope="col-2">Account</th>
-      <th scope="col-2">Transfer Type</th>
-      <th scope="col-2">Quantity</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of tokenService.tokenTxs">
-      <td class="text-truncate" style="max-width: 100px;">{{item.hash}}</td>
-      <td>{{convertToDateTime(item.timeStamp)}}</td>
-      <td class="text-truncate" style="max-width: 100px;" *ngIf="equalString(item.to, adminAddress)">{{item.from}}</td>
-      <td class="text-truncate" style="max-width: 100px;" *ngIf="!equalString(item.to, adminAddress)">{{item.to}}</td>
-      <td *ngIf="equalString(item.to, adminAddress)"><span class="badge badge-info">In</span></td>
-      <td *ngIf="!equalString(item.to, adminAddress)"><span class="badge badge-warning">Out</span></td>
-      <td>{{item.value/1000000000000000000}}</td>
-    </tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th scope="col-2">Txn Hash</th>
+            <th scope="col">Time Stamp</th>
+            <th scope="col-2">From</th>
+            <th scope="col">Transfer Type</th>
+            <th scope="col-2">To</th>
+            <th scope="col-2">Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of tokenService.tokenTxs">
+            <td class="text-truncate" style="max-width: 100px;">{{item.hash}}</td>
+            <td>{{convertToDateTime(item.timeStamp)}}</td>
+            <td [ngClass]="{'text-primary': equalString(item.from, adminAddress)}" class="text-truncate " style="max-width: 100px; ">{{item.from}}</td>
+            <td *ngIf="equalString(item.from, adminAddress) "><span class="badge badge-warning ">Out</span></td>
+            <td *ngIf="!equalString(item.from, adminAddress) "><span class="badge badge-info ">In</span></td>
+            <td [ngClass]="{'text-primary': equalString(item.to, adminAddress)}" class="text-truncate " style="max-width: 100px; ">{{item.to}}</td>
+            <td>{{item.value/1000000000000000000}}</td>
+        </tr>
+    </tbody>
 </table>
