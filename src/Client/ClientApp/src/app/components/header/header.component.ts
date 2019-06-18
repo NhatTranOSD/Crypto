@@ -14,7 +14,7 @@ export class HeaderComponent {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }

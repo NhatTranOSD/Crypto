@@ -18,7 +18,6 @@ import { ComonFunctions } from '../../common/ComonFunctions';
 export class WalletComponent implements OnInit {
   public loading = false;
   public error = '';
-  public wallets: Wallet[];
   public selectedWallet: Wallet;
   public depositingWallet: Wallet;
   public currencyDisplayName = CurrencyDisplayName;
@@ -32,7 +31,7 @@ export class WalletComponent implements OnInit {
     public comonFunctions: ComonFunctions) { }
 
   ngOnInit() {
-    this.getWalletInfo();
+    this.walletService.getWalletInfo();
   }
 
   public createWallet(): void {
@@ -50,20 +49,6 @@ export class WalletComponent implements OnInit {
             this.loading = false;
           });
     }
-  }
-
-  public getWalletInfo(): void {
-    this.loading = true;
-    this.walletService.getWalletInfo().pipe(first())
-      .subscribe(
-        data => {
-          this.wallets = data;
-          this.loading = false;
-        },
-        error => {
-          this.error = error;
-          this.loading = false;
-        });
   }
 
   public selectWallet(selectedItem: Wallet) {

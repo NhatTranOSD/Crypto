@@ -118,6 +118,7 @@ namespace SecurityService.Services
                     result.FirstName = user?.FirstName;
                     result.LastName = user?.LastName;
                     result.UserName = user?.UserName;
+                    result.JwtRole = user?.JwtRole;
 
                     result.Token = GenerateJwtSecurityToken(user.Id, user.JwtRole);
 
