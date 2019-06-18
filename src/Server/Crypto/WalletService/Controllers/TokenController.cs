@@ -23,6 +23,7 @@ namespace WalletService.Controllers
 
         [Route("TokenBalance")]
         [HttpPost]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TokenBalance(string address, string tokenname, string contractaddress)
@@ -36,6 +37,7 @@ namespace WalletService.Controllers
 
         [Route("TokenTxList")]
         [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TokenTxList(string address, string contractaddress, string startblock, string endblock, string sort)
@@ -49,6 +51,7 @@ namespace WalletService.Controllers
 
         [Route("TokenSupply")]
         [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TokenSupply(string tokenname, string contractaddress)

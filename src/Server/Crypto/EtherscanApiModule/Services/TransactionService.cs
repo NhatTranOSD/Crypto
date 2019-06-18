@@ -57,6 +57,31 @@ namespace EtherscanApiModule.Services
         /// Returns the price of ether now
         /// </summary>
         /// <returns>price of ether</returns>
+        public async Task<ResponseModel> GetETHTransactionCount(string address)
+        {
+            try
+            {
+                string uri = AccountActions.BuildUri(_etherscanApi, EtherModules.PROXY, EtherActions.ETH_GETTRANSACTIONCOUNT, new IParamStruct[] {
+                                                        new StringParamStruct(EtherParams.ADDRESS, address),
+                                                    });
+
+                var responseString = await _httpClient.GetStringAsync(uri);
+
+                ResponseModel response = JsonConvert.DeserializeObject<ResponseModel>(responseString);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Returns the price of ether now
+        /// </summary>
+        /// <returns>price of ether</returns>
         public async Task<ResponseModel> GetEtherPrice()
         {
             try

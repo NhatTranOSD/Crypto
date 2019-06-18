@@ -9,6 +9,7 @@ namespace EtherscanApiModule.Common
         public static string ACCOUNT = "account";
         public static string TRANSACTION = "transaction";
         public static string STATS = "stats";
+        public static string PROXY = "proxy";
     }
 
     public static class FCOToken
@@ -27,6 +28,7 @@ namespace EtherscanApiModule.Common
         public static string GETSTATUS = "getstatus";
         public static string ETHPRICE = "ethprice";
         public static string TOKENSUPPLY = "tokensupply";
+        public static string ETH_GETTRANSACTIONCOUNT = "eth_getTransactionCount";
     }
 
     public static class EtherParams

@@ -17,14 +17,14 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-5">Total Supply:</div>
-            <div class="col-5">1000000 </div>
+            <div class="col-5">{{tokenService.tokenSupply}} </div>
             <div class="col-2">FCO</div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col-5">Admin Holder Total:</div>
-            <div class="col-5">50000 </div>
+            <div *ngIf="tokenService.adminBalance" class="col-5">{{tokenService.adminBalance}} </div>
             <div class="col-2">FCO</div>
           </div>
         </li>
@@ -40,7 +40,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-3">Contract:</div>
-            <div class="col-9">0x6429acbf2a15ef0119aa347b8da5a2dbb6056f29 </div>
+            <div class="col-9">{{contractAdress}}</div>
           </div>
         </li>
         <li class="list-group-item">
@@ -52,7 +52,7 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-3">Transfers: </div>
-            <div class="col-9">898,717 </div>
+            <div *ngIf="tokenService.tokenTxs" class="col-9">{{tokenService.tokenTxs.length}} </div>
           </div>
         </li>
       </ul>
@@ -68,19 +68,21 @@
   <thead>
     <tr>
       <th scope="col-2">Txn Hash</th>
-      <th scope="col-2">Age</th>
+      <th scope="col-2">Time Stamp</th>
       <th scope="col-2">Account</th>
       <th scope="col-2">Transfer Type</th>
       <th scope="col-2">Quantity</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of tokenService.tokenTxs" >
-        <td class="text-truncate" style="max-width: 100px;">{{item.hash}}</td>
-        <td>{{convertToDateTime(item.timeStamp)}}</td>
-        <td>tvnhat@gmail.com</td>
-        <td><span class="badge badge-info">In</span></td>
-        <td>10</td>
+    <tr *ngFor="let item of tokenService.tokenTxs">
+      <td class="text-truncate" style="max-width: 100px;">{{item.hash}}</td>
+      <td>{{convertToDateTime(item.timeStamp)}}</td>
+      <td class="text-truncate" style="max-width: 100px;" *ngIf="equalString(item.to, adminAddress)">{{item.from}}</td>
+      <td class="text-truncate" style="max-width: 100px;" *ngIf="!equalString(item.to, adminAddress)">{{item.to}}</td>
+      <td *ngIf="equalString(item.to, adminAddress)"><span class="badge badge-info">In</span></td>
+      <td *ngIf="!equalString(item.to, adminAddress)"><span class="badge badge-warning">Out</span></td>
+      <td>{{item.value/1000000000000000000}}</td>
     </tr>
   </tbody>
 </table>

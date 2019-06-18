@@ -9,7 +9,7 @@ import { ShopComponent } from './pages/shop/shop.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
+  { path: '', component: HomeComponent },
   { path: 'admin', loadChildren: './pages/admin/admin.module#AdminModule', canActivate: [AuthGuard] },
   { path: 'wallet', component: WalletComponent, canActivate: [AuthGuard] },
   { path: 'shop', component: ShopComponent },
@@ -19,7 +19,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

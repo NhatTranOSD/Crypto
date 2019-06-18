@@ -8,11 +8,18 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./transaction-list.component.css']
 })
 export class TransactionListComponent implements OnInit {
+  public adminAddress: string;
+  public contractAdress: string;
 
-  constructor(public tokenService: TokenService) { }
+  constructor(public tokenService: TokenService) {
+    this.adminAddress = environment.adminAddress;
+    this.contractAdress = environment.contractAdress;
+  }
 
   ngOnInit() {
-    this.tokenService.getTokenTransactions(environment.adminAddress, environment.contractAdress, 'desc');
+    this.tokenService.getTokenTransactions(this.adminAddress, this.contractAdress, 'asc');
+    this.tokenService.getAdminBalance(this.adminAddress, '', this.contractAdress);
+    this.tokenService.getTokenSupply('', this.contractAdress);
   }
 
   public convertToDateTime(unixtimestamp: string): any {
@@ -24,6 +31,15 @@ export class TransactionListComponent implements OnInit {
     const formattedTime = date.toLocaleString();
 
     return formattedTime;
+  }
+
+  equalString(a: string, b: string) {
+    if (a.toLowerCase() === b.toLowerCase()) {
+      return true;
+    } else {
+      return false;
+
+    }
   }
 
 }
