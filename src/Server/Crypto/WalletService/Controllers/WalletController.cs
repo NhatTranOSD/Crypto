@@ -18,11 +18,9 @@ namespace WalletService.Controllers
     public class WalletController : ControllerBase
     {
         private readonly IWalletService _walletService;
-        private readonly IAccountService _accountService;
-        public WalletController(IWalletService walletService, IAccountService accountService)
+        public WalletController(IWalletService walletService)
         {
             _walletService = walletService;
-            _accountService = accountService;
         }
 
         [Route("{userId}")]
@@ -49,24 +47,6 @@ namespace WalletService.Controllers
             var result = await _walletService.CreateWallet(requestModel);
 
             return Ok(result);
-        }
-
-        [Route("{id}/Update")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Update(string id)
-        {
-            return Ok();
-        }
-
-        [Route("{id}/AddCurrency")]
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> AddCurrency(string id)
-        {
-            return Ok();
         }
     }
 }
