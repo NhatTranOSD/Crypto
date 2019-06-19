@@ -1,6 +1,6 @@
-<h3>Token <span class="text-secondary">[FCO]</span></h3>
+<h3>Token <span *ngIf="tokenService.tokenConfig" class="text-secondary">[{{tokenService.tokenConfig.tokenSymbol}}]</span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h3>
 <hr>
-<div class="row">
+<div *ngIf="tokenService.tokenConfig" class="row">
     <div class="col">
         <div class="card">
             <div class="card-header">
@@ -10,7 +10,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-5">PRICE:</div>
-                        <div class="col-5">$10 </div>
+                        <div class="col-5">{{tokenService.tokenConfig.priceUSD}} </div>
                         <div class="col-2">USD</div>
                     </div>
                 </li>
@@ -18,14 +18,14 @@
                     <div class="row">
                         <div class="col-5">Total Supply:</div>
                         <div class="col-5">{{tokenService.tokenSupply}} </div>
-                        <div class="col-2">FCO</div>
+                        <div class="col-2">{{tokenService.tokenConfig.tokenSymbol}}</div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-5">Admin Holder Total:</div>
                         <div *ngIf="tokenService.adminBalance" class="col-5">{{tokenService.adminBalance}} </div>
-                        <div class="col-2">FCO</div>
+                        <div class="col-2">{{tokenService.tokenConfig.tokenSymbol}}</div>
                     </div>
                 </li>
             </ul>
@@ -40,13 +40,13 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-3">Contract:</div>
-                        <div class="col-9"><span class="text-highlight">{{contractAdress}}</span></div>
+                        <div class="col-9"><span class="text-highlight">{{tokenService.tokenConfig.contractAddress}}</span></div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-3">Decimals:</div>
-                        <div class="col-9">18 </div>
+                        <div class="col-9">{{tokenService.tokenConfig.decimals}} </div>
                     </div>
                 </li>
                 <li class="list-group-item">
@@ -87,3 +87,5 @@
         </tr>
     </tbody>
 </table>
+
+<!-- Config Modal -->

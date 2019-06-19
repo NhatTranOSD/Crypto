@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletService.Data;
 using WalletService.Entities;
 using WalletService.Entities.ResponseModels;
+using WalletService.Models.ResponseModels;
 
 namespace WalletService.Common
 {
@@ -15,6 +17,7 @@ namespace WalletService.Common
             CreateMap<Wallet, WalletResponseModel>();
             CreateMap<List<Wallet>, List<WalletResponseModel>>();
             CreateMap<WalletCurrency, WalletCurrencyResponseModel>();
+            CreateMap<TokenConfiguration, TokenConfigurationResponseModel>();
         }
     }
 }

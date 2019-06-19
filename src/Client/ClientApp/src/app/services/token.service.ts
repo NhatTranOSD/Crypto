@@ -3,18 +3,46 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
-import { TokenResponse } from '../models/responsemodels/TokenResponse.model';
+import { TokenTxResponse } from '../models/responsemodels/TokenTxResponse.model';
+import { TokenConfig } from '../models/TokenConfig.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
-  public tokenTxs: TokenResponse[];
+  public tokenTxs: TokenTxResponse[];
+  public tokenConfig: TokenConfig;
   public adminBalance: number;
   public tokenSupply: number;
 
   constructor(private http: HttpClient) {
 
+  }
+
+  public getTokenConfig(): void {
+    // tslint:disable-next-line: max-line-length
+    const requestUri = `${environment.walletApi}api/v1/Token/TokenInfo`;
+
+    this.http.get<TokenConfig>(requestUri)
+      .subscribe(
+        data => {
+          this.tokenConfig = data;
+          if (this.tokenConfig !== null) {
+            this.getTokenTransactions(this.tokenConfig.adminAddress, this.tokenConfig.contractAddress, 'asc');
+            this.getAdminBalance(this.tokenConfig.adminAddress, '', this.tokenConfig.contractAddress);
+            this.getTokenSupply('', this.tokenConfig.contractAddress);
+          }
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  public updateTokenConfig(requestModel: TokenConfig): any {
+    return this.http.post<boolean>(`${environment.walletApi}api/v1/Token/UpdateToken`, requestModel)
+      .pipe(map(data => {
+        return data;
+      }));
   }
 
   public getTokenTransactions(address: string, contractaddress: string, sort: string): void {

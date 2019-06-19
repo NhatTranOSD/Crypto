@@ -12,7 +12,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HeaderComponent } from './components/header/header.component';
 import { WalletComponent } from './components/wallet/wallet.component';
-import { ShopComponent } from './pages/shop/shop.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -24,7 +23,6 @@ import { QRCodeModule } from 'angularx-qrcode';
     RegisterComponent,
     HeaderComponent,
     WalletComponent,
-    ShopComponent,
   ],
   imports: [
     BrowserModule,

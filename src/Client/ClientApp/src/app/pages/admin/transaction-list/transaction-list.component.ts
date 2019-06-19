@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenService } from '../../../services/token.service';
 import { environment } from '../../../../environments/environment';
 
@@ -13,13 +15,12 @@ export class TransactionListComponent implements OnInit {
 
   constructor(public tokenService: TokenService) {
     this.adminAddress = environment.adminAddress;
-    this.contractAdress = environment.contractAdress;
+    this.contractAdress = environment.contractAddress;
   }
 
   ngOnInit() {
-    this.tokenService.getTokenTransactions(this.adminAddress, this.contractAdress, 'asc');
-    this.tokenService.getAdminBalance(this.adminAddress, '', this.contractAdress);
-    this.tokenService.getTokenSupply('', this.contractAdress);
+    this.tokenService.getTokenConfig();
+
   }
 
   public convertToDateTime(unixtimestamp: string): any {

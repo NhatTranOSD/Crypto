@@ -40,6 +40,9 @@ namespace ShoppingService.Data.Entities
         public string Currency { get; set; } = "FCO";
 
         [Required]
+        public string TxHash { get; set; }
+
+        [Required]
         public OrderStatus OrderStatus { get; set; }
     }
 }

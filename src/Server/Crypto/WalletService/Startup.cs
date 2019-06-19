@@ -51,6 +51,7 @@ namespace WalletService
 
             services.AddHttpClient<IAccountService, AccountService>();
             services.AddTransient<IWalletService, Services.WalletService>();
+            services.AddTransient<ITokenService, Services.TokenService>();
             services.AddHttpClient<ITransactionService, TransactionService>();
 
             // configure strongly typed settings objects
@@ -86,8 +87,9 @@ namespace WalletService
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, WalletContext walletContext)
         {
+            _ = WalletContextSeed.SeedAsync(walletContext);
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()

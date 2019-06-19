@@ -10,7 +10,7 @@ import { AuthGuard } from './_guards/auth.guard';
 const routes: Routes = [
   { path: 'admin', loadChildren: './pages/admin/admin.module#AdminModule', canActivate: [AuthGuard] },
   { path: 'wallet', component: WalletComponent, canActivate: [AuthGuard] },
-  { path: 'shop', component: ShopComponent },
+  { path: 'shop', loadChildren: './pages/shop/shop.module#ShopModule' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', redirectTo: 'shop' }

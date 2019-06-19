@@ -3,22 +3,56 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EtherscanApiModule.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WalletService.Interfaces;
+using WalletService.Models.RequestModels;
+using WalletService.Models.ResponseModels;
 
 namespace WalletService.Controllers
 {
     [Route("api/v1/[controller]")]
+    [Authorize]
     [ApiController]
     public class TokenController : ControllerBase
     {
         private readonly IAccountService _accountService;
         private readonly ITransactionService _transactionService;
+        private readonly ITokenService _tokenService;
 
-        public TokenController(IAccountService accountService, ITransactionService transactionService)
+        public TokenController(IAccountService accountService, ITransactionService transactionService, ITokenService tokenService)
         {
             _accountService = accountService;
             _transactionService = transactionService;
+            _tokenService = tokenService;
+        }
+
+        [Route("TokenInfo")]
+        [HttpPost]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<TokenConfigurationResponseModel>> TokenInfo()
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            TokenConfigurationResponseModel result = await _tokenService.GetTokenInfo();
+
+            return Ok(result);
+        }
+
+        [Route("UpdateToken")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> UpdateTokenInfo(TokenConfigurationRequestModel requestModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            bool result = await _tokenService.UpdateTokenInfo(requestModel);
+
+            return Ok(result);
         }
 
         [Route("TokenBalance")]

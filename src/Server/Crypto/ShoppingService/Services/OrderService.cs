@@ -85,7 +85,8 @@ namespace ShoppingService.Services
                     ProductName = requestModel.ProductName,
                     TotalProducts = requestModel.TotalProducts,
                     OrderStatus = OrderStatus.Processing,
-                    TotalPayment = totalPayment
+                    TotalPayment = totalPayment,
+                    TxHash = "TxHash",
                 };
 
                 await _shoppingContext.Orders.AddAsync(order);

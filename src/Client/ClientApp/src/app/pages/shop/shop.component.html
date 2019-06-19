@@ -1,132 +1,132 @@
 <div>
-  <br>
-  <!-- Breadcrumb -->
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a routerLink="">Shop</a></li>
-      <li class="breadcrumb-item"><a routerLink="">Apple</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Iphone</li>
-    </ol>
-  </nav>
+    <br>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="">Shop</a></li>
+            <li class="breadcrumb-item"><a routerLink="">Apple</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Iphone</li>
+        </ol>
+    </nav>
 
-  <!-- Shop body -->
-  <div class="bg-white rounded ">
-    <div class="row">
-      <!-- catagogies -->
-      <div class="col-3">
-        <div class="">
-          <h3 class="text-center">Categories</h3>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Iphone</button>
-            </li>
-            <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Tablet</button>
-            </li>
-            <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Laptop</button>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- main -->
-      <div class="col-9">
-        <h3 class="text-center">IPhones</h3>
+    <!-- Shop body -->
+    <div class="bg-white rounded ">
         <div class="row">
-          <div class="col-4" *ngFor="let product of productService.products; index as i">
-            <div class="card border-0 shadow p-3 mb-5">
-              <img [src]="product.pictureUri" class="card-img-top" alt="..." height="250px">
-              <div class="card-body">
-                <button class="btn btn-default btn-sm bg-white border-0" (click)="buyNow(buycontent, product)">
+            <!-- catagogies -->
+            <div class="col-3">
+                <div class="">
+                    <h3 class="text-center">Categories</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Iphone</button>
+                        </li>
+                        <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Tablet</button>
+                        </li>
+                        <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Laptop</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- main -->
+            <div class="col-9">
+                <h3 class="text-center">IPhones</h3>
+                <div class="row">
+                    <div class="col-4" *ngFor="let product of productService.products; index as i">
+                        <div class="card border-0 shadow p-3 mb-5">
+                            <img [src]="product.pictureUri" class="card-img-top" alt="..." height="250px">
+                            <div class="card-body">
+                                <button class="btn btn-default btn-sm bg-white border-0" (click)="buyNow(buycontent, product)">
                   <h5 class="card-title text-primary">{{ product.name }}</h5>
                 </button>
-                <p class="card-text text-sm">{{product.description}}</p>
-                <div class="row">
-                  <div class="col">
-                    <span class="badge badge-light">Stock: {{product.stock}}</span>
-                  </div>
-                  <div class="col">
-                    <h6 class="text-right"> <span class="badge badge-secondary">{{ product.price | number }}
+                                <p class="card-text text-sm">{{product.description}}</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="badge badge-light">Stock: {{product.stock}}</span>
+                                    </div>
+                                    <div class="col">
+                                        <h6 class="text-right"> <span class="badge badge-secondary">{{ product.price | number }}
                         FCO</span></h6>
-                  </div>
-                </div>
+                                    </div>
+                                </div>
 
-                <button (click)="buyNow(buycontent, product)" class="btn btn-sm btn-primary">Buy Now</button>
-              </div>
+                                <button (click)="buyNow(buycontent, product)" class="btn btn-sm btn-primary">Buy Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Paging -->
+                <div class="">
+                    <nav class="row" aria-label="Page navigation example">
+                        <div class="col-10">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" routerLink="" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" routerLink="">1</a></li>
+                                <li class="page-item"><a class="page-link" routerLink="">2</a></li>
+                                <li class="page-item"><a class="page-link" routerLink="">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" routerLink="">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-2">
+                            <p class="text">Page: 5/10</p>
+                        </div>
+                    </nav>
+                </div>
             </div>
-          </div>
         </div>
-        <!-- Paging -->
-        <div class="">
-          <nav class="row" aria-label="Page navigation example">
-            <div class="col-10">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link" routerLink="" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" routerLink="">1</a></li>
-                <li class="page-item"><a class="page-link" routerLink="">2</a></li>
-                <li class="page-item"><a class="page-link" routerLink="">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" routerLink="">Next</a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-2">
-              <p class="text">Page: 5/10</p>
-            </div>
-          </nav>
-        </div>
-      </div>
+
     </div>
 
-  </div>
 
-
-  <!-- BuyNow Modal -->
-  <ng-template #buycontent let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Product Detail</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <!-- BuyNow Modal -->
+    <ng-template #buycontent let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Product Detail</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
-    </div>
-    <div class="modal-body">
-      <div class="card border-0">
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <img [src]="selectedProduct.pictureUri" class="card-img-top" alt="..." height="250px">
-            </div>
-            <div class="col">
-              <a class="text-primary">
-                <h5 class="card-title">{{ selectedProduct.name }}</h5>
-              </a>
-              <p class="card-text text-sm">{{selectedProduct.description}}</p>
-              <div class="row">
-                <div class="col">
-                  <span class="badge badge-light">stock: 5</span>
-                </div>
-                <div class="col">
-                  <h6 class="text-right"> <span class="badge badge-secondary">{{ selectedProduct.price | number }}
-                      FCO</span></h6>
-                </div>
-              </div>
-              <hr>
-              <h6 class="text-left">Transaction Fee: 5 FCO</h6>
-              <hr>
-              <h4>Total payment:<b> {{selectedProduct.price + 5 | number }} FCO</b></h4>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <div class="mr-auto">
-        <h5><span class="badge badge-white">Nhat Tran: 50 FCO</span></h5>
-      </div>
-      <div *ngIf="error && error !== ''" class="alert alert-danger" role="alert">
-        This is a danger alert—check it out!
-      </div>
-      <button type="button" (click)="buyConfirm()" class="btn btn-outline-info">Buy</button>
-      <button type="button" (click)="modal.dismiss('Close')" class="btn btn-outline-dark">Close</button>
-    </div>
-  </ng-template>
+        <div class="modal-body">
+            <div class="card border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <img [src]="selectedProduct.pictureUri" class="card-img-top" alt="..." height="250px">
+                        </div>
+                        <div class="col">
+                            <a class="text-primary">
+                                <h5 class="card-title">{{ selectedProduct.name }}</h5>
+                            </a>
+                            <p class="card-text text-sm">{{selectedProduct.description}}</p>
+                            <div class="row">
+                                <div class="col">
+                                    <span class="badge badge-light">Stock: {{selectedProduct.stock}}</span>
+                                </div>
+                                <div class="col">
+                                    <h6 class="text-right"> <span class="badge badge-secondary">{{ selectedProduct.price | number }}
+                      FCO</span></h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <h6 class="text-left">Transaction Fee: 5 FCO</h6>
+                            <hr>
+                            <h4>Total payment:<b> {{selectedProduct.price + 5 | number }} FCO</b></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="mr-auto">
+                <h5><span class="badge badge-white">Nhat Tran: 50 FCO</span></h5>
+            </div>
+            <div *ngIf="error && error !== ''" class="alert alert-danger" role="alert">
+                This is a danger alert—check it out!
+            </div>
+            <button type="button" (click)="buyConfirm()" class="btn btn-outline-info">Buy</button>
+            <button type="button" (click)="modal.dismiss('Close')" class="btn btn-outline-dark">Close</button>
+        </div>
+    </ng-template>
