@@ -31,7 +31,10 @@ export class WalletComponent implements OnInit {
     public comonFunctions: ComonFunctions) { }
 
   ngOnInit() {
-    this.walletService.getWalletInfo();
+    if (this.walletService.wallets === null) {
+      this.walletService.getWalletInfo();
+    }
+
   }
 
   public createWallet(): void {
@@ -63,11 +66,11 @@ export class WalletComponent implements OnInit {
           this.loading = false;
         });
 
-    this.walletService.createWallet(0).pipe(first())
+    this.walletService.createWallet(1).pipe(first())
       .subscribe(
         data => {
           this.loading = false;
-          this.ngOnInit();
+          this.walletService.getWalletInfo();
         },
         error => {
           this.error = error;

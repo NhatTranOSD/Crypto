@@ -18,9 +18,13 @@ export class WalletService {
   public wallets: Wallet[];
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.authenticationService.currentUser.subscribe(x => {
+      this.currentUser = x;
+      if (x === null) {
+        this.wallets = null;
+      }
+    });
   }
-
 
   public createWallet(currencytype: number) {
 

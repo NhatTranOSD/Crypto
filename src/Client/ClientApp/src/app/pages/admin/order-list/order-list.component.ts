@@ -26,7 +26,7 @@ export class OrderListComponent implements OnInit {
         data => {
           if (data === true) {
             alert('Accept success!');
-            this.orderService.getUserOrders();
+            this.ngOnInit();
           } else {
             alert('Accept Failed!');
           }
@@ -43,7 +43,7 @@ export class OrderListComponent implements OnInit {
       data => {
         if (data === true) {
           alert('Refuse success!');
-          this.orderService.getUserOrders();
+          this.ngOnInit();
         } else {
           alert('Refuse Failed!');
         }

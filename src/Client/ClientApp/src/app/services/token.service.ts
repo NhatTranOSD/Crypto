@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { AuthenticationService } from './authentication.service';
 
 import { environment } from '../../environments/environment';
 import { TokenTxResponse } from '../models/responsemodels/TokenTxResponse.model';
@@ -15,7 +16,15 @@ export class TokenService {
   public adminBalance: number;
   public tokenSupply: number;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => {
+      if (x === null) {
+        this.tokenTxs = null;
+        this.tokenConfig = null;
+        this.adminBalance = null;
+        this.tokenSupply = null;
+      }
+    });
 
   }
 

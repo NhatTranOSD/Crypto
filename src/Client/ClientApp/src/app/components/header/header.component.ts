@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
@@ -11,7 +11,7 @@ import { CurrencyDisplayName } from '../../models/WalletCurrency.model';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnDestroy {
   public currentUser: User;
   public currencyDisplayName = CurrencyDisplayName;
 
@@ -23,15 +23,21 @@ export class HeaderComponent {
 
   // tslint:disable-next-line: use-life-cycle-interface
   ngOnInit(): void {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    if (this.currentUser !== null) {
-      this.walletService.getWalletInfo();
-    }
+    this.authenticationService.currentUser.subscribe(x => {
+      this.currentUser = x;
+      if (x !== null) {
+        this.walletService.getWalletInfo();
+      }
+    });
   }
 
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
+  }
+
+  ngOnDestroy(): void {
+    this.currentUser = null;
   }
 
 }
