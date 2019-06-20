@@ -10,6 +10,7 @@
             <th scope="col">TotalProducts</th>
             <th scope="col">TotalPayment</th>
             <th scope="col">OrderStatus</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -19,8 +20,21 @@
             <td>{{ order.buyerEmail }}</td>
             <td>{{ order.productName }}</td>
             <td>{{ order.totalProducts | number}}</td>
-            <td class="float-right">{{ order.totalPayment | number }} <span class="badge badge-primary">{{order.currency}}</span></td>
-            <td><span class="badge badge-success" [ngClass]="{'badge-danger': order.orderStatus === 3}">{{ orderStatus[order.orderStatus] }}</span></td>
+            <td class="float-right">{{ order.totalPayment | number }} <span class="badge badge-secondary">{{order.currency}}</span></td>
+            <td>
+                <span *ngIf="order.orderStatus === 0" class="badge badge-light">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 1" class="badge badge-info">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 2" class="badge badge-success">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 3" class="badge badge-warning">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 4" class="badge badge-danger">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 5" class="badge badge-primary">{{ orderStatus[order.orderStatus] }}</span>
+            </td>
+            <td>
+                <div *ngIf="order.orderStatus === 3">
+                    <button (click)="acceptRefund(order.id)" class="btn btn-success btn-sm">Approve</button>|
+                    <button (click)="refuseRefund(order.id)" class="btn btn-warning btn-sm">Refuse</button>
+                </div>
+            </td>
         </tr>
     </tbody>
 </table>

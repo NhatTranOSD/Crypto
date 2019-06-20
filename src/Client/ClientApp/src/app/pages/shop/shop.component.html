@@ -36,8 +36,8 @@
                             <img [src]="product.pictureUri" class="card-img-top" alt="..." height="250px">
                             <div class="card-body">
                                 <button class="btn btn-default btn-sm bg-white border-0" (click)="buyNow(buycontent, product)">
-                  <h5 class="card-title text-primary">{{ product.name }}</h5>
-                </button>
+                                    <h5 class="card-title text-primary">{{ product.name }}</h5>
+                                </button>
                                 <p class="card-text text-sm">{{product.description}}</p>
                                 <div class="row">
                                     <div class="col">
@@ -45,11 +45,13 @@
                                     </div>
                                     <div class="col">
                                         <h6 class="text-right"> <span class="badge badge-secondary">{{ product.price | number }}
-                        FCO</span></h6>
+                                                FCO</span></h6>
                                     </div>
                                 </div>
 
-                                <button (click)="buyNow(buycontent, product)" class="btn btn-sm btn-primary">Buy Now</button>
+                                <button (click)="buyNow(buycontent, product)" class="btn btn-sm btn-primary">
+                                    Buy Now
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -86,8 +88,8 @@
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">Product Detail</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
             <div class="card border-0">
@@ -107,7 +109,7 @@
                                 </div>
                                 <div class="col">
                                     <h6 class="text-right"> <span class="badge badge-secondary">{{ selectedProduct.price | number }}
-                      FCO</span></h6>
+                                            FCO</span></h6>
                                 </div>
                             </div>
                             <hr>

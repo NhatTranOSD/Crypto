@@ -10,22 +10,29 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-5">PRICE:</div>
-                        <div class="col-5">{{tokenService.tokenConfig.priceUSD}} </div>
+                        <div class="col-5">{{tokenService.tokenConfig.priceUSD | number}} </div>
                         <div class="col-2">USD</div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-5">Total Supply:</div>
-                        <div class="col-5">{{tokenService.tokenSupply}} </div>
+                        <div class="col-5">{{tokenService.tokenSupply | number}} </div>
                         <div class="col-2">{{tokenService.tokenConfig.tokenSymbol}}</div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-5">Admin Holder Total:</div>
-                        <div *ngIf="tokenService.adminBalance" class="col-5">{{tokenService.adminBalance}} </div>
+                        <div *ngIf="tokenService.adminBalance" class="col-5">{{tokenService.adminBalance | number}} </div>
                         <div class="col-2">{{tokenService.tokenConfig.tokenSymbol}}</div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-5">Gas Price:</div>
+                        <div *ngIf="tokenService.adminBalance" class="col-5">{{tokenService.tokenConfig.gasPricesInGwei | number}}</div>
+                        <div class="col-2">Gwei</div>
                     </div>
                 </li>
             </ul>
@@ -46,13 +53,19 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-3">Decimals:</div>
-                        <div class="col-9">{{tokenService.tokenConfig.decimals}} </div>
+                        <div class="col-9">{{tokenService.tokenConfig.decimals | number}} </div>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-3">Transfers: </div>
                         <div *ngIf="tokenService.tokenTxs" class="col-9">{{tokenService.tokenTxs.length}} </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-3">Gas Limit:</div>
+                        <div class="col-9">{{tokenService.tokenConfig.gasLimit | number}} </div>
                     </div>
                 </li>
             </ul>

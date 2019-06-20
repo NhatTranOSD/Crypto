@@ -28,7 +28,7 @@ namespace ShoppingService.Services
         {
             try
             {
-                IEnumerable<Order> orders = await _shoppingContext.Orders.Where(x => x.BuyerId.Equals(userId)).OrderBy( o => o.UpdatedDate).ToListAsync();
+                IEnumerable<Order> orders = await _shoppingContext.Orders.Where(x => x.BuyerId.Equals(userId)).OrderBy(o => o.UpdatedDate).ToListAsync();
 
                 IEnumerable<OrderResponseModel> response = _mapper.Map<IList<OrderResponseModel>>(orders);
 
@@ -106,6 +106,87 @@ namespace ShoppingService.Services
             catch (Exception ex)
             {
                 return null;
+                throw ex;
+            }
+        }
+
+        public async Task<bool> RefundOrder(Guid orderId, Guid userId)
+        {
+            try
+            {
+                Order order = await _shoppingContext.Orders.SingleOrDefaultAsync(x => x.Id == orderId && x.BuyerId == userId); //  && x.OrderStatus == OrderStatus.Completed
+
+                if (order == null) return false;
+
+                order.OrderStatus = OrderStatus.Refunding;
+
+                _shoppingContext.Orders.Attach(order);
+                _shoppingContext.Entry(order).Property(x => x.OrderStatus).IsModified = true;
+
+                await _shoppingContext.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+        }
+
+        public async Task<bool> AcceptRefundOrder(Guid orderId)
+        {
+            try
+            {
+                Order order = await _shoppingContext.Orders.SingleOrDefaultAsync(x => x.Id == orderId && x.OrderStatus == OrderStatus.Refunding); //  && x.OrderStatus == OrderStatus.Completed
+                Product product = await _shoppingContext.Products.SingleOrDefaultAsync(x => x.Id == order.ProductId);
+
+                if (order == null || product == null) return false;
+
+                order.OrderStatus = OrderStatus.RefundSuccess;
+
+                _shoppingContext.Orders.Attach(order);
+                _shoppingContext.Entry(order).Property(x => x.OrderStatus).IsModified = true;
+
+                product.Stock = product.Stock + order.TotalProducts;
+
+                _shoppingContext.Products.Attach(product);
+                _shoppingContext.Entry(product).Property(x => x.Stock).IsModified = true;
+
+                await _shoppingContext.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+        }
+
+        public async Task<bool> RefuseRefundOrder(Guid orderId)
+        {
+            try
+            {
+                Order order = await _shoppingContext.Orders.SingleOrDefaultAsync(x => x.Id == orderId); //  && x.OrderStatus == OrderStatus.Completed
+
+                if (order == null) return false;
+
+                order.OrderStatus = OrderStatus.RefundFailed;
+
+                _shoppingContext.Orders.Attach(order);
+                _shoppingContext.Entry(order).Property(x => x.OrderStatus).IsModified = true;
+
+                await _shoppingContext.SaveChangesAsync();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
                 throw ex;
             }
         }

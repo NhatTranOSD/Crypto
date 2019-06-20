@@ -6,4 +6,6 @@ export class TokenConfig {
     adminAddress: string;
     priceUSD: number;
     decimals: number;
+    gasLimit: number;
+    gasPricesInGwei: number;
 }

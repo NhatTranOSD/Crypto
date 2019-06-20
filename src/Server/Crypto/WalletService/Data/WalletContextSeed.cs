@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletService.Entities;
 
 namespace WalletService.Data
 {
@@ -21,7 +22,9 @@ namespace WalletService.Data
                         TokenName = "FCoin",
                         TokenSymbol = "FCO",
                         Decimals = 18,
-                        PriceUSD = 10
+                        PriceUSD = 10,
+                        GasLimit = 21000,
+                        GasPricesInGwei = 3.7,
                     };
 
                     await walletContext.AddAsync(tokenConfiguration);

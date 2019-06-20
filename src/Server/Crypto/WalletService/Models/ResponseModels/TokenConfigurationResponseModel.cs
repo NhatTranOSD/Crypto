@@ -19,6 +19,10 @@ namespace WalletService.Models.ResponseModels
 
         public decimal PriceUSD { get; set; }
 
+        public decimal GasLimit { get; set; }
+
+        public double GasPricesInGwei { get; set; }
+
         public int Decimals { get; set; }
     }
 }

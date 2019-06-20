@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WalletService.Data;
+using WalletService.Entities;
 using WalletService.Interfaces;
 using WalletService.Models.RequestModels;
 using WalletService.Models.ResponseModels;

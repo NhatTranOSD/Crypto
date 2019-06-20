@@ -11,6 +11,7 @@ namespace ShoppingService.Common
         Processing = 1,
         Completed = 2,
         Refunding = 3,
-        Refunded = 4,
+        RefundFailed = 4,
+        RefundSuccess = 5,
     }
 }

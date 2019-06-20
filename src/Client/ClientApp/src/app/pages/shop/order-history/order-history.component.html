@@ -7,16 +7,35 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">TxHash</th>
-            <th scope="col">Logo</th>
+            <th scope="col">Updated Date</th>
             <th scope="col">Name</th>
             <th scope="col">Price</th>
-            <th scope="col">Token</th>
+            <th scope="col">Total Products</th>
+            <th scope="col">Total Payment</th>
+            <th scope="col">Status</th>
             <th scope="col"></th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-
+    <tbody *ngIf="orderService.orders">
+        <tr *ngFor="let order of orderService.orders; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <th>{{order.txHash }}</th>
+            <td>{{ order.updatedDate | date: 'MM/dd/yyyy hh:mm:ss' }}</td>
+            <td>{{ order.productName }}</td>
+            <td>Product price</td>
+            <td>{{ order.totalProducts | number}}</td>
+            <td class="float-right">{{ order.totalPayment | number }} <span class="badge badge-secondary">{{order.currency}}</span></td>
+            <td>
+                <span *ngIf="order.orderStatus === 0" class="badge badge-light">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 1" class="badge badge-info">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 2" class="badge badge-success">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 3" class="badge badge-warning">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 4" class="badge badge-danger">{{ orderStatus[order.orderStatus] }}</span>
+                <span *ngIf="order.orderStatus === 5" class="badge badge-primary">{{ orderStatus[order.orderStatus] }}</span>
+            </td>
+            <td>
+                <button *ngIf="order.orderStatus < 3" (click)="refundOrder(order.id)" class="btn btn-primary btn-sm">Refund</button>
+            </td>
         </tr>
     </tbody>
 </table>

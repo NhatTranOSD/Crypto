@@ -62,5 +62,44 @@ namespace ShoppingService.Controllers
 
             return Ok(result);
         }
+
+        [Route("Refund")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> RefundOrder(Guid orderId, Guid userId)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _orderService.RefundOrder(orderId, userId);
+
+            return Ok(result);
+        }
+
+        [Route("AcceptRefund")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> AcceptRefund(Guid orderId)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _orderService.AcceptRefundOrder(orderId);
+
+            return Ok(result);
+        }
+
+        [Route("RefuseRefund")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> RefuseRefund(Guid orderId)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _orderService.RefuseRefundOrder(orderId);
+
+            return Ok(result);
+        }
     }
 }

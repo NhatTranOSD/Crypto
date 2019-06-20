@@ -3,5 +3,6 @@ export const OrderStatus = [
     'Processing',
     'Completed',
     'Refunding',
-    'Refunded'
+    'Refund Failed',
+    'Refund Success'
 ];

@@ -14,5 +14,11 @@ namespace ShoppingService.Interfaces
         Task<IEnumerable<OrderResponseModel>> Orders(Guid userId);
 
         Task<OrderResponseModel> CreateOrder(OrderRequestModel requestModel);
+
+        Task<bool> RefundOrder(Guid orderId, Guid userId);
+
+        Task<bool> AcceptRefundOrder(Guid orderId);
+
+        Task<bool> RefuseRefundOrder(Guid orderId);
     }
 }

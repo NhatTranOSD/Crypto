@@ -27,6 +27,12 @@ namespace WalletService.Models.RequestModels
         public decimal PriceUSD { get; set; }
 
         [Required]
+        public decimal GasLimit { get; set; }
+
+        [Required]
+        public double GasPricesInGwei { get; set; }
+
+        [Required]
         public int Decimals { get; set; }
     }
 }

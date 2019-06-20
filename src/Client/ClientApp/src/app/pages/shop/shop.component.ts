@@ -50,7 +50,7 @@ export class ShopComponent implements OnInit {
       productId: this.selectedProduct.id,
       productName: this.selectedProduct.name,
       totalProducts: 1
-    }
+    };
 
     this.orderService.createOrder(orderRequest)
       .pipe(first())
@@ -65,7 +65,7 @@ export class ShopComponent implements OnInit {
             // Reload
             this.productService.getProducts();
           } else {
-            this.error = "Buy Error";
+            this.error = 'Buy Error';
           }
 
         },

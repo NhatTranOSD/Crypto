@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
+import { AuthenticationService } from '../services/authentication.service';
 import { ProductRequest } from '../models/requestmodels/productrequest.model';
 import { environment } from '../../environments/environment';
 import { Order } from '../models/order.model';
@@ -14,7 +15,7 @@ export class OrderService {
 
   public orders: Order[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private authenticationService: AuthenticationService, private http: HttpClient) { }
 
   public getOrders(): any {
     return this.http.get<Order[]>(`${environment.shoppingApi}api/Order/Orders`)
@@ -27,19 +28,49 @@ export class OrderService {
         });
   }
 
-  public getOrdersById(userId: string): any {
-    return this.http.get<Order[]>(`${environment.shoppingApi}api/Order/Orders/${userId}`)
-      .subscribe(
-        data => {
-          this.orders = data;
-        },
-        error => {
-          console.log(error);
-        });
+  public getUserOrders(): any {
+
+    const userId = this.authenticationService.currentUserValue.id;
+
+    if (userId != null) {
+
+      return this.http.get<Order[]>(`${environment.shoppingApi}api/Order/Orders/${userId}`)
+        .subscribe(
+          data => {
+            this.orders = data;
+          },
+          error => {
+            console.log(error);
+          });
+    }
+
   }
 
   public createOrder(requestModel: OrderRequest): any {
     return this.http.post<Order>(`${environment.shoppingApi}api/Order/Create`, requestModel)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public refundOrder(orderId): any {
+    const userId = this.authenticationService.currentUserValue.id;
+
+    return this.http.post<boolean>(`${environment.shoppingApi}api/Order/Refund?orderId=${orderId}&userId=${userId}`, null)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public acceptRefundOrder(orderId): any {
+    return this.http.post<boolean>(`${environment.shoppingApi}api/Order/AcceptRefund?orderId=${orderId}`, null)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public refuseRefundOrder(orderId): any {
+    return this.http.post<boolean>(`${environment.shoppingApi}api/Order/RefuseRefund?orderId=${orderId}`, null)
       .pipe(map(data => {
         return data;
       }));

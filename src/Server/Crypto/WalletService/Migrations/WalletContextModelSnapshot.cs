@@ -19,7 +19,7 @@ namespace WalletService.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WalletService.Data.TokenConfiguration", b =>
+            modelBuilder.Entity("WalletService.Entities.TokenConfiguration", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -31,6 +31,10 @@ namespace WalletService.Migrations
                         .IsRequired();
 
                     b.Property<int>("Decimals");
+
+                    b.Property<decimal>("GasLimit");
+
+                    b.Property<double>("GasPricesInGwei");
 
                     b.Property<decimal>("PriceUSD");
 
