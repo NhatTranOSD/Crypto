@@ -59,10 +59,6 @@ export class WalletService {
       .subscribe(
         data => {
           this.wallets = data;
-
-          if (this.wallets.length === 0) {
-            this.makeDefaultWallet();
-          }
         },
         error => {
           console.log(error);

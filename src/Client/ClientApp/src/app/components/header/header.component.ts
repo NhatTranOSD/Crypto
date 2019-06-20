@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { User } from '../../models/User.model';
+import { WalletService } from '../../services/wallet.service';
+import { CurrencyDisplayName } from '../../models/WalletCurrency.model';
 
 @Component({
   selector: 'app-header',
@@ -10,13 +12,19 @@ import { User } from '../../models/User.model';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  currentUser: User;
+  public currentUser: User;
+  public currencyDisplayName = CurrencyDisplayName;
 
   constructor(
     private router: Router,
-    public authenticationService: AuthenticationService
-  ) {
+    public authenticationService: AuthenticationService,
+    public walletService: WalletService
+  ) { }
+
+  // tslint:disable-next-line: use-life-cycle-interface
+  ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.walletService.getWalletInfo();
   }
 
   logout() {

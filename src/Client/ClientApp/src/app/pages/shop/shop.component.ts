@@ -20,6 +20,7 @@ export class ShopComponent implements OnInit {
   public selectedProduct: Product;
   public error: string;
   public loading: boolean;
+  public orderTotal = 1;
 
   constructor(private orderService: OrderService,
     private router: Router,
@@ -44,12 +45,17 @@ export class ShopComponent implements OnInit {
   buyConfirm() {
     this.loading = true;
 
+    if (this.orderTotal < 1 || this.orderTotal > this.selectedProduct.stock) {
+      this.error = 'Total Products invalid';
+      return;
+    }
+
     const orderRequest: OrderRequest = {
       buyerId: this.authenticationService.currentUserValue.id,
       buyerEmail: this.authenticationService.currentUserValue.userName,
       productId: this.selectedProduct.id,
       productName: this.selectedProduct.name,
-      totalProducts: 1
+      totalProducts: this.orderTotal,
     };
 
     this.orderService.createOrder(orderRequest)

@@ -112,10 +112,9 @@
                                             FCO</span></h6>
                                 </div>
                             </div>
+                            <label>Products Total: <input min="1" max="{{ selectedProduct.stock }}" [(ngModel)]="orderTotal" type="number"></label>
                             <hr>
-                            <h6 class="text-left">Transaction Fee: 5 FCO</h6>
-                            <hr>
-                            <h4>Total payment:<b> {{selectedProduct.price + 5 | number }} FCO</b></h4>
+                            <h4>Total payment:<b> {{selectedProduct.price*orderTotal | number }} FCO</b></h4>
                         </div>
                     </div>
                 </div>
@@ -126,7 +125,7 @@
                 <h5><span class="badge badge-white">Nhat Tran: 50 FCO</span></h5>
             </div>
             <div *ngIf="error && error !== ''" class="alert alert-danger" role="alert">
-                This is a danger alert—check it out!
+                {{error}}
             </div>
             <button type="button" (click)="buyConfirm()" class="btn btn-outline-info">Buy</button>
             <button type="button" (click)="modal.dismiss('Close')" class="btn btn-outline-dark">Close</button>
