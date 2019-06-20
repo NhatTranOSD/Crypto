@@ -129,7 +129,7 @@ namespace SecurityService.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SecurityService.Models.ApplicationUser", b =>
+            modelBuilder.Entity("SecurityService.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -200,7 +200,7 @@ namespace SecurityService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("SecurityService.Models.ApplicationUser")
+                    b.HasOne("SecurityService.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -208,7 +208,7 @@ namespace SecurityService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("SecurityService.Models.ApplicationUser")
+                    b.HasOne("SecurityService.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -221,7 +221,7 @@ namespace SecurityService.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("SecurityService.Models.ApplicationUser")
+                    b.HasOne("SecurityService.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -229,7 +229,7 @@ namespace SecurityService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("SecurityService.Models.ApplicationUser")
+                    b.HasOne("SecurityService.Entities.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
