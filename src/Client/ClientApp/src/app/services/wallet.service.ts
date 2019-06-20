@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,8 +18,9 @@ export class WalletService {
   public wallets: Wallet[];
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
-    this.currentUser = authenticationService.currentUserValue;
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
+
 
   public createWallet(currencytype: number) {
 
@@ -33,24 +34,6 @@ export class WalletService {
         // login successful if there's a jwt token in the response
         return data;
       }));
-  }
-
-  public makeDefaultWallet(): void {
-    this.createWallet(0).pipe(first())
-      .subscribe(
-        data => {
-        },
-        error => {
-          console.log(error);
-        });
-
-    this.createWallet(1).pipe(first())
-      .subscribe(
-        data => {
-        },
-        error => {
-          console.log(error);
-        });
   }
 
   public getWalletInfo(): any {

@@ -51,6 +51,30 @@ export class WalletComponent implements OnInit {
     }
   }
 
+  public makeDefaultWallets(): void {
+    this.loading = true;
+    this.walletService.createWallet(0).pipe(first())
+      .subscribe(
+        data => {
+          this.loading = false;
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
+
+    this.walletService.createWallet(0).pipe(first())
+      .subscribe(
+        data => {
+          this.loading = false;
+          this.ngOnInit();
+        },
+        error => {
+          this.error = error;
+          this.loading = false;
+        });
+  }
+
   public selectWallet(selectedItem: Wallet) {
     this.selectedWallet = selectedItem;
     if (selectedItem.walletCurrencys[0].currencyType === 0) {
