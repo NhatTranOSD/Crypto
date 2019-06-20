@@ -24,7 +24,9 @@ export class HeaderComponent {
   // tslint:disable-next-line: use-life-cycle-interface
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.walletService.getWalletInfo();
+    if (this.currentUser !== null) {
+      this.walletService.getWalletInfo();
+    }
   }
 
   logout() {
