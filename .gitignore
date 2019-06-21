@@ -37,3 +37,4 @@
 /src/Client/ClientApp/dist
 /src/Server/Crypto/.vs
 /src/Server/Apis/TraddingApi/node_modules
+/src/Server/Apis/EthereumGatewayApi/node_modules
