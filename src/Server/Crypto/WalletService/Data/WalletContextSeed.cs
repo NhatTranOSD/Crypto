@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletService.Data.Entities;
 using WalletService.Entities;
 
 namespace WalletService.Data
@@ -12,6 +13,7 @@ namespace WalletService.Data
         {
             try
             {
+                // Init config
                 if (walletContext.TokenConfiguration.Count() == 0)
                 {
                     TokenConfiguration tokenConfiguration = new TokenConfiguration()
@@ -27,7 +29,53 @@ namespace WalletService.Data
                         GasPricesInGwei = 3.7,
                     };
 
-                    await walletContext.AddAsync(tokenConfiguration);
+                    await walletContext.TokenConfiguration.AddAsync(tokenConfiguration);
+
+                    await walletContext.SaveChangesAsync();
+                };
+
+                if (walletContext.Wallets.Count() == 0)
+                {
+                    Account account = new Account()
+                    {
+                        Id = Guid.NewGuid(),
+                        Address = "0x0B94369D5368acBB6674f11758Be01ae69CDc04f",
+                        PrivateKey = "9C1204822D02E2D646FAB8B569E39A4DE30E64AD72436FF196AEC9F4B8A900CA",
+                    };
+
+                    await walletContext.Accounts.AddAsync(account);
+
+                    // Init ETH currency (Default)
+                    WalletCurrency ETH = new WalletCurrency()
+                    {
+                        Balance = "0",
+                        CurrencyType = CurrencyType.ETH,
+                        Id = Guid.NewGuid(),
+                        UpdatedDate = DateTime.UtcNow,
+                    };
+
+                    // Init FCO currency (Default)
+                    WalletCurrency FCO = new WalletCurrency()
+                    {
+                        Balance = "0",
+                        CurrencyType = CurrencyType.ETH,
+                        Id = Guid.NewGuid(),
+                        UpdatedDate = DateTime.UtcNow,
+                    };
+
+                    await walletContext.WalletCurrencys.AddRangeAsync(ETH, FCO);
+
+                    Wallet wallet = new Wallet()
+                    {
+                        Id = Guid.NewGuid(),
+                        AccountId = account.Id,
+                        Account = account,
+                        CreatedDate = DateTime.UtcNow,
+                        UserId = "0f07555c-00b6-4be9-ab0f-e75c7617efe4",
+                        WalletCurrencys = new List<WalletCurrency> { ETH, FCO },                       
+                    };
+
+                    await walletContext.Wallets.AddAsync(wallet);
 
                     await walletContext.SaveChangesAsync();
                 };

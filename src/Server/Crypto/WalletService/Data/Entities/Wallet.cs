@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletService.Data.Entities;
 
 namespace WalletService.Entities
 {
@@ -13,7 +14,9 @@ namespace WalletService.Entities
 
         public string UserId { get; set; }
 
-        public string Address { get; set; }
+        public Guid AccountId { get; set; }
+
+        public Account Account { get; set; }
 
         //public string PrivateKey { get; set; }
 

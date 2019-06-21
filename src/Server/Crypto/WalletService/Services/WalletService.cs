@@ -46,7 +46,6 @@ namespace WalletService.Services
                 // Init wallet, will generate here
                 Wallet wallet = new Wallet()
                 {
-                    Address = "0x0B94369D5368acBB6674f11758Be01ae69CDc04f",
                     Id = Guid.NewGuid(),
                     UserId = requestModel.UserId,
                     WalletCurrencys = new List<WalletCurrency>() { walletCurrency }
