@@ -21,6 +21,7 @@ namespace WalletService.Data
         public DbSet<WalletCurrency> WalletCurrencys { get; set; }
 
         public DbSet<TokenConfiguration> TokenConfiguration { get; set; }
+        public DbSet<TokenOrder> TokenOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

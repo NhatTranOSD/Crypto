@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletService.Data.Entities;
 using WalletService.Models.RequestModels;
 using WalletService.Models.ResponseModels;
 
@@ -12,5 +13,9 @@ namespace WalletService.Interfaces
         Task<TokenConfigurationResponseModel> GetTokenInfo();
 
         Task<bool> UpdateTokenInfo(TokenConfigurationRequestModel requestModel);
+
+        Task<bool> BuyToken(Guid userId, decimal amount, PairType pair);
+
+        Task<string> TransferTokenToAdmin(Guid userId, decimal amount);
     }
 }

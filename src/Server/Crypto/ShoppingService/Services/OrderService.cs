@@ -70,8 +70,7 @@ namespace ShoppingService.Services
                 // Caculate totalPayment
                 decimal totalPayment = product.Price * requestModel.TotalProducts;
 
-                // Check Buyer Valid and Product Balance
-
+                // Transfer Token
 
                 // Init Order
                 Order order = new Order()

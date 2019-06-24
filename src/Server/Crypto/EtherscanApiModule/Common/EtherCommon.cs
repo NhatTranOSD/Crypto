@@ -15,7 +15,7 @@ namespace EtherscanApiModule.Common
     public static class FCOToken
     {
         public static string TOKENNAME = "FCoin";
-        public static string CONTRACT = "0x6429acbf2a15ef0119aa347b8da5a2dbb6056f29";
+        public static string CONTRACT = "0xcdc915cf1a9ddd30e604112dd47b88d604c29075";
     }
 
     public static class EtherActions

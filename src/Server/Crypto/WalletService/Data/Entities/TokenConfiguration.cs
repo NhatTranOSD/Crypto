@@ -24,6 +24,9 @@ namespace WalletService.Entities
         public string AdminAddress { get; set; }
 
         [Required]
+        public string PrivateKey { get; set; }
+
+        [Required]
         public decimal PriceUSD { get; set; }
 
         [Required]

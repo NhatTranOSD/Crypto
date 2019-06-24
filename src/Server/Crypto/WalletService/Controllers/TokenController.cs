@@ -96,5 +96,31 @@ namespace WalletService.Controllers
 
             return Ok(result);
         }
+
+        [Route("BuyToken")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> BuyToken(BuyTokenRequestModel requestModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _tokenService.BuyToken(requestModel.UserId, requestModel.Amount, requestModel.Pair);
+
+            return Ok(result);
+        }
+
+        [Route("TransferTokenToAdmin")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> TransferTokenToAdmin(TransferTokenRequestModel requestModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _tokenService.TransferTokenToAdmin(requestModel.UserId, requestModel.Amount);
+
+            return Ok(result);
+        }
     }
 }

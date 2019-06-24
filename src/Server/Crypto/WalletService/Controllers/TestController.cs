@@ -6,6 +6,7 @@ using EtherscanApiModule.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WalletService.Interfaces;
+using WalletService.Models.RequestModels;
 
 namespace WalletService.Controllers
 {
@@ -14,14 +15,16 @@ namespace WalletService.Controllers
     public class TestController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IWalletService _walletService;
         private readonly ITransactionService _transactionService;
         private readonly IWeb3Service _web3Service;
 
-        public TestController(IAccountService accountService, ITransactionService transactionService, IWeb3Service web3Service)
+        public TestController(IWalletService walletService, IAccountService accountService, ITransactionService transactionService, IWeb3Service web3Service)
         {
             _accountService = accountService;
             _transactionService = transactionService;
             _web3Service = web3Service;
+            _walletService = walletService;
         }
 
         [HttpGet]
@@ -37,8 +40,8 @@ namespace WalletService.Controllers
 
             //var TXList = await _accountService.ETHTxList("0x0B94369D5368acBB6674f11758Be01ae69CDc04f", "1", "latest", 1, 15, "asc");
 
-            var eth = await _web3Service.SendETH("0xB6DB9AFF2b8436C748a528A41CeBE0E58c7fD075", 1000000000);
-            var token = await _web3Service.SendToken("0xB6DB9AFF2b8436C748a528A41CeBE0E58c7fD075", 1000000000);
+            //var eth = await _web3Service.SendETH("0xB6DB9AFF2b8436C748a528A41CeBE0E58c7fD075", 1000000000);
+            //var token = await _web3Service.SendToken("0xB6DB9AFF2b8436C748a528A41CeBE0E58c7fD075", 1000000000);
 
             return null;
         }

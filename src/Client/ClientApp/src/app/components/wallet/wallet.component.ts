@@ -24,6 +24,7 @@ export class WalletComponent implements OnInit {
 
   public buyingWallet: Wallet;
   public buyForm: FormGroup;
+  public submitted = false;
 
   public currencyDisplayName = CurrencyDisplayName;
 
@@ -108,6 +109,32 @@ export class WalletComponent implements OnInit {
     });
     this.buyingWallet = wallet;
     this.modalService.open(content);
+  }
+
+  public buyNow() {
+    this.submitted = true;
+    if (this.buyForm.invalid) {
+      return;
+    }
+
+    console.log(this.f.amount.value);
+    console.log(this.f.pair.value);
+
+    this.tokenService.buyToken(this.f.amount.value, this.f.pair.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          if (data) {
+            alert('Buy Success');
+            this.modalService.dismissAll();
+          } else {
+            alert('Buy Failed');
+          }
+        },
+        error => {
+          alert('Buy Error')
+        });
+        
   }
 
 }

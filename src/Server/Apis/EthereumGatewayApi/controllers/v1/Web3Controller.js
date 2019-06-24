@@ -46,8 +46,8 @@ const sendETHTransaction = async (req, res) => {
         const to = req.query.to;
         const value = req.query.value;
         const privateKey = req.query.privateKey;
-        const gas = req.body.gas || '23000';
-        const gasPrice = req.body.gasPrice || '5000000000';
+        const gas = req.body.gas || '21000';
+        const gasPrice = req.body.gasPrice || '10000000000';
         const data = req.body.data || '';
 
         const nonce = await Web3Service.getTransactionCount(from);
@@ -65,6 +65,8 @@ const sendETHTransaction = async (req, res) => {
         };
 
         const signedTransaction = await Web3Service.signTransaction(tx, privateKey);
+
+        console.log(signedTransaction);
 
         Web3Service.sendSignedTransaction(signedTransaction.rawTransaction);
 
@@ -89,8 +91,8 @@ const sendToken = async (req, res) => {
         const to = req.query.to;
         const value = req.query.value;
         const privateKey = req.query.privateKey;
-        const gas = req.body.gas || '250000';
-        const gasPrice = req.body.gasPrice || '5000000000';
+        const gas = req.body.gas || '210000';
+        const gasPrice = req.body.gasPrice || '10000000000';
 
         const nonce = await Web3Service.getTransactionCount(from);
 

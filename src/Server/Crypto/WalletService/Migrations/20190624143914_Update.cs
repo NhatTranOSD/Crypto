@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WalletService.Migrations
 {
-    public partial class InitDB : Migration
+    public partial class Update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,6 +16,7 @@ namespace WalletService.Migrations
                     TokenSymbol = table.Column<string>(nullable: false),
                     ContractAddress = table.Column<string>(nullable: false),
                     AdminAddress = table.Column<string>(nullable: false),
+                    PrivateKey = table.Column<string>(nullable: false),
                     PriceUSD = table.Column<decimal>(nullable: false),
                     GasLimit = table.Column<decimal>(nullable: false),
                     GasPricesInGwei = table.Column<double>(nullable: false),
@@ -24,6 +25,26 @@ namespace WalletService.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TokenConfiguration", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TokenOrders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ReceiveTxHash = table.Column<string>(nullable: false),
+                    SendTxHash = table.Column<string>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    BuyerId = table.Column<Guid>(nullable: false),
+                    Amount = table.Column<decimal>(nullable: false),
+                    Fee = table.Column<decimal>(nullable: false),
+                    TotalPayment = table.Column<decimal>(nullable: false),
+                    TokenName = table.Column<string>(nullable: false),
+                    TokenOrderStatus = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TokenOrders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -100,6 +121,9 @@ namespace WalletService.Migrations
 
             migrationBuilder.DropTable(
                 name: "TokenConfiguration");
+
+            migrationBuilder.DropTable(
+                name: "TokenOrders");
 
             migrationBuilder.DropTable(
                 name: "WalletCurrencys");

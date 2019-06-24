@@ -99,4 +99,17 @@ export class TokenService {
           console.log(error);
         });
   }
+
+  public buyToken(amount: number, pair: number): any {
+    const requestModel ={
+      userId: this.authenticationService.currentUserValue.id,
+      amount: amount,
+      pair: pair
+    };
+
+    return this.http.post<boolean>(`${environment.walletApi}api/v1/Token/BuyToken`, requestModel)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

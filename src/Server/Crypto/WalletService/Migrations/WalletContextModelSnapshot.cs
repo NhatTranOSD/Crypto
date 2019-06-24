@@ -15,7 +15,7 @@ namespace WalletService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -38,6 +38,37 @@ namespace WalletService.Migrations
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("WalletService.Data.Entities.TokenOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<Guid>("BuyerId");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<decimal>("Fee");
+
+                    b.Property<string>("ReceiveTxHash")
+                        .IsRequired();
+
+                    b.Property<string>("SendTxHash")
+                        .IsRequired();
+
+                    b.Property<string>("TokenName")
+                        .IsRequired();
+
+                    b.Property<int>("TokenOrderStatus");
+
+                    b.Property<decimal>("TotalPayment");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TokenOrders");
+                });
+
             modelBuilder.Entity("WalletService.Entities.TokenConfiguration", b =>
                 {
                     b.Property<Guid>("Id")
@@ -56,6 +87,9 @@ namespace WalletService.Migrations
                     b.Property<double>("GasPricesInGwei");
 
                     b.Property<decimal>("PriceUSD");
+
+                    b.Property<string>("PrivateKey")
+                        .IsRequired();
 
                     b.Property<string>("TokenName")
                         .IsRequired();

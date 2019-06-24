@@ -12,7 +12,10 @@ namespace WalletService.Data.Entities
         public Guid Id { get; set; }
 
         [Required]
-        public string TxHash { get; set; }
+        public string ReceiveTxHash { get; set; }
+
+        [Required]
+        public string SendTxHash { get; set; }
 
         [Required]
         public DateTime CreatedDate { get; set; }
@@ -39,7 +42,13 @@ namespace WalletService.Data.Entities
 
     public enum TokenOrderStatus
     {
-        Failed = 0,
-        Successed = 1
+        Pending = 0,
+        Failed = 1,
+        Successed = 2
+    }
+
+    public enum PairType
+    {
+        ETH_FCO = 0,
     }
 }
