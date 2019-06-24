@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WalletService } from '../../services/wallet.service';
 import { first } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenService } from '../../services/token.service';
 import { environment } from '../../../environments/environment';
 
@@ -20,6 +21,10 @@ export class WalletComponent implements OnInit {
   public error = '';
   public selectedWallet: Wallet;
   public depositingWallet: Wallet;
+
+  public buyingWallet: Wallet;
+  public buyForm: FormGroup;
+
   public currencyDisplayName = CurrencyDisplayName;
 
   public isCollapsed = false;
@@ -28,7 +33,8 @@ export class WalletComponent implements OnInit {
   constructor(private modalService: NgbModal,
     private walletService: WalletService,
     public tokenService: TokenService,
-    public comonFunctions: ComonFunctions) { }
+    public comonFunctions: ComonFunctions,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     if (this.walletService.wallets === null) {
@@ -89,6 +95,18 @@ export class WalletComponent implements OnInit {
 
   public depositCoin(content, wallet: Wallet) {
     this.depositingWallet = wallet;
+    this.modalService.open(content);
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { return this.buyForm.controls; }
+
+  public buyCoin(content, wallet: Wallet) {
+    this.buyForm = this.formBuilder.group({
+      amount: [0, Validators.required],
+      pair: [0, Validators.required]
+    });
+    this.buyingWallet = wallet;
     this.modalService.open(content);
   }
 

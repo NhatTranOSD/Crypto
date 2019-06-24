@@ -19,15 +19,17 @@ namespace WalletService.Services
     {
         private readonly WalletContext _walletContext;
         private readonly IWeb3Service _web3Service;
+        private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
 
         private IAccountService _accountService;
 
-        public WalletService(IWeb3Service web3Service, WalletContext walletContext, IAccountService accountService, IMapper mapper)
+        public WalletService(IWeb3Service web3Service, WalletContext walletContext, IAccountService accountService, ITokenService tokenService, IMapper mapper)
         {
             _walletContext = walletContext;
             _accountService = accountService;
             _web3Service = web3Service;
+            _tokenService = tokenService;
             _mapper = mapper;
         }
 
@@ -103,6 +105,48 @@ namespace WalletService.Services
                 return null;
                 throw ex;
             }
+        }
+
+        public async Task<bool> BuyToken(Guid userId, decimal amount, int pair)
+        {
+            try
+            {
+                // get wallets
+                IEnumerable<Wallet> wallets = _walletContext.Wallets.Where(x => x.Id == userId);
+
+                if (wallets.Count() < 2) return false;
+
+                TokenOrder tokenOrder = new TokenOrder()
+                {
+                    Id = Guid.NewGuid(),
+                    Amount = amount,
+                    BuyerId = userId,
+                    CreatedDate = DateTime.UtcNow,
+                    Fee = 250000 * 5000000000 + 23000 * 5000000000,
+                    TokenName = "FCoin",
+                    TotalPayment = amount * 1000000000000000000 + 250000 * 5000000000 + 23000 * 5000000000,
+                };
+
+                // Check type
+                if (pair == 0)
+                {
+                    // Transfer ETH user to Admin
+
+                    // Transfer Token to user
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+        }
+
+        private async Task<string> SendETH(string from, string to, decimal value, string privateKey)
+        {
+            return await _web3Service.SendETH(from, to, value, privateKey);
         }
     }
 }

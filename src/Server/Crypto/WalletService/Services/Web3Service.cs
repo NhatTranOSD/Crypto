@@ -63,11 +63,11 @@ namespace WalletService.Services
             }
         }
 
-        public async Task<string> SendETH(string to, decimal value)
+        public async Task<string> SendETH(string from, string to, decimal value, string privateKey)
         {
             try
             {
-                string uri = Web3Actions.SendETH(_ethereumGatewayApi, to, value);
+                string uri = Web3Actions.SendETH(_ethereumGatewayApi, from, to, value, privateKey);
 
                 var responseString = await _httpClient.GetStringAsync(uri);
 
@@ -88,11 +88,11 @@ namespace WalletService.Services
             }
         }
 
-        public async Task<string> SendToken(string to, decimal value)
+        public async Task<string> SendToken(string from, string to, decimal value, string privateKey)
         {
             try
             {
-                string uri = Web3Actions.SendToken(_ethereumGatewayApi, to, value);
+                string uri = Web3Actions.SendToken(_ethereumGatewayApi, from, to, value, privateKey);
 
                 var responseString = await _httpClient.GetStringAsync(uri);
 

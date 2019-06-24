@@ -10,7 +10,7 @@ var web3 = new Web3(new Web3.providers.HttpProvider(
 
 const Web3Service = require('../../services/Web3Service');
 
-const createAccount = async(req, res) => {
+const createAccount = async (req, res) => {
     try {
         var account = await Web3Service.createAccount();
 
@@ -32,24 +32,27 @@ const createAccount = async(req, res) => {
     }
 }
 
-const sendETHTransaction = async(req, res) => {
+const sendETHTransaction = async (req, res) => {
     try {
-        if (req.query.to === null ||
+        if (req.query.from === null ||
+            req.query.to === null ||
             req.query.value === null ||
-            process.env.adminAddress === null ||
-            process.env.privateKey === null) {
+            req.query.privateKey === null ||
+            process.env.adminAddress === null) {
             res.json({ successed: false, result: null });
         }
 
+        const from = req.query.from;
         const to = req.query.to;
         const value = req.query.value;
+        const privateKey = req.query.privateKey;
         const gas = req.body.gas || '23000';
         const gasPrice = req.body.gasPrice || '5000000000';
         const data = req.body.data || '';
 
-        const nonce = await Web3Service.getTransactionCount(process.env.adminAddress);
+        const nonce = await Web3Service.getTransactionCount(from);
 
-        const balance = await Web3Service.getBalance(process.env.adminAddress);
+        const balance = await Web3Service.getBalance(from);
 
         //sign transaction
         var tx = {
@@ -61,7 +64,7 @@ const sendETHTransaction = async(req, res) => {
             data: data
         };
 
-        const signedTransaction = await Web3Service.signTransaction(tx, process.env.privateKey);
+        const signedTransaction = await Web3Service.signTransaction(tx, privateKey);
 
         Web3Service.sendSignedTransaction(signedTransaction.rawTransaction);
 
@@ -72,32 +75,35 @@ const sendETHTransaction = async(req, res) => {
     }
 }
 
-const sendToken = async(req, res) => {
+const sendToken = async (req, res) => {
     try {
-        if (req.query.to === null ||
+        if (req.query.from === null ||
+            req.query.to === null ||
             req.query.value === null ||
-            process.env.adminAddress === null ||
-            process.env.privateKey === null) {
+            req.query.privateKey === null ||
+            process.env.adminAddress === null) {
             res.json({ successed: false, result: null });
         }
 
+        const from = req.query.from;
         const to = req.query.to;
-        const value = req.query.value || '0';
+        const value = req.query.value;
+        const privateKey = req.query.privateKey;
         const gas = req.body.gas || '250000';
         const gasPrice = req.body.gasPrice || '5000000000';
 
-        const nonce = await Web3Service.getTransactionCount(process.env.adminAddress);
+        const nonce = await Web3Service.getTransactionCount(from);
 
-        const balance = await Web3Service.getBalance(process.env.adminAddress);
+        const balance = await Web3Service.getBalance(from);
 
         const abiArray = JSON.parse(fs.readFileSync('ABI.json', 'utf-8'));
 
-        const contract = web3.eth.Contract(abiArray, process.env.contractAddress, { from: process.env.adminAddress });
+        const contract = web3.eth.Contract(abiArray, process.env.contractAddress, { from: from });
 
         const data = contract.methods.transfer(to, value).encodeABI();
 
         var tx = {
-            from: process.env.adminAddress,
+            from: from,
             gasPrice: gasPrice,
             gasLimit: gas,
             to: process.env.contractAddress,
@@ -106,7 +112,7 @@ const sendToken = async(req, res) => {
             nonce: nonce
         }
 
-        const signedTransaction = await Web3Service.signTransaction(tx, process.env.privateKey);
+        const signedTransaction = await Web3Service.signTransaction(tx, privateKey);
 
         Web3Service.sendSignedTransaction(signedTransaction.rawTransaction);
 
