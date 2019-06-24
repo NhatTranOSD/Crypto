@@ -15,6 +15,7 @@ namespace WalletService.Data
         }
 
         public DbSet<Wallet> Wallets { get; set; }
+
         public DbSet<Account> Accounts { get; set; }
 
         public DbSet<WalletCurrency> WalletCurrencys { get; set; }

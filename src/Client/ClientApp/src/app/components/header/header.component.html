@@ -12,8 +12,8 @@
             </ul>
             <div *ngIf="currentUser" class="col text-right">
                 <a class="text-warning" *ngFor="let wallet of walletService.wallets">
-                    {{wallet.walletCurrencys[0].balance/1000000000000000000}}
-                     [{{currencyDisplayName[wallet.walletCurrencys[0].currencyType]}}]
+                    {{wallet.walletCurrency.balance/1000000000000000000}}
+                     [{{currencyDisplayName[wallet.walletCurrency.currencyType]}}]
                 </a>
                 <div ngbDropdown placement="top-right" class="d-inline-block">
                     <button class="btn btn-outline-white text-light" id="dropdownBasic2" ngbDropdownToggle>{{currentUser.userName}}</button>

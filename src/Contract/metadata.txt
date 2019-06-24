@@ -1,0 +1,7 @@
+Metadata published successfully.
+browser/EIP20.sol : 
+bzz-raw://bbecf489e1cebb97cc54b0fcb6ddb564dd69c9982f709ba5861b246e78c6b0ad
+browser/EIP20Interface.sol : 
+bzz-raw://3012a08ed2c6e0efb80f623f5228dff6e0541068493f3a1e78b863fdd1816508
+metadata.json : 
+bzz-raw://964a308db4595b2a201e1e874194571c4c35a8ffc11b9bfd0486321e47d61d8a

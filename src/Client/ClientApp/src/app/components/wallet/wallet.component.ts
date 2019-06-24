@@ -80,8 +80,8 @@ export class WalletComponent implements OnInit {
 
   public selectWallet(selectedItem: Wallet) {
     this.selectedWallet = selectedItem;
-    if (selectedItem.walletCurrencys[0].currencyType === 0) {
-      this.tokenService.getTokenTransactions(this.selectedWallet.address, environment.contractAddress, 'asc');
+    if (selectedItem.walletCurrency.currencyType === 0) {
+      this.tokenService.getTokenTransactions(this.selectedWallet.account.address, environment.contractAddress, 'asc');
     } else {
       this.tokenService.tokenTxs = null;
     }

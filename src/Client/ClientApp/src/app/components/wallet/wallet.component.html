@@ -22,17 +22,18 @@
             <div *ngIf="walletService.wallets" class="card border-0">
                 <div class="list-group">
                     <div *ngFor="let wallet of walletService.wallets">
-                        <a *ngFor="let item of wallet.walletCurrencys" [ngClass]="{'bg-light': selectedWallet === wallet}" class="list-group-item list-group-item-action border-0">
-                            <div (click)="selectWallet(wallet)" class="row">
+                        <a [ngClass]="{'bg-light': selectedWallet === wallet}" class="list-group-item list-group-item-action border-0">
+                            <div class="row">
                                 <div class="col-4">
-                                    <img *ngIf="item.currencyType == 0" class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg" alt="Card image cap">
-                                    <img *ngIf="item.currencyType == 1" class="card-img-top" src="https://res.cloudinary.com/teepublic/image/private/s--cf-FFLgW--/t_Preview/b_rgb:fffffe,c_limit,f_jpg,h_630,q_90,w_630/v1513290036/production/designs/2179049_1.jpg" alt="Card image cap">
+                                    <img *ngIf="wallet.walletCurrency.currencyType == 0" class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg" alt="Card image cap">
+                                    <img *ngIf="wallet.walletCurrency.currencyType == 1" class="card-img-top" src="https://res.cloudinary.com/teepublic/image/private/s--cf-FFLgW--/t_Preview/b_rgb:fffffe,c_limit,f_jpg,h_630,q_90,w_630/v1513290036/production/designs/2179049_1.jpg" alt="Card image cap">
                                 </div>
                                 <div class="col-8">
-                                    <h4><b>{{currencyDisplayName[item.currencyType]}}</b></h4>
-                                    <h6>Balance: {{item.balance/1000000000000000000}}
+                                    <h4><b>{{currencyDisplayName[wallet.walletCurrency.currencyType]}}</b></h4>
+                                    <h6>Balance: {{wallet.walletCurrency.balance/1000000000000000000}}
                                     </h6>
-                                    <button (click)="depositCoin(depositContent, wallet)" class="btn btn-sm btn-success">Deposit</button>
+                                    <button type="button" (click)="depositCoin(depositContent, wallet)" class="btn btn-sm btn-success p-1">Deposit</button>
+                                    <button type="button" (click)="selectWallet(wallet)" class="btn btn-sm btn-info">Transactions</button>
                                 </div>
                             </div>
                         </a>
@@ -61,15 +62,15 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-3">
-                        <img *ngIf="selectedWallet.walletCurrencys[0].currencyType == 0" class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg" alt="Card image cap">
-                        <img *ngIf="selectedWallet.walletCurrencys[0].currencyType == 1" class="card-img-top" src="https://res.cloudinary.com/teepublic/image/private/s--cf-FFLgW--/t_Preview/b_rgb:fffffe,c_limit,f_jpg,h_630,q_90,w_630/v1513290036/production/designs/2179049_1.jpg"
+                        <img *ngIf="selectedWallet.walletCurrency.currencyType == 0" class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg" alt="Card image cap">
+                        <img *ngIf="selectedWallet.walletCurrency.currencyType == 1" class="card-img-top" src="https://res.cloudinary.com/teepublic/image/private/s--cf-FFLgW--/t_Preview/b_rgb:fffffe,c_limit,f_jpg,h_630,q_90,w_630/v1513290036/production/designs/2179049_1.jpg"
                             alt="Card image cap">
                     </div>
                     <div class="col-9">
-                        <p>Address: <span class="text-highlight">{{selectedWallet.address}}</span></p>
-                        <p>Currency: {{currencyDisplayName[selectedWallet.walletCurrencys[0].currencyType]}}</p>
-                        <p>Balance: {{selectedWallet.walletCurrencys[0].balance/1000000000000000000}}</p>
-                        <p>Contract: <span class="text-highlight">0xd4048296e93478a31777e8d7ef2128e601a0eac5</span></p>
+                        <p>Address: <span class="text-highlight">{{selectedWallet.account.address}}</span></p>
+                        <p>Currency: {{currencyDisplayName[selectedWallet.walletCurrency.currencyType]}}</p>
+                        <p>Balance: {{selectedWallet.walletCurrency.balance/1000000000000000000}}</p>
+                        <p *ngIf="selectedWallet.walletCurrency.currencyType == 0">Contract: <span class="text-highlight">0xd4048296e93478a31777e8d7ef2128e601a0eac5</span></p>
                         <p *ngIf="tokenService.tokenTxs">Transfers: {{tokenService.tokenTxs.length}}</p>
                     </div>
                 </div>
@@ -84,10 +85,10 @@
                                     <img class="card-img-top" src="https://cdn0.iconfinder.com/data/icons/mobile-device/512/dollar-usd-round-keyboard-money-usa-latin-2-512.png" alt="Card image cap">
                                 </div>
                                 <div class="col-5">
-                                    <p *ngIf="comonFunctions.equalHash(item.to, selectedWallet.address)">
+                                    <p *ngIf="comonFunctions.equalHash(item.to, selectedWallet.account.address)">
                                         Receive
                                     </p>
-                                    <p *ngIf="!comonFunctions.equalHash(item.to, selectedWallet.address)">
+                                    <p *ngIf="!comonFunctions.equalHash(item.to, selectedWallet.account.address)">
                                         Sent
                                     </p>
                                     <h6 class="text-left">#{{ i + 1 }} - {{comonFunctions.convertTimestampToDisplayTime(item.timeStamp)}}
@@ -119,7 +120,7 @@
 <ng-template #depositContent let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">
-            <b>{{currencyDisplayName[depositingWallet.walletCurrencys[0].currencyType]}}</b> Deposit
+            <b>{{currencyDisplayName[depositingWallet.walletCurrency.currencyType]}}</b> Deposit
         </h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
@@ -129,7 +130,7 @@
 
         <div class="card border-0">
             <div class="card-body">
-                Address: {{depositingWallet.address}}
+                Address: {{depositingWallet.account.address}}
             </div>
         </div>
 
@@ -140,7 +141,7 @@
                 margin-left: auto;
                 margin-right: auto;
                 width: 50%;">
-                    <qrcode class="text-center" [qrdata]="depositingWallet.address" [size]="256" [level]="'M'">
+                    <qrcode class="text-center" [qrdata]="depositingWallet.account.address" [size]="256" [level]="'M'">
                     </qrcode>
                 </div>
             </div>

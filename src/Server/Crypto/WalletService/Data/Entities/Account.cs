@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletService.Entities;
 
 namespace WalletService.Data.Entities
 {
@@ -12,5 +13,9 @@ namespace WalletService.Data.Entities
         public string Address { get; set; }
 
         public string PrivateKey { get; set; }
+
+        public Guid WalletId { get; set; }
+
+        public Wallet Wallet { get; set; }
     }
 }

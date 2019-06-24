@@ -14,8 +14,6 @@ namespace WalletService.Entities
 
         public string UserId { get; set; }
 
-        public Guid AccountId { get; set; }
-
         public Account Account { get; set; }
 
         //public string PrivateKey { get; set; }
@@ -23,6 +21,6 @@ namespace WalletService.Entities
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy }")]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        public ICollection<WalletCurrency> WalletCurrencys { get; set; }
+        public WalletCurrency WalletCurrency { get; set; }
     }
 }
