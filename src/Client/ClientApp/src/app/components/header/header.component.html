@@ -7,7 +7,7 @@
         </ul> -->
             <ul class="nav justify-content-center">
                 <li *ngIf="authenticationService.currentUserValue && authenticationService.currentUserValue.jwtRole === 'Admin'" class="nav-item">
-                    <a class="nav-link active" routerLink="/admin/catalog">Admin</a>
+                    <a class="nav-link active" routerLink="/admin/charts">Admin</a>
                 </li>
             </ul>
             <div *ngIf="currentUser" class="col text-right">
