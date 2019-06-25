@@ -41,7 +41,6 @@ export class WalletComponent implements OnInit {
     if (this.walletService.wallets === null) {
       this.walletService.getWalletInfo();
     }
-
   }
 
   public createWallet(): void {
@@ -66,18 +65,8 @@ export class WalletComponent implements OnInit {
     this.walletService.createWallet(0).pipe(first())
       .subscribe(
         data => {
-          this.loading = false;
-        },
-        error => {
-          this.error = error;
-          this.loading = false;
-        });
-
-    this.walletService.createWallet(1).pipe(first())
-      .subscribe(
-        data => {
-          this.loading = false;
           this.walletService.getWalletInfo();
+          this.loading = false;
         },
         error => {
           this.error = error;
@@ -117,15 +106,12 @@ export class WalletComponent implements OnInit {
       return;
     }
 
-    console.log(this.f.amount.value);
-    console.log(this.f.pair.value);
-
     this.tokenService.buyToken(this.f.amount.value, this.f.pair.value)
       .pipe(first())
       .subscribe(
         data => {
           if (data) {
-            alert('Buy Success');
+            alert('Buy Success. Please wait for transfer');
             this.modalService.dismissAll();
           } else {
             alert('Buy Failed');
@@ -134,7 +120,7 @@ export class WalletComponent implements OnInit {
         error => {
           alert('Buy Error')
         });
-        
+
   }
 
 }

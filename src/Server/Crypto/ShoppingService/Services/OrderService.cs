@@ -70,7 +70,7 @@ namespace ShoppingService.Services
                 // Caculate totalPayment
                 decimal totalPayment = product.Price * requestModel.TotalProducts;
 
-                // Transfer Token
+                // Check TxHash before
 
                 // Init Order
                 Order order = new Order()
@@ -85,7 +85,7 @@ namespace ShoppingService.Services
                     TotalProducts = requestModel.TotalProducts,
                     OrderStatus = OrderStatus.Processing,
                     TotalPayment = totalPayment,
-                    TxHash = "TxHash",
+                    TxHash = requestModel.TxHash,
                 };
 
                 await _shoppingContext.Orders.AddAsync(order);

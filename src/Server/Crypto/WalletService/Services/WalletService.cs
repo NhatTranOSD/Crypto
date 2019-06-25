@@ -37,31 +37,72 @@ namespace WalletService.Services
         {
             try
             {
-                // Init ETH currency (Default)
-                WalletCurrency walletCurrency = new WalletCurrency()
+                // Create Ethereum Account
+                Account account = await _web3Service.CreateAccount();
+                if (account == null) return false;
+
+                ///////////// ETH Wallet /////////////
+                WalletCurrency ETHCurrency = new WalletCurrency()
                 {
                     Balance = "0",
-                    CurrencyType = (CurrencyType)requestModel.CurrencyType,
+                    CurrencyType = CurrencyType.ETH,
                     Id = Guid.NewGuid(),
                     UpdatedDate = DateTime.UtcNow,
                 };
 
-                await _walletContext.WalletCurrencys.AddAsync(walletCurrency);
+                await _walletContext.WalletCurrencys.AddAsync(ETHCurrency);
 
                 // Init wallet, will generate here
-                Wallet wallet = new Wallet()
+                Wallet ETHwallet = new Wallet()
                 {
                     Id = Guid.NewGuid(),
                     UserId = requestModel.UserId,
-                    WalletCurrency = walletCurrency,
+                    WalletCurrency = ETHCurrency,
                     CreatedDate = DateTime.UtcNow,
                 };
+                await _walletContext.Wallets.AddAsync(ETHwallet);
 
-                await _walletContext.Wallets.AddAsync(wallet);
+                Account ETHAccount = new Account()
+                {
+                    Id = Guid.NewGuid(),
+                    Address = account.Address,
+                    PrivateKey = account.PrivateKey,
+                    Wallet = ETHwallet,
+                    WalletId = ETHwallet.Id,
+                };
+                await _walletContext.Accounts.AddAsync(ETHAccount);
 
-                Account account = await _web3Service.CreateAccount(wallet.Id);
 
-                if (account == null) return false;
+                ///////////// ETH Wallet /////////////
+                WalletCurrency ToKenCurrency = new WalletCurrency()
+                {
+                    Balance = "0",
+                    CurrencyType = CurrencyType.FCO,
+                    Id = Guid.NewGuid(),
+                    UpdatedDate = DateTime.UtcNow,
+                };
+
+                await _walletContext.WalletCurrencys.AddAsync(ToKenCurrency);
+
+                // Init wallet, will generate here
+                Wallet TokenWallet = new Wallet()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = requestModel.UserId,
+                    WalletCurrency = ToKenCurrency,
+                    CreatedDate = DateTime.UtcNow,
+                };
+                await _walletContext.Wallets.AddAsync(TokenWallet);
+
+                Account TokenAccount = new Account()
+                {
+                    Id = Guid.NewGuid(),
+                    Address = account.Address,
+                    PrivateKey = account.PrivateKey,
+                    Wallet = TokenWallet,
+                    WalletId = TokenWallet.Id,
+                };
+                await _walletContext.Accounts.AddAsync(TokenAccount);
 
                 await _walletContext.SaveChangesAsync();
 

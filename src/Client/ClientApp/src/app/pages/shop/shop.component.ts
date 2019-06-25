@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 
 import { ProductService } from '../../services/product.service';
 import { OrderService } from '../../services/order.service';
+import { TokenService } from '../../services/token.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Product } from '../../models/Product.model';
 import { OrderRequest } from '../../models/requestmodels/orderrequest.model';
@@ -23,6 +24,7 @@ export class ShopComponent implements OnInit {
   public orderTotal = 1;
 
   constructor(private orderService: OrderService,
+    private tokenService: TokenService,
     private router: Router,
     private authenticationService: AuthenticationService,
     public productService: ProductService,
@@ -51,6 +53,7 @@ export class ShopComponent implements OnInit {
     }
 
     const orderRequest: OrderRequest = {
+      txHash: '',
       buyerId: this.authenticationService.currentUserValue.id,
       buyerEmail: this.authenticationService.currentUserValue.userName,
       productId: this.selectedProduct.id,
@@ -58,18 +61,39 @@ export class ShopComponent implements OnInit {
       totalProducts: this.orderTotal,
     };
 
-    this.orderService.createOrder(orderRequest)
+    // Transfer token to admin
+    this.tokenService.transferTokenToAdmin(this.selectedProduct.price * this.orderTotal)
       .pipe(first())
       .subscribe(
         data => {
           this.loading = false;
 
-          if (data != null) {
-            alert('Buy successfull');
-            this.modalService.dismissAll();
+          if (data && data.txHash !== null) {
+            orderRequest.txHash = data.txHash;
+            // Create Order
+            this.loading = true;
+            this.orderService.createOrder(orderRequest)
+              .pipe(first())
+              .subscribe(
+                data => {
+                  this.loading = false;
 
-            // Reload
-            this.productService.getProducts();
+                  console.log('result:', data);
+                  if (data != null) {
+                    alert('Buy successfull');
+                    this.modalService.dismissAll();
+
+                    // Reload
+                    this.productService.getProducts();
+                  } else {
+                    this.error = 'Buy Error';
+                  }
+
+                },
+                error => {
+                  this.error = error;
+                  this.loading = false;
+                });
           } else {
             this.error = 'Buy Error';
           }
@@ -77,6 +101,7 @@ export class ShopComponent implements OnInit {
         },
         error => {
           this.error = error;
+          console.log(error);
           this.loading = false;
         });
   }

@@ -112,4 +112,16 @@ export class TokenService {
         return data;
       }));
   }
+
+  public transferTokenToAdmin(amount: number): any {
+    const requestModel ={
+      userId: this.authenticationService.currentUserValue.id,
+      amount: amount,
+    };
+
+    return this.http.post<any>(`${environment.walletApi}api/v1/Token/TransferTokenToAdmin`, requestModel)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
 }

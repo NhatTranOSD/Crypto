@@ -8,7 +8,7 @@ namespace WalletService.Interfaces
 {
     public interface IWeb3Service
     {
-        Task<Account> CreateAccount(Guid walletId);
+        Task<Account> CreateAccount();
         Task<string> SendETH(string from, string to, decimal value, string privateKey);
         Task<string> SendToken(string from, string to, decimal value, string privateKey);
     }

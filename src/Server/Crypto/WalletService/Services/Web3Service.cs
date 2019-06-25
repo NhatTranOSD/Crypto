@@ -33,7 +33,7 @@ namespace WalletService.Services
             _ethereumGatewayApi = _settings?.Value.ApiUri;
         }
 
-        public async Task<Account> CreateAccount(Guid walletId)
+        public async Task<Account> CreateAccount()
         {
             try
             {
@@ -48,11 +48,7 @@ namespace WalletService.Services
                 if (!success) return null;
 
                 Account account = JsonConvert.DeserializeObject<Account>(jsonObj.Property("result").Value.ToString());
-                account.Id = Guid.NewGuid();
-                account.WalletId = walletId;
-
-                await _walletContext.Accounts.AddAsync(account);
-                await _walletContext.SaveChangesAsync();
+                // account.PrivateKey = account.PrivateKey.ToUpper();
 
                 return account;
             }

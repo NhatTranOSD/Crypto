@@ -109,7 +109,7 @@ namespace WalletService.Services
                 if (pair == PairType.ETH_FCO)
                 {
                     // Transfer ETH to Admin
-                    string receivedTx = await SendETH(ETH.Account.Address, config.AdminAddress, amount * 1000000000000000000, ETH.Account.PrivateKey);
+                    string receivedTx = await SendETH(ETH.Account.Address, config.AdminAddress, Convert.ToUInt64(tokenOrder.TotalPayment), ETH.Account.PrivateKey);
 
 
                     if (string.IsNullOrEmpty(receivedTx)) return false;
@@ -166,7 +166,7 @@ namespace WalletService.Services
                 if (Convert.ToDecimal(FCO.WalletCurrency.Balance) < amount * 1000000000000000000) return null;
 
                 // Transfer Token to user
-                string sendTx = await SendToken(config.AdminAddress, FCO.Account.Address, amount * 1000000000000000000, ETH.Account.PrivateKey);
+                string sendTx = await SendToken(FCO.Account.Address, config.AdminAddress, amount * 1000000000000000000, FCO.Account.PrivateKey);
 
                 return sendTx;
             }
