@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 
+import { ChartDataSets } from 'chart.js';
+
 import { environment } from '../../environments/environment';
 import { TokenTxResponse } from '../models/responsemodels/TokenTxResponse.model';
 import { TokenConfig } from '../models/TokenConfig.model';
@@ -15,6 +17,10 @@ export class TokenService {
   public tokenConfig: TokenConfig;
   public adminBalance: number;
   public tokenSupply: number;
+
+  public lineChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Token Orders' },
+  ];
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(x => {
@@ -101,7 +107,7 @@ export class TokenService {
   }
 
   public buyToken(amount: number, pair: number): any {
-    const requestModel ={
+    const requestModel = {
       userId: this.authenticationService.currentUserValue.id,
       amount: amount,
       pair: pair
@@ -114,7 +120,7 @@ export class TokenService {
   }
 
   public transferTokenToAdmin(amount: number): any {
-    const requestModel ={
+    const requestModel = {
       userId: this.authenticationService.currentUserValue.id,
       amount: amount,
     };
@@ -123,5 +129,18 @@ export class TokenService {
       .pipe(map(data => {
         return data;
       }));
+  }
+
+  public getOrdersChart(): any {
+    return this.http.get<number[]>(`${environment.walletApi}api/v1/Chart/TokenOrdersChart`)
+      .subscribe(
+        data => {
+          this.lineChartData = [
+            { data: data, label: 'FCoin Orders' },
+          ];
+        },
+        error => {
+          console.log(error);
+        });
   }
 }

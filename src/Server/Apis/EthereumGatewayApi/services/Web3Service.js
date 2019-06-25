@@ -17,36 +17,26 @@ const encryptPassword = async (privateKey, password) => {
 }
 
 const getTransactionCount = async (address) => {
-    return web3.eth.getTransactionCount(address, 'latest');
+    return web3.eth.getTransactionCount(address);
 }
 
 const getBalance = async (address) => {
-    return web3.eth.getBalance(address, 'latest');
+    return web3.eth.getBalance(address);
 }
 
 const signTransaction = async (tx, privateKey) => {
-    return web3.eth.accounts.signTransaction(tx, process.env.privateKey);
+    return web3.eth.accounts.signTransaction(tx, privateKey);
 }
 
 const sendSignedTransaction = async (rawTransaction) => {
-    return web3.eth.sendSignedTransaction(rawTransaction)
-        .on('receipt', function (receipt) {
-            console.log(receipt);
-        })
-        .once('transactionHash', function (hash) { console.log(hash) })
-        .once('receipt', function (receipt) { console.log(receipt) })
-        .on('confirmation', function (confNumber) { console.log(confNumber) })
-        .on('error', function (error) { console.log(error) })
-        .then(function (receipt) {
-            console.log(receipt);
-        });;
+    return web3.eth.sendSignedTransaction(rawTransaction);
 }
 
 const estimateGas = async (to, data) => {
     return web3.eth.estimateGas({
         to: to,
         data: data
-    });
+    }).then(console.log);;
 };
 
 const getGasPrice = async () => {

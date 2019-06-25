@@ -1,7 +1,6 @@
 let express = require('express');
 let app = express();
-const bodyParser = require('body-parser')
-const env = require('dotenv')
+const env = require('dotenv');
 env.config();
 
 // Parse URL-encoded bodies (as sent by HTML forms)

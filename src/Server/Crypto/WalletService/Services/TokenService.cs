@@ -109,7 +109,7 @@ namespace WalletService.Services
                 if (pair == PairType.ETH_FCO)
                 {
                     // Transfer ETH to Admin
-                    string receivedTx = await SendETH(ETH.Account.Address, config.AdminAddress, Convert.ToUInt64(tokenOrder.TotalPayment), ETH.Account.PrivateKey);
+                    string receivedTx = await SendETH(ETH.Account.Address, config.AdminAddress, Convert.ToUInt64(tokenOrder.TotalPayment*1000000000), ETH.Account.PrivateKey);
 
 
                     if (string.IsNullOrEmpty(receivedTx)) return false;

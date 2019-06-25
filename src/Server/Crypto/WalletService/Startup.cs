@@ -54,6 +54,7 @@ namespace WalletService
             services.AddHttpClient<IAccountService, AccountService>();
             services.AddTransient<IWalletService, Services.WalletService>();
             services.AddTransient<ITokenService, Services.TokenService>();
+            services.AddTransient<IChartService, ChartService>();
             services.AddHttpClient<ITransactionService, TransactionService>();
             services.AddHttpClient<IWeb3Service, Web3Service>();
 

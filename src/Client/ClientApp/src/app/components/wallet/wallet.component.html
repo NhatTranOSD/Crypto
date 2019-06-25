@@ -86,8 +86,8 @@
                         <p>Address: <span class="text-highlight">{{selectedWallet.account.address}}</span></p>
                         <p>Currency: {{currencyDisplayName[selectedWallet.walletCurrency.currencyType]}}</p>
                         <p>Balance: {{selectedWallet.walletCurrency.balance/1000000000000000000}}</p>
-                        <p *ngIf="selectedWallet.walletCurrency.currencyType == 0">Contract: <span
-                                class="text-highlight">0xd4048296e93478a31777e8d7ef2128e601a0eac5</span></p>
+                        <p *ngIf="selectedWallet.walletCurrency.currencyType === 0 && tokenService.tokenConfig">Contract: <span
+                                class="text-highlight">{{tokenService.tokenConfig.contractAddress}}</span></p>
                         <p *ngIf="tokenService.tokenTxs">Transfers: {{tokenService.tokenTxs.length}}</p>
                     </div>
                 </div>

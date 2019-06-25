@@ -10,6 +10,7 @@ using ShoppingService.Interfaces;
 namespace ShoppingService.Controllers
 {
     [Route("api/v1/[controller]")]
+    [Authorize]
     [ApiController]
     public class ChartController : ControllerBase
     {
@@ -21,7 +22,7 @@ namespace ShoppingService.Controllers
 
         [Route("OrdersChart")]
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<decimal>>> OrdersChart()

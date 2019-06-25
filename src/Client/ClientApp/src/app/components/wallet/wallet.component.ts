@@ -41,6 +41,8 @@ export class WalletComponent implements OnInit {
     if (this.walletService.wallets === null) {
       this.walletService.getWalletInfo();
     }
+
+    this.tokenService.getTokenConfig();
   }
 
   public createWallet(): void {
