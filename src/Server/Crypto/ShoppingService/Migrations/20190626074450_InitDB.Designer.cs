@@ -10,7 +10,7 @@ using ShoppingService.Data;
 namespace ShoppingService.Migrations
 {
     [DbContext(typeof(ShoppingContext))]
-    [Migration("20190624065928_InitDB")]
+    [Migration("20190626074450_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,8 @@ namespace ShoppingService.Migrations
 
                     b.Property<string>("ProductName")
                         .IsRequired();
+
+                    b.Property<string>("RefundTxHash");
 
                     b.Property<decimal>("TotalPayment");
 

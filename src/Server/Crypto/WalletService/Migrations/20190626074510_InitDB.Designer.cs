@@ -10,8 +10,8 @@ using WalletService.Data;
 namespace WalletService.Migrations
 {
     [DbContext(typeof(WalletContext))]
-    [Migration("20190626033748_UpdateBuyerEmail")]
-    partial class UpdateBuyerEmail
+    [Migration("20190626074510_InitDB")]
+    partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

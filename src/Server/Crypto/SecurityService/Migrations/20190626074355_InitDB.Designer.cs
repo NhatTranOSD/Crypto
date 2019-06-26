@@ -10,7 +10,7 @@ using SecurityService.Data;
 namespace SecurityService.Migrations
 {
     [DbContext(typeof(SecurityContext))]
-    [Migration("20190626065640_InitDB")]
+    [Migration("20190626074355_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

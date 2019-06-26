@@ -34,13 +34,16 @@ namespace WalletService.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     ReceiveTxHash = table.Column<string>(nullable: false),
                     SendTxHash = table.Column<string>(nullable: false),
+                    RevertTxHash = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     BuyerId = table.Column<Guid>(nullable: false),
+                    BuyerEmail = table.Column<string>(nullable: true),
                     Amount = table.Column<decimal>(nullable: false),
                     Fee = table.Column<decimal>(nullable: false),
                     TotalPayment = table.Column<decimal>(nullable: false),
                     TokenName = table.Column<string>(nullable: false),
-                    TokenOrderStatus = table.Column<int>(nullable: false)
+                    TokenOrderStatus = table.Column<int>(nullable: false),
+                    PairType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

@@ -22,6 +22,7 @@ namespace ShoppingService.Migrations
                     TotalPayment = table.Column<decimal>(nullable: false),
                     Currency = table.Column<string>(nullable: false),
                     TxHash = table.Column<string>(nullable: false),
+                    RefundTxHash = table.Column<string>(nullable: true),
                     OrderStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
