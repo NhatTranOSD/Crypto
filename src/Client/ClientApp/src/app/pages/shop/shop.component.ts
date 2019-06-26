@@ -10,11 +10,8 @@ import { TokenService } from '../../services/token.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Product } from '../../models/Product.model';
 import { OrderRequest } from '../../models/requestmodels/orderrequest.model';
-<<<<<<< HEAD
 import { Paging } from '../../models/Paging.model';
-=======
 import { WalletService } from '../../services/wallet.service';
->>>>>>> DEV
 
 @Component({
   selector: 'app-shop',
@@ -22,10 +19,10 @@ import { WalletService } from '../../services/wallet.service';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-  
+
   public selectedProduct: Product;
-  public products:any;
-  public paging : Paging;
+  public products: any;
+  public paging: Paging;
   public error: string;
   public loading: boolean;
   public orderTotal = 1;
@@ -33,9 +30,9 @@ export class ShopComponent implements OnInit {
   public totalPage = 0;
   public pageNumber = 1;
   public pageSize = 5;
-  public limit : number[] = [5,10,15,20];
-  selectedSize : number = 5;
-  
+  public limit: number[] = [5, 10, 15, 20];
+  selectedSize: number = 5;
+
   constructor(private orderService: OrderService,
     private tokenService: TokenService,
     private router: Router,
@@ -50,21 +47,18 @@ export class ShopComponent implements OnInit {
 
   getProductLists(): void {
     this.loading = true;
-    this.productService.getProductLists( {pageNumber: this.pageNumber, pageSize : this.pageSize} ).subscribe(
+    this.productService.getProductLists({ pageNumber: this.pageNumber, pageSize: this.pageSize }).subscribe(
       data => {
         this.products = data.product;
         this.total = data.paging.totalItems;
         this.totalPage = data.paging.totalPages;
-        
-        console.log("res",data)
-        console.log(this.total + " " + this.totalPage)  
       },
       error => {
         console.log(error);
       });
   }
 
-  selected(){
+  selected() {
     this.pageSize = this.selectedSize;
     this.getProductLists();
   }
@@ -83,7 +77,7 @@ export class ShopComponent implements OnInit {
     this.pageNumber--;
     this.getProductLists();
   }
-  
+
   buyNow(content, item) {
 
     if (this.authenticationService.currentUserValue === null) {
@@ -125,44 +119,41 @@ export class ShopComponent implements OnInit {
       .subscribe(
         data => {
 
-<<<<<<< HEAD
           if (data != null) {
             alert('Buy successfull');
             this.modalService.dismissAll();
             // Reload
             this.productService.getProducts();
-=======
-          if (data && data.txHash !== null) {
-            orderRequest.txHash = data.txHash;
-            // Create Order
-            this.loading = true;
-            this.orderService.createOrder(orderRequest)
-              .pipe(first())
-              .subscribe(
-                data => {
-                  if (data != null) {
-                    alert('Buy successfull');
+            if (data && data.txHash !== null) {
+              orderRequest.txHash = data.txHash;
+              // Create Order
+              this.loading = true;
+              this.orderService.createOrder(orderRequest)
+                .pipe(first())
+                .subscribe(
+                  data => {
+                    if (data != null) {
+                      alert('Buy successfull');
 
-                    // Reload
-                    this.productService.getProducts();
-                    this.walletService.getWalletInfo();
-                  } else {
-                    alert('Buy failed');
-                  }
+                      // Reload
+                      this.productService.getProducts();
+                      this.walletService.getWalletInfo();
+                    } else {
+                      alert('Buy failed');
+                    }
 
-                  this.tokenService.trading = false;
+                    this.tokenService.trading = false;
 
-                },
-                error => {
-                  this.error = error;
-                  this.tokenService.trading = false;
-                });
->>>>>>> DEV
-          } else {
-            this.error = 'Buy Error';
-            this.tokenService.trading = false;
+                  },
+                  error => {
+                    this.error = error;
+                    this.tokenService.trading = false;
+                  });
+            } else {
+              this.error = 'Buy Error';
+              this.tokenService.trading = false;
+            }
           }
-
         },
         error => {
           this.error = error;
