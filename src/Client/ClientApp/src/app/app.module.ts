@@ -15,6 +15,7 @@ import { WalletComponent } from './components/wallet/wallet.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angularx-qrcode';
+import { TokenOrderHistoryComponent } from './components/token-orderhistory/token-orderhistory.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { QRCodeModule } from 'angularx-qrcode';
     RegisterComponent,
     HeaderComponent,
     WalletComponent,
+    TokenOrderHistoryComponent,
   ],
   imports: [
     BrowserModule,

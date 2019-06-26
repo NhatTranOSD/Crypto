@@ -83,7 +83,7 @@ namespace ShoppingService.Services
                     ProductId = requestModel.ProductId,
                     ProductName = requestModel.ProductName,
                     TotalProducts = requestModel.TotalProducts,
-                    OrderStatus = OrderStatus.Processing,
+                    OrderStatus = OrderStatus.Completed,
                     TotalPayment = totalPayment,
                     TxHash = requestModel.TxHash,
                 };

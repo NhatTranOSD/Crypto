@@ -8,6 +8,7 @@ import { ChartDataSets } from 'chart.js';
 import { environment } from '../../environments/environment';
 import { TokenTxResponse } from '../models/responsemodels/TokenTxResponse.model';
 import { TokenConfig } from '../models/TokenConfig.model';
+import { TokenOrder } from '../models/tokenorder.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class TokenService {
   public tokenConfig: TokenConfig;
   public adminBalance: number;
   public tokenSupply: number;
+
+  public tokenOrders: TokenOrder[];
+
+  public trading = false;
 
   public lineChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Token Orders' },
@@ -68,6 +73,35 @@ export class TokenService {
       .subscribe(
         data => {
           this.tokenTxs = data.result;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  public getUserTokenOrders() {
+    const userId = this.authenticationService.currentUserValue.id;
+    const requestUri = `${environment.walletApi}api/v1/Token/UserOrderHistory?userId=${userId}`;
+
+    this.http.get<TokenOrder[]>(requestUri)
+      .subscribe(
+        data => {
+          this.tokenOrders = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  public getTokenOrders() {
+    const userId = this.authenticationService.currentUserValue.id;
+    const requestUri = `${environment.walletApi}/api/v1/Token/OrderHistory`;
+
+    this.http.get<TokenOrder[]>(requestUri)
+      .subscribe(
+        data => {
+          this.tokenOrders = data;
+          console.log(data);
         },
         error => {
           console.log(error);

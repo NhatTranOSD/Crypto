@@ -73,6 +73,36 @@ namespace WalletService.Services
             }
         }
 
+        public async Task<IEnumerable<TokenOrderResponseModel>> TokenOrderHistory()
+        {
+            try
+            {
+                IEnumerable<TokenOrder> tokenOrders = await _walletContext.TokenOrders.OrderByDescending(x => x.CreatedDate).Take(20).ToListAsync();
+
+                return _mapper.Map<IEnumerable<TokenOrderResponseModel>>(tokenOrders);
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public async Task<IEnumerable<TokenOrderResponseModel>> TokenOrderHistory(Guid userId)
+        {
+            try
+            {
+                IEnumerable<TokenOrder> tokenOrders = await _walletContext.TokenOrders.Where(x => x.BuyerId == userId).OrderByDescending(x => x.CreatedDate).Take(20).ToListAsync();
+
+                return _mapper.Map<IEnumerable<TokenOrderResponseModel>>(tokenOrders);
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
         public async Task<bool> BuyToken(Guid userId, decimal amount, PairType pair)
         {
             try
@@ -109,25 +139,40 @@ namespace WalletService.Services
                 if (pair == PairType.ETH_FCO)
                 {
                     // Transfer ETH to Admin
-                    string receivedTx = await SendETH(ETH.Account.Address, config.AdminAddress, Convert.ToUInt64(tokenOrder.TotalPayment*1000000000), ETH.Account.PrivateKey);
+                    string receivedTx = await SendETH(ETH.Account.Address, config.AdminAddress, Convert.ToUInt64(tokenOrder.TotalPayment * 1000000000), ETH.Account.PrivateKey);
 
 
-                    if (string.IsNullOrEmpty(receivedTx)) return false;
-
-                    // Transfer Token to user
-                    string sendTx = await SendToken(config.AdminAddress, FCO.Account.Address, amount * 1000000000000000000, config.PrivateKey);
-
-                    if (string.IsNullOrEmpty(sendTx))
+                    if (string.IsNullOrEmpty(receivedTx))
                     {
-                        // Revert ETH
-                        string revertTx = await SendETH(config.AdminAddress, ETH.Account.Address, amount * 1000000000000000000, config.PrivateKey);
+                        tokenOrder.TokenOrderStatus = TokenOrderStatus.Failed;
+                    }
+                    else
+                    {
+                        // Transfer Token to user
+                        string sendTx = await SendToken(config.AdminAddress, FCO.Account.Address, amount * 1000000000000000000, config.PrivateKey);
 
-                        return false;
-                    };
+                        if (string.IsNullOrEmpty(sendTx))
+                        {
+                            // Revert ETH
+                            string revertTx = await SendETH(config.AdminAddress, ETH.Account.Address, Convert.ToUInt64(tokenOrder.TotalPayment * 1000000000), config.PrivateKey);
 
-                    tokenOrder.TokenOrderStatus = TokenOrderStatus.Pending;
-                    tokenOrder.ReceiveTxHash = receivedTx;
-                    tokenOrder.SendTxHash = sendTx;
+                            if (string.IsNullOrEmpty(revertTx))
+                            {
+                                tokenOrder.TokenOrderStatus = TokenOrderStatus.Reverting;
+                            }
+                            else
+                            {
+                                tokenOrder.TokenOrderStatus = TokenOrderStatus.Reverted;
+                                tokenOrder.RevertTxHash = revertTx;
+                            }
+                        }
+                        else
+                        {
+                            tokenOrder.TokenOrderStatus = TokenOrderStatus.Successed;
+                            tokenOrder.ReceiveTxHash = receivedTx;
+                            tokenOrder.SendTxHash = sendTx;
+                        }
+                    }
 
                     await _walletContext.TokenOrders.AddAsync(tokenOrder);
                     await _walletContext.SaveChangesAsync();

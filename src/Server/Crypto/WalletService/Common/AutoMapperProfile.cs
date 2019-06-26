@@ -19,6 +19,7 @@ namespace WalletService.Common
             CreateMap<Account, AccountResponseModel>();
             CreateMap<WalletCurrency, WalletCurrencyResponseModel>();
             CreateMap<TokenConfiguration, TokenConfigurationResponseModel>();
+            CreateMap<TokenOrder, TokenOrderResponseModel>();
         }
     }
 }

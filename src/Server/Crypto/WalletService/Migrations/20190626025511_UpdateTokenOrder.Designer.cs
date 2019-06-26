@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WalletService.Data;
 
 namespace WalletService.Migrations
 {
     [DbContext(typeof(WalletContext))]
-    partial class WalletContextModelSnapshot : ModelSnapshot
+    [Migration("20190626025511_UpdateTokenOrder")]
+    partial class UpdateTokenOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,15 +47,11 @@ namespace WalletService.Migrations
 
                     b.Property<decimal>("Amount");
 
-                    b.Property<string>("BuyerEmail");
-
                     b.Property<Guid>("BuyerId");
 
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<decimal>("Fee");
-
-                    b.Property<int>("PairType");
 
                     b.Property<string>("ReceiveTxHash")
                         .IsRequired();

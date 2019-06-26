@@ -17,5 +17,9 @@ namespace WalletService.Interfaces
         Task<bool> BuyToken(Guid userId, decimal amount, PairType pair);
 
         Task<string> TransferTokenToAdmin(Guid userId, decimal amount);
+
+        Task<IEnumerable<TokenOrderResponseModel>> TokenOrderHistory(Guid userId);
+
+        Task<IEnumerable<TokenOrderResponseModel>> TokenOrderHistory();
     }
 }

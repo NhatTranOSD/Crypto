@@ -108,19 +108,21 @@ export class WalletComponent implements OnInit {
       return;
     }
 
+    this.modalService.dismissAll();
+
+    this.tokenService.trading = true;
+
     this.tokenService.buyToken(this.f.amount.value, this.f.pair.value)
       .pipe(first())
       .subscribe(
         data => {
-          if (data) {
-            alert('Buy Success. Please wait for transfer');
-            this.modalService.dismissAll();
-          } else {
-            alert('Buy Failed');
-          }
+          this.tokenService.trading = false;
+          this.walletService.getWalletInfo();
+          alert('Buy success');
         },
         error => {
-          alert('Buy Error')
+          this.tokenService.trading = false;
+          alert('Buy error');
         });
 
   }

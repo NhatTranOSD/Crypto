@@ -16,7 +16,7 @@ const createAccount = async (req, res) => {
 
         if (account) {
 
-            const privateKey = await Web3Service.encryptPassword(account.privateKey, 'test');
+            // const privateKey = await Web3Service.encryptPassword(account.privateKey, 'test');
             let result = {
                 successed: true,
                 result: {
@@ -39,8 +39,7 @@ const sendETHTransaction = async (req, res) => {
         if (req.query.from === null ||
             req.query.to === null ||
             req.query.value === null ||
-            req.query.privateKey === null ||
-            process.env.adminAddress === null) {
+            req.query.privateKey === null) {
             res.json({ successed: false, result: null });
         }
 
@@ -90,7 +89,11 @@ const sendETHTransaction = async (req, res) => {
             .on('error', function (error) {
                 console.log('error: ', error);
 
-                res.json({ successed: false, result: null });
+                if (!returned) {
+                    res.json({ successed: true, result: null });
+                    returned = true;
+                }
+
                 return;
             })
             .then(function (receipt) {
@@ -108,8 +111,7 @@ const sendToken = async (req, res) => {
         if (req.query.from === null ||
             req.query.to === null ||
             req.query.value === null ||
-            req.query.privateKey === null ||
-            process.env.adminAddress === null) {
+            req.query.privateKey === null) {
             res.json({ successed: false, result: null });
         }
 
@@ -163,7 +165,10 @@ const sendToken = async (req, res) => {
             })
             .on('error', function (error) {
                 console.log('error: ', error);
-                res.json({ successed: false, result: null });
+                if (!returned) {
+                    res.json({ successed: true, result: null });
+                    returned = true;
+                }
                 return;
             })
             .then(function (receipt) {

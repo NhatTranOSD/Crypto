@@ -37,7 +37,11 @@
                                         alt="Card image cap">
                                 </div>
                                 <div class="col-8">
-                                    <h4><b>{{currencyDisplayName[wallet.walletCurrency.currencyType]}}</b></h4>
+                                    <h4><b>{{currencyDisplayName[wallet.walletCurrency.currencyType]}}</b>
+                                        <span><img *ngIf="tokenService.trading" class="pl-2"
+                                                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                        </span>
+                                    </h4>
                                     <h6>Balance: {{wallet.walletCurrency.balance/1000000000000000000}}
                                     </h6>
                                     <button *ngIf="wallet.walletCurrency.currencyType !== 0" type="button"
@@ -86,8 +90,9 @@
                         <p>Address: <span class="text-highlight">{{selectedWallet.account.address}}</span></p>
                         <p>Currency: {{currencyDisplayName[selectedWallet.walletCurrency.currencyType]}}</p>
                         <p>Balance: {{selectedWallet.walletCurrency.balance/1000000000000000000}}</p>
-                        <p *ngIf="selectedWallet.walletCurrency.currencyType === 0 && tokenService.tokenConfig">Contract: <span
-                                class="text-highlight">{{tokenService.tokenConfig.contractAddress}}</span></p>
+                        <p *ngIf="selectedWallet.walletCurrency.currencyType === 0 && tokenService.tokenConfig">
+                            Contract: <span class="text-highlight">{{tokenService.tokenConfig.contractAddress}}</span>
+                        </p>
                         <p *ngIf="tokenService.tokenTxs">Transfers: {{tokenService.tokenTxs.length}}</p>
                     </div>
                 </div>
@@ -185,7 +190,7 @@
                 <form [formGroup]="buyForm" (ngSubmit)="buyNow()">
                     <div class="form-group">
                         <label for="amount">Amount: </label>
-                        <input  min="0" type="number" formControlName="amount" class="form-control"
+                        <input min="0" type="number" formControlName="amount" class="form-control"
                             [ngClass]="{ 'is-invalid': f.amount.errors }" />
                         <div *ngIf="f.amount.errors" class="invalid-feedback">
                             <div *ngIf="f.amount.errors.required">Amount is required</div>
@@ -200,7 +205,8 @@
                     </div>
                     <hr>
                     <button class="btn btn-primary btn-sm pull-right">BuyNow</button>
-                    <button type="button" class="btn btn-outline-dark btn-sm pull-right mr-1" (click)="modal.dismiss('Close')">close</button>
+                    <button type="button" class="btn btn-outline-dark btn-sm pull-right mr-1"
+                        (click)="modal.dismiss('Close')">close</button>
                 </form>
             </div>
         </div>
