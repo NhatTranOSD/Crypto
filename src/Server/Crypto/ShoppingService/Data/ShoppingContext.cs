@@ -21,10 +21,6 @@ namespace ShoppingService.Data
         {
             base.OnModelCreating(builder);
         }
-        public PageList<Product> GetProducts(int pageNumber, int pageSize)
-        {
-            IQueryable<Product> query = Products;
-            return PageList<Product>.Create(query,  pageNumber,  pageSize);
-        }
+        
     }
 }

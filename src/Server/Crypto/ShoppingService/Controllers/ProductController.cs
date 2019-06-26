@@ -6,12 +6,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ShoppingService.Common;
 using ShoppingService.Data;
-using ShoppingService.Data.Helpers;
 using ShoppingService.Interfaces;
 using ShoppingService.Models.RequestModels;
-using ShoppingService.Models.ResponseModels;
 
 namespace ShoppingService.Controllers
 {
@@ -87,29 +84,15 @@ namespace ShoppingService.Controllers
 
             return Ok(result);
         }
-
-       
+               
         [HttpGet]
-        public IActionResult GetProducts(int pageNumber, int pageSize)
+        public async Task<ActionResult> GetProducts(int pageNumber, int pageSize)
         {
-            var products = _shoppingContext.GetProducts( pageNumber,  pageSize);
+            if (!ModelState.IsValid) return BadRequest();
 
-            IList<ProductResponseModel> response = _mapper.Map<IList<ProductResponseModel>>(products);
-             
-            var paginationMetaData = new PagingHeader
-            {
-            TotalItems = products.TotalCount,
-            PageNumber = products.PageSize,
-            PageSize = products.CurrentPage,
-            TotalPages = products.TotalPages,
-            };
+            var result = await _productService.GetProductLists(pageNumber, pageSize);
 
-            var productList = new ProductListResponseModel
-            {
-                Paging = paginationMetaData,
-                Product = response,
-            };
-            return Ok(productList);
+            return Ok(result);
         }
     }
 }

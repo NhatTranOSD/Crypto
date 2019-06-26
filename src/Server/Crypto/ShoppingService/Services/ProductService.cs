@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShoppingService.Data;
 using ShoppingService.Data.Entities;
+using ShoppingService.Data.Helpers;
 using ShoppingService.Interfaces;
 using ShoppingService.Models.RequestModels;
 using ShoppingService.Models.ResponseModels;
@@ -117,6 +118,40 @@ namespace ShoppingService.Services
             catch (Exception ex)
             {
                 return false;
+                throw ex;
+            }
+        }
+
+        public async Task<ProductListResponseModel> GetProductLists(int pageNumber, int pageSize)
+        {
+            try
+            {
+                var productAll = await _shoppingContext.Products.ToListAsync();
+                var products = await _shoppingContext.Products.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+                var totalCountPerPage = products.Count();
+                var totalCountAll = productAll.Count;
+
+                IList<ProductResponseModel> response = _mapper.Map<IList<ProductResponseModel>>(products);
+            
+                var paginationMetaData = new PagingHeader
+                {
+                    TotalItems = totalCountAll,
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalPages = (int)Math.Ceiling(totalCountAll / (double)pageSize),
+                };
+
+                var productList = new ProductListResponseModel
+                {
+                    Paging = paginationMetaData,
+                    Product = response,
+                };
+                return productList;
+            }
+            catch (Exception ex)
+            {
+                return null;
                 throw ex;
             }
         }

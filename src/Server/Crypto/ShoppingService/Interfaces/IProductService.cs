@@ -17,5 +17,7 @@ namespace ShoppingService.Interfaces
 
         Task<bool> DeleteProduct(string productId);
 
+        Task<ProductListResponseModel> GetProductLists(int pageNumber, int pageSize);
+
     }
 }
