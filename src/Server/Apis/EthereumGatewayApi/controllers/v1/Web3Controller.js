@@ -128,7 +128,7 @@ const sendToken = async (req, res) => {
         // const balance = await Web3Service.getBalance(from);
         console.log('sendToken Value: ', value);
 
-        const abiArray = JSON.parse(fs.readFileSync('ABI.json', 'utf-8'));
+        const abiArray = JSON.parse(fs.readFileSync('./ABI.json', 'utf-8'));
 
         const contract = web3.eth.Contract(abiArray, process.env.contractAddress, { from: from });
 
