@@ -9,6 +9,7 @@ import { OrderService } from '../../services/order.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Product } from '../../models/Product.model';
 import { OrderRequest } from '../../models/requestmodels/orderrequest.model';
+import { Paging } from '../../models/Paging.model';
 
 @Component({
   selector: 'app-shop',
@@ -16,12 +17,20 @@ import { OrderRequest } from '../../models/requestmodels/orderrequest.model';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-
+  
   public selectedProduct: Product;
+  public products:any;
+  public paging : Paging;
   public error: string;
   public loading: boolean;
   public orderTotal = 1;
-
+  public total = 0;
+  public totalPage = 0;
+  public pageNumber = 1;
+  public pageSize = 5;
+  public limit : number[] = [5,10,15,20];
+  selectedSize : number = 5;
+  
   constructor(private orderService: OrderService,
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -29,9 +38,45 @@ export class ShopComponent implements OnInit {
     private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.productService.getProducts();
+    this.getProductLists();
   }
 
+  getProductLists(): void {
+    this.loading = true;
+    this.productService.getProductLists( {pageNumber: this.pageNumber, pageSize : this.pageSize} ).subscribe(
+      data => {
+        this.products = data.product;
+        this.total = data.paging.totalItems;
+        this.totalPage = data.paging.totalPages;
+        
+        console.log("res",data)
+        console.log(this.total + " " + this.totalPage)  
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  selected(){
+    this.pageSize = this.selectedSize;
+    this.getProductLists();
+  }
+
+  goToPage(n: number): void {
+    this.pageNumber = n;
+    this.getProductLists();
+  }
+
+  onNext(): void {
+    this.pageNumber++;
+    this.getProductLists();
+  }
+
+  onPrev(): void {
+    this.pageNumber--;
+    this.getProductLists();
+  }
+  
   buyNow(content, item) {
 
     if (this.authenticationService.currentUserValue === null) {
@@ -67,7 +112,6 @@ export class ShopComponent implements OnInit {
           if (data != null) {
             alert('Buy successfull');
             this.modalService.dismissAll();
-
             // Reload
             this.productService.getProducts();
           } else {

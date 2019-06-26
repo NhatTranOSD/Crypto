@@ -4,16 +4,22 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Product } from '../models/Product.model';
 import { ProductRequest } from '../models/requestmodels/productrequest.model';
+import {ProductList} from '../models/ProductList.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  
   public products: Product[];
 
   constructor(private http: HttpClient) {
 
+  }
+
+  public getProductLists(pageable): Observable<ProductList> {
+    return this.http.get<ProductList>(`${environment.shoppingApi}api/Product?pageNumber=${pageable.pageNumber}&pageSize=${pageable.pageSize}`);
   }
 
   public getProducts(): any {

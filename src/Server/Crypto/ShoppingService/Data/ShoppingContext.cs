@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShoppingService.Data.Helpers;
 
 namespace ShoppingService.Data
 {
@@ -19,6 +20,11 @@ namespace ShoppingService.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+        }
+        public PageList<Product> GetProducts(int pageNumber, int pageSize)
+        {
+            IQueryable<Product> query = Products;
+            return PageList<Product>.Create(query,  pageNumber,  pageSize);
         }
     }
 }

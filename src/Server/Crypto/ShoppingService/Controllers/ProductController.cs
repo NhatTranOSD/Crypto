@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShoppingService.Common;
+using ShoppingService.Data;
+using ShoppingService.Data.Helpers;
 using ShoppingService.Interfaces;
 using ShoppingService.Models.RequestModels;
+using ShoppingService.Models.ResponseModels;
 
 namespace ShoppingService.Controllers
 {
@@ -15,10 +20,16 @@ namespace ShoppingService.Controllers
     public class ProductController : ControllerBase
     {
         protected readonly IProductService _productService;
+        private readonly IUrlHelper _urlhelper;
+        private readonly ShoppingContext _shoppingContext;
+        private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, ShoppingContext shoppingContext, IMapper mapper)
         {
             _productService = productService;
+            _shoppingContext = shoppingContext;
+            _mapper = mapper;
+            
         }
 
         [AllowAnonymous]
@@ -75,6 +86,30 @@ namespace ShoppingService.Controllers
             var result = await _productService.DeleteProduct(id);
 
             return Ok(result);
+        }
+
+       
+        [HttpGet]
+        public IActionResult GetProducts(int pageNumber, int pageSize)
+        {
+            var products = _shoppingContext.GetProducts( pageNumber,  pageSize);
+
+            IList<ProductResponseModel> response = _mapper.Map<IList<ProductResponseModel>>(products);
+             
+            var paginationMetaData = new PagingHeader
+            {
+            TotalItems = products.TotalCount,
+            PageNumber = products.PageSize,
+            PageSize = products.CurrentPage,
+            TotalPages = products.TotalPages,
+            };
+
+            var productList = new ProductListResponseModel
+            {
+                Paging = paginationMetaData,
+                Product = response,
+            };
+            return Ok(productList);
         }
     }
 }
