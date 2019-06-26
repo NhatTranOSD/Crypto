@@ -27,18 +27,18 @@ namespace WalletService.Services
 
                 DbFunctions dfunc = null;
 
-                decimal order_0 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 0).SumAsync(s => s.TotalPayment);
-                decimal order_1 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 1).SumAsync(s => s.TotalPayment);
-                decimal order_2 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 2).SumAsync(s => s.TotalPayment);
-                decimal order_3 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 3).SumAsync(s => s.TotalPayment);
-                decimal order_4 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 4).SumAsync(s => s.TotalPayment);
-                decimal order_5 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 5).SumAsync(s => s.TotalPayment);
-                decimal order_6 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 6).SumAsync(s => s.TotalPayment);
+                decimal order_0 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 0).SumAsync(s => s.Amount);
+                decimal order_1 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 1).SumAsync(s => s.Amount);
+                decimal order_2 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 2).SumAsync(s => s.Amount);
+                decimal order_3 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 3).SumAsync(s => s.Amount);
+                decimal order_4 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 4).SumAsync(s => s.Amount);
+                decimal order_5 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 5).SumAsync(s => s.Amount);
+                decimal order_6 = await _walletContext.TokenOrders.Where(x => SqlServerDbFunctionsExtensions.DateDiffDay(dfunc, x.CreatedDate, DateTime.UtcNow) == 6).SumAsync(s => s.Amount);
 
 
                 IEnumerable<decimal> data = new List<decimal>()
                         {
-                            order_6/1000000000, order_5/1000000000, order_4/1000000000, order_3/1000000000, order_2/1000000000, order_1/1000000000, order_0/1000000000
+                            order_6, order_5, order_4, order_3, order_2, order_1, order_0
                         };
 
                 return data;
