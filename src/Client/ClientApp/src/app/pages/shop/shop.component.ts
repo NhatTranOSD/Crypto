@@ -47,10 +47,14 @@ export class ShopComponent implements OnInit {
   }
 
   buyConfirm() {
-    this.loading = true;
 
     if (this.orderTotal < 1 || this.orderTotal > this.selectedProduct.stock) {
       this.error = 'Total Products invalid';
+      return;
+    }
+
+    if (this.tokenService.trading === true) {
+      alert('Please wait for previous transaction complete! Thanks');
       return;
     }
 
@@ -72,7 +76,6 @@ export class ShopComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.loading = false;
 
           if (data && data.txHash !== null) {
             orderRequest.txHash = data.txHash;
@@ -82,7 +85,6 @@ export class ShopComponent implements OnInit {
               .pipe(first())
               .subscribe(
                 data => {
-                  console.log('result:', data);
                   if (data != null) {
                     alert('Buy successfull');
 
@@ -90,7 +92,7 @@ export class ShopComponent implements OnInit {
                     this.productService.getProducts();
                     this.walletService.getWalletInfo();
                   } else {
-                    this.error = 'Buy Error';
+                    alert('Buy failed');
                   }
 
                   this.tokenService.trading = false;

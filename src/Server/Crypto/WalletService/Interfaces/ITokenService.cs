@@ -18,6 +18,8 @@ namespace WalletService.Interfaces
 
         Task<string> TransferTokenToAdmin(Guid userId, decimal amount);
 
+        Task<string> RefundUserToken(Guid userId, decimal amount);
+
         Task<IEnumerable<TokenOrderResponseModel>> TokenOrderHistory(Guid userId);
 
         Task<IEnumerable<TokenOrderResponseModel>> TokenOrderHistory();

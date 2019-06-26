@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ShoppingService.Common;
 using ShoppingService.Data;
 using ShoppingService.Data.Entities;
@@ -9,6 +10,8 @@ using ShoppingService.Models.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ShoppingService.Services
@@ -17,18 +20,20 @@ namespace ShoppingService.Services
     {
         private readonly ShoppingContext _shoppingContext;
         private readonly IMapper _mapper;
+        private readonly HttpClient _httpClient;
 
-        public OrderService(ShoppingContext shoppingContext, IMapper mapper)
+        public OrderService(ShoppingContext shoppingContext, IMapper mapper, HttpClient httpClient)
         {
             _shoppingContext = shoppingContext;
             _mapper = mapper;
+            _httpClient = httpClient;
         }
 
         public async Task<IEnumerable<OrderResponseModel>> Orders(Guid userId)
         {
             try
             {
-                IEnumerable<Order> orders = await _shoppingContext.Orders.Where(x => x.BuyerId.Equals(userId)).OrderBy(o => o.UpdatedDate).ToListAsync();
+                IEnumerable<Order> orders = await _shoppingContext.Orders.Where(x => x.BuyerId.Equals(userId)).OrderByDescending(o => o.CreatedDate).Take(20).ToListAsync();
 
                 IEnumerable<OrderResponseModel> response = _mapper.Map<IList<OrderResponseModel>>(orders);
 
@@ -45,7 +50,7 @@ namespace ShoppingService.Services
         {
             try
             {
-                IList<Order> orders = await _shoppingContext.Orders.OrderBy(o => o.UpdatedDate).ToListAsync();
+                IList<Order> orders = await _shoppingContext.Orders.OrderByDescending(o => o.CreatedDate).Take(20).ToListAsync();
 
                 IList<OrderResponseModel> response = _mapper.Map<IList<OrderResponseModel>>(orders);
 
@@ -95,7 +100,6 @@ namespace ShoppingService.Services
                 _shoppingContext.Products.Attach(product);
                 _shoppingContext.Entry(product).Property(x => x.Stock).IsModified = true;
 
-                // Transfer FCO here
 
                 // Complete Transfer
                 await _shoppingContext.SaveChangesAsync();
@@ -143,15 +147,26 @@ namespace ShoppingService.Services
 
                 if (order == null || product == null) return false;
 
-                order.OrderStatus = OrderStatus.RefundSuccess;
-
-                _shoppingContext.Orders.Attach(order);
-                _shoppingContext.Entry(order).Property(x => x.OrderStatus).IsModified = true;
-
                 product.Stock = product.Stock + order.TotalProducts;
 
                 _shoppingContext.Products.Attach(product);
                 _shoppingContext.Entry(product).Property(x => x.Stock).IsModified = true;
+
+                // Refund Coin here
+
+                string refundTxHash = await RefundUserToken(order.BuyerId, order.TotalPayment);
+
+                if (refundTxHash == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    order.RefundTxHash = refundTxHash;
+                    order.OrderStatus = OrderStatus.RefundSuccess;
+
+                    _shoppingContext.Orders.Update(order);
+                }
 
                 await _shoppingContext.SaveChangesAsync();
 
@@ -186,6 +201,29 @@ namespace ShoppingService.Services
             catch (Exception ex)
             {
                 return false;
+                throw ex;
+            }
+        }
+
+        private async Task<string> RefundUserToken(Guid userId, decimal amount)
+        {
+            try
+            {
+                string uri = "https://localhost:5002/api/v1/Token/RefundUserToken";
+
+                TransferTokenRequestModel requestModel = new TransferTokenRequestModel() { UserId = userId, Amount = amount };
+
+                var jsonRequestModel = JsonConvert.SerializeObject(requestModel);
+
+                HttpResponseMessage response = await _httpClient.PostAsync(uri, new StringContent(jsonRequestModel, Encoding.UTF8, "application/json"));
+
+                var result = JsonConvert.DeserializeObject<TransferTokenResponseModel>(await response.Content.ReadAsStringAsync());
+
+                return result.TxHash;
+            }
+            catch (Exception ex)
+            {
+                return null;
                 throw ex;
             }
         }

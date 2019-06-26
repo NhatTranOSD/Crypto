@@ -149,7 +149,7 @@ namespace WalletService.Services
                     else
                     {
                         // Transfer Token to user
-                        string sendTx = await SendToken(config.AdminAddress, FCO.Account.Address, amount * 1000000000000000000, config.PrivateKey);
+                        string sendTx = await SendToken(config.AdminAddress, FCO.Account.Address, Convert.ToUInt64(amount) * 1000000000000000000, config.PrivateKey);
 
                         if (string.IsNullOrEmpty(sendTx))
                         {
@@ -211,7 +211,7 @@ namespace WalletService.Services
                 if (Convert.ToDecimal(FCO.WalletCurrency.Balance) < amount * 1000000000000000000) return null;
 
                 // Transfer Token to user
-                string sendTx = await SendToken(FCO.Account.Address, config.AdminAddress, amount * 1000000000000000000, FCO.Account.PrivateKey);
+                string sendTx = await SendToken(FCO.Account.Address, config.AdminAddress, Convert.ToUInt64(amount) * 1000000000000000000, FCO.Account.PrivateKey);
 
                 return sendTx;
             }
@@ -222,12 +222,41 @@ namespace WalletService.Services
             }
         }
 
-        private async Task<string> SendETH(string from, string to, decimal value, string privateKey)
+        public async Task<string> RefundUserToken(Guid userId, decimal amount)
+        {
+            try
+            {
+                TokenConfiguration config = await _walletContext.TokenConfiguration.SingleOrDefaultAsync();
+
+                // get wallets
+                IEnumerable<Wallet> wallets = _walletContext.Wallets
+                                                .Include(i => i.WalletCurrency)
+                                                .Include(i => i.Account)
+                                                .Where(x => x.UserId == userId.ToString());
+
+                Wallet ETH = wallets.SingleOrDefault(e => e.WalletCurrency.CurrencyType == CurrencyType.ETH);
+                Wallet FCO = wallets.SingleOrDefault(e => e.WalletCurrency.CurrencyType == CurrencyType.FCO);
+
+                if (wallets.Count() < 2) return null;
+
+                // Transfer Token to user
+                string sendTx = await SendToken(config.AdminAddress, FCO.Account.Address, Convert.ToUInt64(amount) * 1000000000000000000, config.PrivateKey);
+
+                return sendTx;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        private async Task<string> SendETH(string from, string to, UInt64 value, string privateKey)
         {
             return await _web3Service.SendETH(from, to, value, privateKey);
         }
 
-        private async Task<string> SendToken(string from, string to, decimal value, string privateKey)
+        private async Task<string> SendToken(string from, string to, UInt64 value, string privateKey)
         {
             return await _web3Service.SendToken(from, to, value, privateKey);
         }

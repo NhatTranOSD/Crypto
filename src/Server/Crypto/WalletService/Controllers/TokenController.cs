@@ -151,5 +151,21 @@ namespace WalletService.Controllers
 
             return Ok(responseModel);
         }
+
+        [Route("RefundUserToken")]
+        [HttpPost]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<TransferTokenResponseModel>> RefundUserToken(TransferTokenRequestModel requestModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            string result = await _tokenService.RefundUserToken(requestModel.UserId, requestModel.Amount);
+
+            TransferTokenResponseModel responseModel = new TransferTokenResponseModel() { TxHash = result };
+
+            return Ok(responseModel);
+        }
     }
 }

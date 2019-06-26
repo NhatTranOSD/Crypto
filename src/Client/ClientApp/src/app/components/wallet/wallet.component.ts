@@ -108,6 +108,20 @@ export class WalletComponent implements OnInit {
       return;
     }
 
+    // Check valid ETH
+    let currentETH = 0; // Wei
+
+    this.walletService.wallets.forEach(function (wallet) {
+      if (wallet.walletCurrency.currencyType === 1) {
+        currentETH = +wallet.walletCurrency.balance; //Wei
+      }
+    });
+
+    if (this.f.amount.value * 1000000000000000000 / 20 > currentETH - 1000000000000000000) {
+      alert('Sorry, your ETH Balance is not enough.');
+      return;
+    };
+
     this.modalService.dismissAll();
 
     this.tokenService.trading = true;
@@ -118,8 +132,13 @@ export class WalletComponent implements OnInit {
       .subscribe(
         data => {
           this.tokenService.trading = false;
-          this.walletService.getWalletInfo();
-          alert('Buy FCoin success');
+          if (data == true) {
+            this.walletService.getWalletInfo();
+            alert('Buy FCoin success');
+          }
+          else {
+            alert('Buy FCoin Error');
+          }
         },
         error => {
           this.tokenService.trading = false;

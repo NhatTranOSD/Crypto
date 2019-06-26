@@ -51,6 +51,8 @@ namespace ShoppingService
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IChartService, ChartService>();
 
+            services.AddHttpClient<IOrderService, OrderService>();
+
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
