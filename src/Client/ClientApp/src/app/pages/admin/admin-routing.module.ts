@@ -5,6 +5,7 @@ import { AdminComponent } from './admin.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { ChartComponent } from '../admin/chart/chart.component';
+import { TokenOrderHistoryComponent } from './token-order-history/token-order-history.component';
 
 
 const routes: Routes = [
@@ -19,8 +20,12 @@ const routes: Routes = [
                 component: CatalogComponent,
             },
             {
-                path: 'orders',
+                path: 'productorders',
                 component: OrderListComponent,
+            },
+            {
+                path: 'tokenorders',
+                component: TokenOrderHistoryComponent,
             },
             {
                 path: 'transactions',

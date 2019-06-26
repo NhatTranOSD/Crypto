@@ -13,9 +13,10 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
 import { ChartComponent } from './chart/chart.component';
 import { ProductOrderChartComponent } from './chart/product-order-chart/product-order-chart.component';
 import { TokenOrderChartComponent } from './chart/token-order-chart/token-order-chart.component';
+import { TokenOrderHistoryComponent } from './token-order-history/token-order-history.component';
 
 @NgModule({
-  declarations: [AdminComponent, CatalogComponent, HeaderComponent, OrderListComponent, TransactionListComponent, ChartComponent, ProductOrderChartComponent, TokenOrderChartComponent],
+  declarations: [AdminComponent, CatalogComponent, HeaderComponent, OrderListComponent, TransactionListComponent, ChartComponent, ProductOrderChartComponent, TokenOrderChartComponent, TokenOrderHistoryComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

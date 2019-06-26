@@ -111,6 +111,7 @@ export class WalletComponent implements OnInit {
     this.modalService.dismissAll();
 
     this.tokenService.trading = true;
+    alert('transactions are being made. Please wait and check Token order history');
 
     this.tokenService.buyToken(this.f.amount.value, this.f.pair.value)
       .pipe(first())
@@ -118,11 +119,11 @@ export class WalletComponent implements OnInit {
         data => {
           this.tokenService.trading = false;
           this.walletService.getWalletInfo();
-          alert('Buy success');
+          alert('Buy FCoin success');
         },
         error => {
           this.tokenService.trading = false;
-          alert('Buy error');
+          alert('Buy FCoin error');
         });
 
   }

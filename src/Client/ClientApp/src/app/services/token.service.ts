@@ -95,13 +95,12 @@ export class TokenService {
 
   public getTokenOrders() {
     const userId = this.authenticationService.currentUserValue.id;
-    const requestUri = `${environment.walletApi}/api/v1/Token/OrderHistory`;
+    const requestUri = `${environment.walletApi}api/v1/Token/OrderHistory`;
 
     this.http.get<TokenOrder[]>(requestUri)
       .subscribe(
         data => {
           this.tokenOrders = data;
-          console.log(data);
         },
         error => {
           console.log(error);
