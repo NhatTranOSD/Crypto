@@ -209,7 +209,8 @@ namespace ShoppingService.Services
         {
             try
             {
-                string uri = "https://localhost:5002/api/v1/Token/RefundUserToken";
+                //string uri = "https://localhost:5002/api/v1/Token/RefundUserToken";
+                string uri = "https://crypto-walletservice.azurewebsites.net/api/v1/Token/RefundUserToken";
 
                 TransferTokenRequestModel requestModel = new TransferTokenRequestModel() { UserId = userId, Amount = amount };
 
