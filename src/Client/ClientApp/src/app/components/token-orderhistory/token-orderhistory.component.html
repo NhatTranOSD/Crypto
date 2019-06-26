@@ -1,0 +1,40 @@
+<hr>
+<h3>My Token Order History</h3>
+<hr>
+<table class="table table-striped bg-white">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">TxHash</th>
+      <th scope="col">createdDate</th>
+      <th scope="col">Pair</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Fee</th>
+      <th scope="col">TotalPayment</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of tokenService.tokenOrders; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td class="text-truncate" style="max-width: 100px;">{{ item.sendTxHash }}</td>
+      <td>{{ item.createdDate | date: 'MM/dd/yyyy hh:mm:ss a' }}</td>
+      <td>{{ pairType[item.pairType] }}</td>
+      <td>{{ item.amount | number }}</td>
+      <td>{{ item.fee/1000000000000000000 | number }} ETH</td>
+      <td>{{ item.totalPayment/1000000000 | number }} ETH</td>
+      <td>
+        <span *ngIf="item.tokenOrderStatus === 0"
+          class="badge badge-light">{{ tokenOrderStatus[item.tokenOrderStatus] }}</span>
+        <span *ngIf="item.tokenOrderStatus === 1"
+          class="badge badge-danger">{{ tokenOrderStatus[item.tokenOrderStatus] }}</span>
+        <span *ngIf="item.tokenOrderStatus === 2"
+          class="badge badge-success">{{ tokenOrderStatus[item.tokenOrderStatus] }}</span>
+        <span *ngIf="item.tokenOrderStatus === 3"
+          class="badge badge-warning">{{ tokenOrderStatus[item.tokenOrderStatus] }}</span>
+        <span *ngIf="item.tokenOrderStatus === 4"
+          class="badge badge-dark">{{ tokenOrderStatus[item.tokenOrderStatus] }}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

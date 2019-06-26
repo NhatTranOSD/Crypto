@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
+import { ChartDataSets } from 'chart.js';
+
 import { AuthenticationService } from '../services/authentication.service';
 import { ProductRequest } from '../models/requestmodels/productrequest.model';
 import { environment } from '../../environments/environment';
@@ -14,6 +16,9 @@ import { OrderRequest } from '../models/requestmodels/orderrequest.model';
 export class OrderService {
 
   public orders: Order[];
+  public lineChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Product Orders' },
+  ];
 
   constructor(private authenticationService: AuthenticationService, private http: HttpClient) { }
 
@@ -22,6 +27,19 @@ export class OrderService {
       .subscribe(
         data => {
           this.orders = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  public getOrdersChart(): any {
+    return this.http.get<number[]>(`${environment.shoppingApi}api/v1/Chart/OrdersChart`)
+      .subscribe(
+        data => {
+          this.lineChartData = [
+            { data: data, label: 'Product Orders' },
+          ];
         },
         error => {
           console.log(error);

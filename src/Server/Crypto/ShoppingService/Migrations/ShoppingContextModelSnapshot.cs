@@ -41,6 +41,8 @@ namespace ShoppingService.Migrations
                     b.Property<string>("ProductName")
                         .IsRequired();
 
+                    b.Property<string>("RefundTxHash");
+
                     b.Property<decimal>("TotalPayment");
 
                     b.Property<int>("TotalProducts");

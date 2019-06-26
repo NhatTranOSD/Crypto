@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
+import { TokenService } from '../../services/token.service';
 import { User } from '../../models/User.model';
 import { WalletService } from '../../services/wallet.service';
 import { CurrencyDisplayName } from '../../models/WalletCurrency.model';
@@ -18,7 +19,8 @@ export class HeaderComponent implements OnDestroy {
   constructor(
     private router: Router,
     public authenticationService: AuthenticationService,
-    public walletService: WalletService
+    public walletService: WalletService,
+    public tokenService: TokenService
   ) { }
 
   // tslint:disable-next-line: use-life-cycle-interface

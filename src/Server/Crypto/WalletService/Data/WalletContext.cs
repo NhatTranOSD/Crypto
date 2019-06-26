@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletService.Data.Entities;
 using WalletService.Entities;
 
 namespace WalletService.Data
@@ -15,9 +16,12 @@ namespace WalletService.Data
 
         public DbSet<Wallet> Wallets { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+
         public DbSet<WalletCurrency> WalletCurrencys { get; set; }
 
         public DbSet<TokenConfiguration> TokenConfiguration { get; set; }
+        public DbSet<TokenOrder> TokenOrders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

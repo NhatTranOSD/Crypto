@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using WalletService.Models.ResponseModels;
 
 namespace WalletService.Entities.ResponseModels
 {
@@ -12,11 +13,11 @@ namespace WalletService.Entities.ResponseModels
 
         public string UserId { get; set; }
 
-        public string Address { get; set; }
+        public AccountResponseModel Account { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy }")]
         public DateTime CreatedDate { get; set; }
 
-        public IList<WalletCurrencyResponseModel> WalletCurrencys { get; set; }
+        public WalletCurrencyResponseModel WalletCurrency { get; set; }
     }
 }

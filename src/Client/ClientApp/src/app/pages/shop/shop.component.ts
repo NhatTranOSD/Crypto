@@ -6,10 +6,15 @@ import { first } from 'rxjs/operators';
 
 import { ProductService } from '../../services/product.service';
 import { OrderService } from '../../services/order.service';
+import { TokenService } from '../../services/token.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Product } from '../../models/Product.model';
 import { OrderRequest } from '../../models/requestmodels/orderrequest.model';
+<<<<<<< HEAD
 import { Paging } from '../../models/Paging.model';
+=======
+import { WalletService } from '../../services/wallet.service';
+>>>>>>> DEV
 
 @Component({
   selector: 'app-shop',
@@ -32,9 +37,11 @@ export class ShopComponent implements OnInit {
   selectedSize : number = 5;
   
   constructor(private orderService: OrderService,
+    private tokenService: TokenService,
     private router: Router,
     private authenticationService: AuthenticationService,
     public productService: ProductService,
+    private walletService: WalletService,
     private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -88,14 +95,19 @@ export class ShopComponent implements OnInit {
   }
 
   buyConfirm() {
-    this.loading = true;
 
     if (this.orderTotal < 1 || this.orderTotal > this.selectedProduct.stock) {
       this.error = 'Total Products invalid';
       return;
     }
 
+    if (this.tokenService.trading === true) {
+      alert('Please wait for previous transaction complete! Thanks');
+      return;
+    }
+
     const orderRequest: OrderRequest = {
+      txHash: '',
       buyerId: this.authenticationService.currentUserValue.id,
       buyerEmail: this.authenticationService.currentUserValue.userName,
       productId: this.selectedProduct.id,
@@ -103,24 +115,58 @@ export class ShopComponent implements OnInit {
       totalProducts: this.orderTotal,
     };
 
-    this.orderService.createOrder(orderRequest)
+    this.tokenService.trading = true;
+    this.modalService.dismissAll();
+    alert('transactions are being made. Please wait and check order history');
+
+    // Transfer token to admin
+    this.tokenService.transferTokenToAdmin(this.selectedProduct.price * this.orderTotal)
       .pipe(first())
       .subscribe(
         data => {
-          this.loading = false;
 
+<<<<<<< HEAD
           if (data != null) {
             alert('Buy successfull');
             this.modalService.dismissAll();
             // Reload
             this.productService.getProducts();
+=======
+          if (data && data.txHash !== null) {
+            orderRequest.txHash = data.txHash;
+            // Create Order
+            this.loading = true;
+            this.orderService.createOrder(orderRequest)
+              .pipe(first())
+              .subscribe(
+                data => {
+                  if (data != null) {
+                    alert('Buy successfull');
+
+                    // Reload
+                    this.productService.getProducts();
+                    this.walletService.getWalletInfo();
+                  } else {
+                    alert('Buy failed');
+                  }
+
+                  this.tokenService.trading = false;
+
+                },
+                error => {
+                  this.error = error;
+                  this.tokenService.trading = false;
+                });
+>>>>>>> DEV
           } else {
             this.error = 'Buy Error';
+            this.tokenService.trading = false;
           }
 
         },
         error => {
           this.error = error;
+          console.log(error);
           this.loading = false;
         });
   }

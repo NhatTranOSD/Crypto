@@ -3,7 +3,11 @@ import { WalletCurrency } from './WalletCurrency.model';
 export class Wallet {
     id: string;
     userId: string;
-    address: string;
+    account: Account;
     createdDate: string;
-    walletCurrencys: WalletCurrency[];
+    walletCurrency: WalletCurrency;
+}
+
+export class Account {
+    address: string;
 }

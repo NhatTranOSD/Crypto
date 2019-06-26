@@ -4,18 +4,28 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { AdminComponent } from './admin.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { ChartComponent } from '../admin/chart/chart.component';
+import { TokenOrderHistoryComponent } from './token-order-history/token-order-history.component';
 
 
 const routes: Routes = [
     {
         path: '', component: AdminComponent, children: [
             {
+                path: 'charts',
+                component: ChartComponent,
+            },
+            {
                 path: 'catalog',
                 component: CatalogComponent,
             },
             {
-                path: 'orders',
+                path: 'productorders',
                 component: OrderListComponent,
+            },
+            {
+                path: 'tokenorders',
+                component: TokenOrderHistoryComponent,
             },
             {
                 path: 'transactions',

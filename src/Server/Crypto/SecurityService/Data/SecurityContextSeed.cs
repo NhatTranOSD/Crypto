@@ -18,6 +18,7 @@ namespace SecurityService.Data
                 {
                     ApplicationUser user = new ApplicationUser
                     {
+                        Id = "0f07555c-00b6-4be9-ab0f-e75c7617efe4",
                         Email = "admin@orientsoftware.com",
                         UserName = "admin@orientsoftware.com",
                         FirstName = "Orient",

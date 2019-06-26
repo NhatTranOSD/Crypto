@@ -19,6 +19,62 @@ namespace WalletService.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("WalletService.Data.Entities.Account", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("PrivateKey");
+
+                    b.Property<Guid>("WalletId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WalletId")
+                        .IsUnique();
+
+                    b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("WalletService.Data.Entities.TokenOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<string>("BuyerEmail");
+
+                    b.Property<Guid>("BuyerId");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<decimal>("Fee");
+
+                    b.Property<int>("PairType");
+
+                    b.Property<string>("ReceiveTxHash")
+                        .IsRequired();
+
+                    b.Property<string>("RevertTxHash");
+
+                    b.Property<string>("SendTxHash")
+                        .IsRequired();
+
+                    b.Property<string>("TokenName")
+                        .IsRequired();
+
+                    b.Property<int>("TokenOrderStatus");
+
+                    b.Property<decimal>("TotalPayment");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TokenOrders");
+                });
+
             modelBuilder.Entity("WalletService.Entities.TokenConfiguration", b =>
                 {
                     b.Property<Guid>("Id")
@@ -38,6 +94,9 @@ namespace WalletService.Migrations
 
                     b.Property<decimal>("PriceUSD");
 
+                    b.Property<string>("PrivateKey")
+                        .IsRequired();
+
                     b.Property<string>("TokenName")
                         .IsRequired();
 
@@ -53,8 +112,6 @@ namespace WalletService.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Address");
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -80,16 +137,25 @@ namespace WalletService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WalletId");
+                    b.HasIndex("WalletId")
+                        .IsUnique();
 
                     b.ToTable("WalletCurrencys");
+                });
+
+            modelBuilder.Entity("WalletService.Data.Entities.Account", b =>
+                {
+                    b.HasOne("WalletService.Entities.Wallet", "Wallet")
+                        .WithOne("Account")
+                        .HasForeignKey("WalletService.Data.Entities.Account", "WalletId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WalletService.Entities.WalletCurrency", b =>
                 {
                     b.HasOne("WalletService.Entities.Wallet", "Wallet")
-                        .WithMany("WalletCurrencys")
-                        .HasForeignKey("WalletId")
+                        .WithOne("WalletCurrency")
+                        .HasForeignKey("WalletService.Entities.WalletCurrency", "WalletId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
