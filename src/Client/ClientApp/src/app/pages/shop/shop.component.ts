@@ -120,7 +120,6 @@ export class ShopComponent implements OnInit {
         data => {
 
           if (data != null) {
-            alert('Buy successfull');
             this.modalService.dismissAll();
             // Reload
             this.productService.getProducts();
