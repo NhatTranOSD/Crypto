@@ -17,14 +17,11 @@ namespace ShoppingService.Controllers
     public class ProductController : ControllerBase
     {
         protected readonly IProductService _productService;
-        private readonly IUrlHelper _urlhelper;
-        private readonly ShoppingContext _shoppingContext;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService, ShoppingContext shoppingContext, IMapper mapper)
+        public ProductController(IProductService productService, IMapper mapper)
         {
             _productService = productService;
-            _shoppingContext = shoppingContext;
             _mapper = mapper;
             
         }
