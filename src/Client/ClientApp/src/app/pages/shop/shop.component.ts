@@ -132,13 +132,13 @@ export class ShopComponent implements OnInit {
                 .subscribe(
                   data => {
                     if (data != null) {
-                      alert('Buy successfull');
+                      alert('Buy successfull! Please check order history.');
 
                       // Reload
                       this.productService.getProducts();
                       this.walletService.getWalletInfo();
                     } else {
-                      alert('Buy failed');
+                      alert('Buy failed! Please try again.');
                     }
 
                     this.tokenService.trading = false;
@@ -149,7 +149,7 @@ export class ShopComponent implements OnInit {
                     this.tokenService.trading = false;
                   });
             } else {
-              this.error = 'Buy Error';
+              alert('Buy failed! Please check your balance.')
               this.tokenService.trading = false;
             }
           }
@@ -159,6 +159,13 @@ export class ShopComponent implements OnInit {
           console.log(error);
           this.loading = false;
         });
+    this.reset();
+  }
+
+  // Reset error and total
+  private reset() {
+    this.orderTotal = 1;
+    this.error = '';
   }
 
 }

@@ -17,7 +17,7 @@ const encryptPassword = async (privateKey, password) => {
 }
 
 const getTransactionCount = async (address) => {
-    return web3.eth.getTransactionCount(address);
+    return web3.eth.getTransactionCount(address, 'pending');
 }
 
 const getBalance = async (address) => {

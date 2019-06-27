@@ -10,13 +10,21 @@ var web3 = new Web3(new Web3.providers.HttpProvider(
 
 const Web3Service = require('../../services/Web3Service');
 
+
+let deplaycount = 0;
+
+const getDeplay = () => {
+    if (deplaycount === 10) deplaycount = 0;
+    deplaycount++;
+    return deplaycount;
+}
+
 const createAccount = async (req, res) => {
     try {
         var account = await Web3Service.createAccount();
 
         if (account) {
 
-            // const privateKey = await Web3Service.encryptPassword(account.privateKey, 'test');
             let result = {
                 successed: true,
                 result: {
@@ -51,10 +59,9 @@ const sendETHTransaction = async (req, res) => {
         const gasPrice = req.body.gasPrice || 20000000000;
         const data = req.body.data || '';
 
+        await sleep(getDeplay()*1000);
         const nonce = await Web3Service.getTransactionCount(from);
-
-        // const balance = await Web3Service.getBalance(from);
-        console.log('sendETHTransaction value:', value);
+        console.log('none: ', nonce);
 
         //sign transaction
         var tx = {
@@ -66,11 +73,7 @@ const sendETHTransaction = async (req, res) => {
             data: web3.utils.toHex(data)
         };
 
-        console.log('tx:', tx);
-
         const signedTransaction = await Web3Service.signTransaction(tx, privateKey);
-
-        console.log('signedTransaction:', signedTransaction);
 
         let returned = false;
 
@@ -79,7 +82,7 @@ const sendETHTransaction = async (req, res) => {
                 console.log('transactionHash: ', hash);
             })
             .on('confirmation', function (confNumber, receipt) {
-                console.log('confirmation: ', confNumber, receipt);
+                // console.log('confirmation: ', confNumber, receipt);
                 if (!returned) {
                     res.json({ successed: true, result: { transactionHash: receipt.transactionHash } });
                     returned = true;
@@ -117,16 +120,16 @@ const sendToken = async (req, res) => {
 
         const from = req.query.from;
         const to = req.query.to;
-        // const to = '0xb4C73803EC208Ba0D366C2Ba08955AD06803Ee26';
         const value = req.query.value;
         const privateKey = req.query.privateKey;
-        const gas = req.body.gas || 250000;
+        const gas = req.body.gas || 50000;
         const gasPrice = req.body.gasPrice || 20000000000;
 
+        await sleep(getDeplay()*1000);
         const nonce = await Web3Service.getTransactionCount(from);
+        console.log('none: ', nonce);
 
         // const balance = await Web3Service.getBalance(from);
-        console.log('sendToken Value: ', value);
 
         const abiArray = JSON.parse(fs.readFileSync('./ABI.json', 'utf-8'));
 
@@ -155,7 +158,7 @@ const sendToken = async (req, res) => {
                 // return;
             })
             .on('confirmation', function (confNumber, receipt) {
-                console.log('confirmation: ', confNumber);
+                // console.log('confirmation: ', confNumber);
 
                 if (!returned) {
                     res.json({ successed: true, result: { transactionHash: receipt.transactionHash } });
@@ -178,6 +181,10 @@ const sendToken = async (req, res) => {
     } catch (e) {
         res.json({ successed: false, result: null });
     }
+}
+
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
 module.exports.sendETHTransaction = sendETHTransaction;
