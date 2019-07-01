@@ -95,17 +95,21 @@ export class WalletComponent implements OnInit {
 
   public buyCoin(content, wallet: Wallet) {
     this.buyForm = this.formBuilder.group({
-      amount: [0, Validators.required],
+      amount: [1, Validators.required],
       pair: [0, Validators.required]
     });
+
     this.buyingWallet = wallet;
     this.modalService.open(content);
   }
 
   public buyNow() {
     this.submitted = true;
-    if (this.buyForm.invalid) {
+    if (this.buyForm.invalid || this.f.amount.value < 1) {
+      this.error = 'Invalid inputs'
       return;
+    } else {
+      this.error = ''
     }
 
     // Check valid ETH

@@ -34,6 +34,19 @@ namespace WalletService.Controllers
             return Ok(result);
         }
 
+        [Route("ETHPrice")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> ETHPrice()
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _transactionService.GetEtherPrice();
+
+            return Ok(result);
+        }
+
         [Route("ETHTxList")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]

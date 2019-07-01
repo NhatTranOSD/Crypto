@@ -188,21 +188,62 @@
         <div class="card border-0">
             <div class="card-body">
                 <form [formGroup]="buyForm" (ngSubmit)="buyNow()">
-                    <div class="form-group">
+                    <div class="form-group text-left">
                         <label for="amount">Amount: </label>
-                        <input min="0" type="number" formControlName="amount" class="form-control"
+                        <input min="1" type="number" formControlName="amount" class="form-control"
                             [ngClass]="{ 'is-invalid': f.amount.errors }" />
                         <div *ngIf="f.amount.errors" class="invalid-feedback">
                             <div *ngIf="f.amount.errors.required">Amount is required</div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group text-left">
                         <label for="pair">Pair: </label>
                         <select formControlName="pair" class="form-control">
                             <option value="0">ETH/FCO</option>
                             <!-- <option value="1">1</option> -->
                         </select>
                     </div>
+                    <hr>
+                    <div class="form-group text-left">
+                        <div class="row">
+                            <div class="col-4">
+                                Transaction Fee:
+                            </div>
+                            <div class="col-6">
+                                {{tokenService.tokenConfig.gasLimit * tokenService.tokenConfig.gasPricesInGwei/1000000000}}
+                            </div>
+                            <div class="col-2">
+                                ETH
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                FCO Price:
+                            </div>
+                            <div class="col-6">
+                                {{tokenService.tokenConfig.priceUSD / walletService.ETHPrice.ethusd}}
+                            </div>
+                            <div class="col-2">
+                                ETH
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <b>Total Payment: </b>
+                            </div>
+                            <div class="col-6">
+                                {{tokenService.tokenConfig.priceUSD / walletService.ETHPrice.ethusd * f.amount.value + tokenService.tokenConfig.gasLimit * tokenService.tokenConfig.gasPricesInGwei/1000000000}}
+                            </div>
+                            <div class="col-2">
+                                ETH
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="alert alert-danger" *ngIf="error !== ''">{{error}}</div >
                     <hr>
                     <button class="btn btn-primary btn-sm pull-right">BuyNow</button>
                     <button type="button" class="btn btn-outline-dark btn-sm pull-right mr-1"
