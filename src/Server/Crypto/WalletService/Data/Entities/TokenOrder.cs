@@ -59,5 +59,8 @@ namespace WalletService.Data.Entities
     public enum PairType
     {
         ETH_FCO = 0,
+        ETH_ETH = 1,
+        FCO_FCO = 2,
+        FCO_ETH = 3
     }
 }

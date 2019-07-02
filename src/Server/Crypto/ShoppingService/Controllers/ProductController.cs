@@ -82,13 +82,23 @@ namespace ShoppingService.Controllers
             return Ok(result);
         }
                
+        //[HttpGet]
+        //public async Task<ActionResult> GetProducts(int pageNumber, int pageSize)
+        //{
+        //    if (!ModelState.IsValid) return BadRequest();
+
+        //    var result = await _productService.GetProductLists(pageNumber, pageSize);
+
+        //    return Ok(result);
+        //}
+
         [HttpGet]
-        public async Task<ActionResult> GetProducts(int pageNumber, int pageSize)
+        public async Task<ActionResult> SearchProducts(string text, int pageNumber, int pageSize)
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var result = await _productService.GetProductLists(pageNumber, pageSize);
-
+            var result = await _productService.SearchProducts(text, pageNumber, pageSize);
+           
             return Ok(result);
         }
     }

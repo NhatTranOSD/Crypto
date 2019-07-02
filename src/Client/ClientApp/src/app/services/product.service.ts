@@ -11,15 +11,16 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class ProductService {
-  
+
   public products: Product[];
 
   constructor(private http: HttpClient) {
 
   }
 
-  public getProductLists(pageable): Observable<ProductList> {
-    return this.http.get<ProductList>(`${environment.shoppingApi}api/Product?pageNumber=${pageable.pageNumber}&pageSize=${pageable.pageSize}`);
+  public getProductLists(pageable): any {
+    // tslint:disable-next-line:max-line-length
+    return this.http.get<ProductList>(`${environment.shoppingApi}api/Product?text=${pageable.text}&pageNumber=${pageable.pageNumber}&pageSize=${pageable.pageSize}`);
   }
 
   public getProducts(): any {

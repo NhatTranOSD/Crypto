@@ -26,10 +26,13 @@
                     </ul>
                 </div>
             </div>
-
             <!-- main -->
             <div class="col-9">
                 <h3 class="text-center">IPhones</h3>
+                <!-- <my-app-searching></my-app-searching> -->
+                <div class="active-cyan-4 mb-4 col-6">
+                    <input class="form-control" type="text" placeholder="Search" (input)="searchText($event.target.value)" aria-label="Search">
+                </div>
                 <div class="row">
                     <div class="col-4" *ngFor="let product of products; index as i">
                         <div class="card border-0 shadow p-3 mb-5">
@@ -63,9 +66,9 @@
                         <option *ngFor="let item of limit" >{{item}}</option>
                     </select>
                     </div>
-                    <my-app-paging 
+                    <my-app-paging
                 (goPage)="goToPage($event)"
-                (goNext)="onNext()"
+                (goNext)="onNext_1()"
                 (goPrev)="onPrev()"
                 [pagesToShow]="totalPage"
                 [page]="pageNumber"
@@ -126,5 +129,4 @@
             <button type="button" (click)="modal.dismiss('Close')" class="btn btn-outline-dark">Close</button>
         </div>
     </ng-template>
-   
-    
+

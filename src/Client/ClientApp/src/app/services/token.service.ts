@@ -22,6 +22,7 @@ export class TokenService {
   public tokenOrders: TokenOrder[];
 
   public trading = false;
+  public widthDraw = false;
 
   public lineChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Token Orders' },
@@ -147,6 +148,20 @@ export class TokenService {
     };
 
     return this.http.post<boolean>(`${environment.walletApi}api/v1/Token/BuyToken`, requestModel)
+      .pipe(map(data => {
+        return data;
+      }));
+  }
+
+  public widthdraw(amount: number, address: string , pair: number): any {
+    const requestModel = {
+      userId: this.authenticationService.currentUserValue.id,
+      amount: amount,
+      address: address,
+      pair: pair
+    };
+
+    return this.http.post<boolean>(`${environment.walletApi}api/v1/Widthdraw/Widthdraw`, requestModel)
       .pipe(map(data => {
         return data;
       }));

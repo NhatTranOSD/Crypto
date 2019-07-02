@@ -47,9 +47,17 @@
                                     <button *ngIf="wallet.walletCurrency.currencyType !== 0" type="button"
                                         (click)="depositCoin(depositContent, wallet)"
                                         class="btn btn-sm btn-success mr-1">Deposit</button>
-                                    <button *ngIf="wallet.walletCurrency.currencyType === 0" type="button"
+
+                                        <button *ngIf="wallet.walletCurrency.currencyType === 0" type="button"
                                         (click)="buyCoin(buyContent, wallet)"
                                         class="btn btn-sm btn-info mr-1">Buy</button>
+
+                                    <button  type="button"
+                                    (click)="widthdrwalCoin(widthdrawlContent, wallet)"
+                                        class="btn btn-sm btn-warning mr-1">Withdrawal</button>
+
+
+
                                     <button type="button" (click)="selectWallet(wallet)"
                                         class="btn btn-sm btn-warning mr-1 float-right">Transactions</button>
                                 </div>
@@ -173,6 +181,49 @@
     </div>
 </ng-template>
 
+<!-- Widthdrawl Modal -->
+<ng-template #widthdrawlContent let-modal>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+            <b>{{currencyDisplayName[buyingWallet.walletCurrency.currencyType]}}</b> Widthdraw
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        <div class="card border-0">
+            <div class="card-body">
+                <form [formGroup]="widthdrawlForm" (ngSubmit)="widthdrawlNow()">
+                    <div class="form-group">
+                        <label for="amount">Amount: </label>
+                        <input min="0" type="number" formControlName="amount" class="form-control"
+                            [ngClass]="{ 'is-invalid': x.amount.errors }" />
+                        <div *ngIf="x.amount.errors" class="invalid-feedback">
+                            <div *ngIf="x.amount.errors.required">Amount is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressWidthdrawl">Address: </label>
+                        <input placeholder="Address here" type="text" formControlName="addressWidthdrawl" class="form-control" />
+                    </div>
+                    <hr>
+                    <button class="btn btn-primary btn-sm pull-right">WidthdrawNow</button>
+                    <button type="button" class="btn btn-outline-dark btn-sm pull-right mr-1"
+                        (click)="modal.dismiss('Close')">close</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Close')">Buy Now</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Close')">Done</button>
+    </div> -->
+
+</ng-template>
+
 <!-- Buy Modal -->
 <!-- Deposit Modal -->
 <ng-template #buyContent let-modal>
@@ -217,3 +268,4 @@
         <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Close')">Done</button>
     </div> -->
 </ng-template>
+

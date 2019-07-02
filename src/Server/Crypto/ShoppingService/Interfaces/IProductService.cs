@@ -19,5 +19,9 @@ namespace ShoppingService.Interfaces
 
         Task<ProductListResponseModel> GetProductLists(int pageNumber, int pageSize);
 
+        Task<ProductListResponseModel> SearchProducts(string text, int pageNumber, int pageSize);
+
+
+
     }
 }

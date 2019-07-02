@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,9 +13,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HeaderComponent } from './components/header/header.component';
 import { WalletComponent } from './components/wallet/wallet.component';
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angularx-qrcode';
+import { NotifyModule } from './modules/notify/notify.module';
 import { TokenOrderHistoryComponent } from './components/token-orderhistory/token-orderhistory.component';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { TokenOrderHistoryComponent } from './components/token-orderhistory/toke
     HttpClientModule,
     NgbModule,
     QRCodeModule,
+    NotifyModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

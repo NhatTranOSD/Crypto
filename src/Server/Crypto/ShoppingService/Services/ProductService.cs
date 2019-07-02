@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Korzh.EasyQuery.Linq;
 
 namespace ShoppingService.Services
 {
@@ -133,7 +134,49 @@ namespace ShoppingService.Services
                 var totalCountAll = productAll.Count;
 
                 IList<ProductResponseModel> response = _mapper.Map<IList<ProductResponseModel>>(products);
-            
+
+                var paginationMetaData = new PagingHeader
+                {
+                    TotalItems = totalCountAll,
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalPages = (int)Math.Ceiling(totalCountAll / (double)pageSize),
+                };
+
+                var productList = new ProductListResponseModel
+                {
+                    Paging = paginationMetaData,
+                    Product = response,
+                };
+                return productList;
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+        public async Task<ProductListResponseModel> SearchProducts(string text, int pageNumber, int pageSize)
+        {
+            var productListSearch = new List<Product>();
+            try
+            {
+                //
+                if (!string.IsNullOrEmpty(text))
+                {
+                    productListSearch  = await _shoppingContext.Products.FullTextSearchQuery(text).ToListAsync();
+                }
+                else
+                {
+                    productListSearch = await _shoppingContext.Products.ToListAsync();
+                }
+
+                var products =  productListSearch.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+                var totalCountPerPage = products.Count();
+                var totalCountAll = productListSearch.Count;
+
+                IList<ProductResponseModel> response = _mapper.Map<IList<ProductResponseModel>>(products);
+
                 var paginationMetaData = new PagingHeader
                 {
                     TotalItems = totalCountAll,

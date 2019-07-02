@@ -30,16 +30,17 @@ export class ShopComponent implements OnInit {
   public totalPage = 0;
   public pageNumber = 1;
   public pageSize = 5;
+  public textSearch = '';
   public limit: number[] = [5, 10, 15, 20];
   selectedSize: number = 5;
 
   constructor(private orderService: OrderService,
-    private tokenService: TokenService,
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    public productService: ProductService,
-    private walletService: WalletService,
-    private modalService: NgbModal) { }
+              private tokenService: TokenService,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              public productService: ProductService,
+              private walletService: WalletService,
+              private modalService: NgbModal) { }
 
   ngOnInit() {
     this.getProductLists();
@@ -47,15 +48,21 @@ export class ShopComponent implements OnInit {
 
   getProductLists(): void {
     this.loading = true;
-    this.productService.getProductLists({ pageNumber: this.pageNumber, pageSize: this.pageSize }).subscribe(
+    this.productService.getProductLists({text: this.textSearch, pageNumber: this.pageNumber, pageSize: this.pageSize }).subscribe(
       data => {
         this.products = data.product;
         this.total = data.paging.totalItems;
         this.totalPage = data.paging.totalPages;
+        console.log(data);
       },
       error => {
         console.log(error);
       });
+  }
+
+  searchText(text: string): void {
+    this.textSearch = text;
+    this.getProductLists();
   }
 
   selected() {
@@ -68,7 +75,7 @@ export class ShopComponent implements OnInit {
     this.getProductLists();
   }
 
-  onNext(): void {
+  onNext_1(): void {
     this.pageNumber++;
     this.getProductLists();
   }

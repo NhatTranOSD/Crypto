@@ -13,6 +13,7 @@ export class PagingComponent  {
   @Input() perPage: number; // how many items we want to show per page
   @Input() pagesToShow: number; // how many pages between next/prev
   @Input() loading: boolean; // check if content is being loaded
+  @Input() textSearch: string; // text search
 
   @Output() goPrev = new EventEmitter<boolean>();
   @Output() goNext = new EventEmitter<boolean>();
@@ -73,5 +74,5 @@ export class PagingComponent  {
     pages.sort((a, b) => a - b);
     return pages;
   }
-  
+
 }
