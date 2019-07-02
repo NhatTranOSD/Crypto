@@ -22,7 +22,7 @@
             <td class="text-truncate" style="max-width: 120px;">{{order.txHash}}</td>
             <td>{{ order.updatedDate | date: 'MM/dd/yyyy hh:mm:ss' }}</td>
             <td>{{ order.productName }}</td>
-            <td>Product price</td>
+            <td>{{ order.totalPayment / order.totalProducts | number}}</td>
             <td>{{ order.totalProducts | number}}</td>
             <td class="float-right">{{ order.totalPayment | number }} <span
                     class="badge badge-secondary">{{order.currency}}</span></td>
@@ -41,9 +41,42 @@
                     class="badge badge-primary">{{ orderStatus[order.orderStatus] }}</span>
             </td>
             <td>
-                <button *ngIf="order.orderStatus < 3" (click)="refundOrder(order.id)"
+                <button *ngIf="order.orderStatus < 3 && order.totalProducts > 0" (click)="refundOrder(refundcontent,order)"
                     class="btn btn-primary btn-sm">Refund</button>
             </td>
         </tr>
     </tbody>
 </table>
+  <!-- Refund Modal -->
+  <ng-template #refundcontent let-modal>
+      <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Total Products Refund</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <div class="card border-0">
+              <div class="card-body">
+                  <div class="row">
+
+                      <div class="col">
+                          <label></label>
+                          <label>Products Total: <input min="1" max="{{ orderRefund.totalProducts }}" [(ngModel)]="refundTotal" type="number"></label>
+                          <hr>
+                          <h4>Total Refund:<b> {{orderRefund.totalPayment/orderRefund.totalProducts*refundTotal | number }} FCO</b></h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <div class="mr-auto">
+          </div>
+          <div *ngIf="error && error !== ''" class="alert alert-danger" role="alert">
+              {{error}}
+          </div>
+          <button type="button" (click)="refundConfirm(orderRefund.id)" class="btn btn-outline-info">Refund</button>
+          <button type="button" (click)="modal.dismiss('Close')" class="btn btn-outline-dark">Close</button>
+      </div>
+  </ng-template>

@@ -67,11 +67,11 @@ namespace ShoppingService.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> RefundOrder(Guid orderId, Guid userId)
+        public async Task<ActionResult<bool>> RefundOrder(Guid orderId, Guid userId, int amount)
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var result = await _orderService.RefundOrder(orderId, userId);
+            var result = await _orderService.RefundOrder(orderId, userId, amount);
 
             return Ok(result);
         }

@@ -113,15 +113,40 @@ namespace ShoppingService.Services
             }
         }
 
-        public async Task<bool> RefundOrder(Guid orderId, Guid userId)
+        public async Task<bool> RefundOrder(Guid orderId, Guid userId, int amount)
         {
             try
             {
                 Order order = await _shoppingContext.Orders.SingleOrDefaultAsync(x => x.Id == orderId && x.BuyerId == userId); //  && x.OrderStatus == OrderStatus.Completed
-
                 if (order == null) return false;
+                // Create Order Refund
+                // Caculate totalPayment
+                decimal totalPayment = (order.TotalPayment / order.TotalProducts)*amount;
 
-                order.OrderStatus = OrderStatus.Refunding;
+                // Check TxHash before
+
+                // Init Order
+                Order orderRefund = new Order()
+                {
+                    Id = Guid.NewGuid(),
+                    UpdatedDate = DateTime.UtcNow,
+                    CreatedDate = DateTime.UtcNow,
+                    BuyerId = order.BuyerId,
+                    BuyerEmail = order.BuyerEmail,
+                    ProductId = order.ProductId,
+                    ProductName = order.ProductName,
+                    TotalProducts = amount,
+                    OrderStatus = OrderStatus.Refunding,
+                    TotalPayment = totalPayment,
+                    TxHash = order.TxHash,
+                };
+
+                await _shoppingContext.Orders.AddAsync(orderRefund);
+                //await _shoppingContext.SaveChangesAsync();
+
+                //order.OrderStatus = OrderStatus.Refunding;
+                order.TotalPayment = order.TotalPayment - amount * (order.TotalPayment / order.TotalProducts);
+                order.TotalProducts = order.TotalProducts - amount;
 
                 _shoppingContext.Orders.Attach(order);
                 _shoppingContext.Entry(order).Property(x => x.OrderStatus).IsModified = true;
@@ -189,9 +214,17 @@ namespace ShoppingService.Services
                 if (order == null) return false;
 
                 order.OrderStatus = OrderStatus.RefundFailed;
-
+                
                 _shoppingContext.Orders.Attach(order);
                 _shoppingContext.Entry(order).Property(x => x.OrderStatus).IsModified = true;
+
+                Order orderMain = await _shoppingContext.Orders.SingleOrDefaultAsync(x => x.TxHash == order.TxHash && x.OrderStatus == OrderStatus.Completed); //  && x.OrderStatus == OrderStatus.Completed
+                if (orderMain == null) return false;
+                orderMain.TotalProducts = orderMain.TotalProducts + order.TotalProducts;
+                orderMain.TotalPayment = orderMain.TotalPayment + order.TotalPayment;
+
+                _shoppingContext.Orders.Attach(orderMain);
+                _shoppingContext.Entry(orderMain).Property(x => x.OrderStatus).IsModified = true;
 
                 await _shoppingContext.SaveChangesAsync();
 

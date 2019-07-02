@@ -71,10 +71,11 @@ export class OrderService {
       }));
   }
 
-  public refundOrder(orderId): any {
+  public refundOrder(orderId, refundTotal): any {
     const userId = this.authenticationService.currentUserValue.id;
 
-    return this.http.post<boolean>(`${environment.shoppingApi}api/Order/Refund?orderId=${orderId}&userId=${userId}`, null)
+    // tslint:disable-next-line:max-line-length
+    return this.http.post<boolean>(`${environment.shoppingApi}api/Order/Refund?orderId=${orderId}&userId=${userId}&amount=${refundTotal}`, null)
       .pipe(map(data => {
         return data;
       }));

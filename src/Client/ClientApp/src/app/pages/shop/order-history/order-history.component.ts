@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { OrderService } from '../../../services/order.service';
 import { OrderStatus } from '../../../models/orderstatus.model';
 
@@ -11,8 +11,12 @@ import { OrderStatus } from '../../../models/orderstatus.model';
 })
 export class OrderHistoryComponent implements OnInit {
   public orderStatus;
+  public amount: number;
+  public refundTotal = 1;
+  public orderRefund: any;
 
-  constructor(public orderService: OrderService) {
+  constructor(public orderService: OrderService,
+              private modalService: NgbModal) {
     this.orderStatus = OrderStatus;
   }
 
@@ -20,8 +24,15 @@ export class OrderHistoryComponent implements OnInit {
     this.orderService.getUserOrders();
   }
 
-  public refundOrder(orderId: string): void {
-    this.orderService.refundOrder(orderId)
+  public refundOrder(content, order): void {
+
+    this.orderRefund = order;
+    this.modalService.open(content);
+  }
+  public refundConfirm(orderId: number) {
+
+    this.modalService.dismissAll();
+    this.orderService.refundOrder(orderId, this.refundTotal)
       .pipe(first())
       .subscribe(
         data => {
@@ -36,4 +47,5 @@ export class OrderHistoryComponent implements OnInit {
           console.log(error);
         });
   }
+
 }
