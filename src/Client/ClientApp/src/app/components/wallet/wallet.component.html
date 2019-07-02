@@ -99,38 +99,31 @@
 
                 <hr>
                 <h2>Transaction List</h2>
-                <div *ngIf="tokenService.tokenTxs" class="list-group bg-light">
-                    <div *ngFor="let item of tokenService.tokenTxs; index as i">
-                        <div class="list-group-item list-group-item-action">
-                            <div class="row">
-                                <div class="col-5">
-                                    <p *ngIf="comonFunctions.equalHash(item.to, selectedWallet.account.address)">
-                                        Receive
-                                    </p>
-                                    <p *ngIf="!comonFunctions.equalHash(item.to, selectedWallet.account.address)">
-                                        Sent
-                                    </p>
-                                    <h6 class="text-left">#{{ i + 1 }} -
-                                        {{comonFunctions.convertTimestampToDisplayTime(item.timeStamp)}}
-                                    </h6>
-                                    <div class="alert alert-dark border-0" role="alert">
-                                        <div class="text-truncate">
-                                            TxHash: {{item.hash}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <span class="badge badge-info">Confirmed</span>
-                                </div>
-                                <div class="col-3">
-                                    {{item.value/1000000000000000000}}
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
+                <table>
+                        <thead>
+                          <tr>
+                            <th [class.active]="order === 'hash'"
+                                (click)="setOrder('hash')"
+                            >
+                              ID <span [hidden]="reverse">▼</span
+                              ><span [hidden]="!reverse">▲</span>
+                            </th>
+                            <th [class.active]="order === 'hash'"
+                                (click)="setOrder('timeStamp')"
+                                class="mdl-data-table__cell--non-numeric"
+                            >
+                              Name <span [hidden]="reverse">▼</span
+                              ><span [hidden]="!reverse">▲</span>
+                            </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let row of tokenService.tokenTxs | orderBy: order:reverse:'case-insensitive'">
+                            <td>{{ row.hash }}</td>
+                            <td>{{ row.timeStamp }}</td>
+                          </tr>
+                          </tbody>
+                </table>
             </div>
         </div>
     </div>

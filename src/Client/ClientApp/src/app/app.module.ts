@@ -18,7 +18,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { TokenOrderHistoryComponent } from './components/token-orderhistory/token-orderhistory.component';
 import { NotifyModule } from './modules/notify/notify.module';
 import { EmailConfirmationComponent } from './components/emailconfirmation/emailconfirmation.component';
-
+import { OrderPipe } from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,9 @@ import { EmailConfirmationComponent } from './components/emailconfirmation/email
     HeaderComponent,
     WalletComponent,
     TokenOrderHistoryComponent,
-    EmailConfirmationComponent
+    EmailConfirmationComponent,
+    OrderPipe
+
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,9 @@ import { EmailConfirmationComponent } from './components/emailconfirmation/email
     NgbModule,
     QRCodeModule,
     NotifyModule,
+    OrderPipe
+
+    
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
