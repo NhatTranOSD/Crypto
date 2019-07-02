@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'wallet', component: WalletComponent, canActivate: [AuthGuard] },
   { path: 'tokenorders', component: TokenOrderHistoryComponent, canActivate: [AuthGuard] },
   { path: 'shop', loadChildren: './pages/shop/shop.module#ShopModule' },
-  { path : 'emailconfirmation', component: EmailConfirmationComponent},
+  { path: 'emailconfirmation', component: EmailConfirmationComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', redirectTo: 'shop' }
