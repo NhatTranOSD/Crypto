@@ -13,15 +13,14 @@ import { TokenConfig } from '../../../models/TokenConfig.model';
 export class TransactionListComponent implements OnInit {
   public adminAddress: string;
   public contractAdress: string;
-  public tokenConfig : TokenConfig;
+  public tokenConfig: TokenConfig;
   public tokenConfigForm: FormGroup;
   public formSubmitted: boolean;
   public formLoading: boolean;
 
-  constructor(public tokenService: TokenService,private formBuilder: FormBuilder,private modalService: NgbModal,) {
+  constructor(public tokenService: TokenService, private formBuilder: FormBuilder, private modalService: NgbModal, ) {
     this.adminAddress = environment.adminAddress;
     this.contractAdress = environment.contractAddress;
-    
   }
 
   ngOnInit() {

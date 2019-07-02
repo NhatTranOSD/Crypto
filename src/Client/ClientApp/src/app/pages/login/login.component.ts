@@ -63,11 +63,9 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           if (data.succeeded) {
-            if(data.jwtRole == "Admin"){
+            if (data.jwtRole === 'Admin') {
               this.router.navigate(['admin']);
-            }
-            else
-            {
+            } else {
               this.router.navigate([this.returnUrl]);
             }
           } else {
