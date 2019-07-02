@@ -15,7 +15,7 @@ namespace ShoppingService.Interfaces
 
         Task<OrderResponseModel> CreateOrder(OrderRequestModel requestModel);
 
-        Task<bool> RefundOrder(Guid orderId, Guid userId, int amount);
+        Task<bool> RefundOrder(Guid orderId, Guid userId);
 
         Task<bool> AcceptRefundOrder(Guid orderId);
 
