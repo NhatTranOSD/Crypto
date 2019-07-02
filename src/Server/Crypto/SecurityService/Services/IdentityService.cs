@@ -26,13 +26,15 @@ namespace SecurityService.Services
         private readonly IEmailService _emailService;
         private readonly AppSettings _appSettings;
         private readonly IAppLogger<IdentityService> _logger;
+        private readonly ClientHostName _clientHostName;
 
         public IdentityService(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IMapper mapper,
             IEmailService emailService,
             IOptions<AppSettings> appSettings,
-            IAppLogger<IdentityService> logger)
+            IAppLogger<IdentityService> logger,
+            IOptions<ClientHostName> clientHostName)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,6 +42,8 @@ namespace SecurityService.Services
             _emailService = emailService;
             _appSettings = appSettings.Value;
             _logger = logger;
+            _clientHostName = clientHostName.Value;
+            
         }
 
         public async Task<CreateUserResponse> Create(string firstName, string lastName, string email, string password, string hostname)
@@ -57,7 +61,8 @@ namespace SecurityService.Services
                     string confirmationToken = _userManager.GenerateEmailConfirmationTokenAsync(appUser).Result;
 
                     string currentHost = $"https://{hostname}";
-                    string confirmUrl = currentHost + "/api/v1/Identity/ConfirmEmail/{0}?code={1}";
+
+                    string confirmUrl = $"https://{_clientHostName.Host}" + "emailconfirmation?userid={0}&code={1}";
 
                     string callbackUrl = string.Format(confirmUrl, appUser.Id, confirmationToken);
 

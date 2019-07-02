@@ -17,6 +17,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angularx-qrcode';
 import { TokenOrderHistoryComponent } from './components/token-orderhistory/token-orderhistory.component';
 import { NotifyModule } from './modules/notify/notify.module';
+import { EmailConfirmationComponent } from './components/emailconfirmation/emailconfirmation.component';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { NotifyModule } from './modules/notify/notify.module';
     HeaderComponent,
     WalletComponent,
     TokenOrderHistoryComponent,
+    EmailConfirmationComponent
   ],
   imports: [
     BrowserModule,
