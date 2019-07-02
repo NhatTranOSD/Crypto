@@ -59,7 +59,8 @@ namespace WalletService.Services
                 tokenConfiguration.PriceUSD = requestModel.PriceUSD;
                 tokenConfiguration.TokenName = requestModel.TokenName;
                 tokenConfiguration.TokenSymbol = requestModel.TokenSymbol;
-
+                tokenConfiguration.GasPricesInGwei = requestModel.GasPricesInGwei;
+                tokenConfiguration.GasLimit = requestModel.GasLimit;
                 _walletContext.TokenConfiguration.Update(tokenConfiguration);
 
                 await _walletContext.SaveChangesAsync();
