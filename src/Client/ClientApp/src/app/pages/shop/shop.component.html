@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="authenticationService.currentUserValue && authenticationService.currentUserValue.jwtRole === 'User'">
     <br>
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
@@ -12,21 +12,8 @@
     <!-- Shop body -->
     <div class="bg-white rounded ">
         <div class="row">
-            <!-- catagogies -->
-            <div class="col-3">
-                <div class="">
-                    <h3 class="text-center">Categories</h3>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Iphone</button>
-                        </li>
-                        <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Tablet</button>
-                        </li>
-                        <li class="list-group-item"><button type="button" class="btn btn-outline-primary btn-block">Laptop</button>
-                        </li>
-                    </ul>
-                </div>
+            <div class="col-1">
             </div>
-
             <!-- main -->
             <div class="col-9">
                 <h3 class="text-center">IPhones</h3>

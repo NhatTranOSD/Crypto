@@ -36,16 +36,16 @@ namespace SecurityService.Controllers
         }
 
         [Route("ConfirmEmail/{userId}")]
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<CreateUserResponse>> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult<CreateUserResponse>> ConfirmEmail(EmailConfirmationRequest requestModel)
         {
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(code)) return BadRequest("Invlid model");
+            if (string.IsNullOrEmpty(requestModel.UserId) || string.IsNullOrEmpty(requestModel.Code)) return BadRequest("Invlid model");
 
-            var result = await _identityService.ConfirmEmail(userId, code);
+            var result = await _identityService.ConfirmEmail(requestModel.UserId, requestModel.Code);
 
-            return Ok(result);
+          return Ok(result);
         }
 
         [Route("Login")]

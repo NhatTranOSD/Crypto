@@ -55,6 +55,8 @@ namespace SecurityService
             services.AddTransient<IEmailService, EmailService>();
 
             services.Configure<EmailSettings>(options => Configuration.GetSection("EmailSettings").Bind(options));
+          
+            services.Configure<ClientHostName>(Configuration.GetSection("ClientHostName"));
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");

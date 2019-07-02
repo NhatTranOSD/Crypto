@@ -16,6 +16,9 @@ import { WalletComponent } from './components/wallet/wallet.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angularx-qrcode';
 import { TokenOrderHistoryComponent } from './components/token-orderhistory/token-orderhistory.component';
+import { NotifyModule } from './modules/notify/notify.module';
+import { EmailConfirmationComponent } from './components/emailconfirmation/emailconfirmation.component';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +28,7 @@ import { TokenOrderHistoryComponent } from './components/token-orderhistory/toke
     HeaderComponent,
     WalletComponent,
     TokenOrderHistoryComponent,
+    EmailConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,7 @@ import { TokenOrderHistoryComponent } from './components/token-orderhistory/toke
     HttpClientModule,
     NgbModule,
     QRCodeModule,
+    NotifyModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
