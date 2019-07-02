@@ -7,9 +7,16 @@ import { ShopComponent } from './pages/shop/shop.component';
 import { TokenOrderHistoryComponent } from './components/token-orderhistory/token-orderhistory.component';
 
 import { AuthGuard } from './_guards/auth.guard';
+import { RoleGuard } from './_guards/role.guard';
 
 const routes: Routes = [
-  { path: 'admin', loadChildren: './pages/admin/admin.module#AdminModule', canActivate: [AuthGuard] },
+  {
+    path: 'admin', loadChildren: './pages/admin/admin.module#AdminModule',
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'Admin'
+    }
+  },
   { path: 'wallet', component: WalletComponent, canActivate: [AuthGuard] },
   { path: 'tokenorders', component: TokenOrderHistoryComponent, canActivate: [AuthGuard] },
   { path: 'shop', loadChildren: './pages/shop/shop.module#ShopModule' },
