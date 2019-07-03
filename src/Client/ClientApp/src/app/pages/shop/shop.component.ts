@@ -12,6 +12,7 @@ import { Product } from '../../models/Product.model';
 import { OrderRequest } from '../../models/requestmodels/orderrequest.model';
 import { Paging } from '../../models/Paging.model';
 import { WalletService } from '../../services/wallet.service';
+import { NotifyService } from './../../services/notify.service';
 
 @Component({
   selector: 'app-shop',
@@ -39,7 +40,8 @@ export class ShopComponent implements OnInit {
     private authenticationService: AuthenticationService,
     public productService: ProductService,
     private walletService: WalletService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private notifyService: NotifyService) { }
 
   ngOnInit() {
     this.getProductLists();
@@ -96,7 +98,7 @@ export class ShopComponent implements OnInit {
     }
 
     if (this.tokenService.trading === true) {
-      alert('Please wait for previous transaction complete! Thanks');
+      this.notifyService.showNotification('info', 'Please wait for previous transaction complete! Thanks');
       return;
     }
 
@@ -111,7 +113,8 @@ export class ShopComponent implements OnInit {
 
     this.tokenService.trading = true;
     this.modalService.dismissAll();
-    alert('transactions are being made. Please wait and check order history');
+
+    this.notifyService.showNotification('warning', 'Transactions are being made. Please wait and check order history');
 
     // Transfer token to admin
     this.tokenService.transferTokenToAdmin(this.selectedProduct.price * this.orderTotal)
@@ -132,13 +135,12 @@ export class ShopComponent implements OnInit {
                 .subscribe(
                   data => {
                     if (data != null) {
-                      alert('Buy successfull! Please check order history.');
-
+                      this.notifyService.showNotification('success', 'Buy successfull! Please check order history.');
                       // Reload
                       this.productService.getProducts();
                       this.walletService.getWalletInfo();
                     } else {
-                      alert('Buy failed! Please try again.');
+                      this.notifyService.showNotification('error', 'Buy Product Failed.');
                     }
 
                     this.tokenService.trading = false;
@@ -149,7 +151,7 @@ export class ShopComponent implements OnInit {
                     this.tokenService.trading = false;
                   });
             } else {
-              alert('Buy failed! Please check your balance.')
+              this.notifyService.showNotification('error', 'Buy failed! Please check your balance.');
               this.tokenService.trading = false;
             }
           }

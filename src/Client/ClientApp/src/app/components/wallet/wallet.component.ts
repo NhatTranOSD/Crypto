@@ -107,10 +107,10 @@ export class WalletComponent implements OnInit {
   public buyNow() {
     this.submitted = true;
     if (this.buyForm.invalid || this.f.amount.value < 1) {
-      this.error = 'Invalid inputs'
+      this.error = 'Invalid inputs';
       return;
     } else {
-      this.error = ''
+      this.error = '';
     }
 
     // Check valid ETH
@@ -132,24 +132,24 @@ export class WalletComponent implements OnInit {
     this.modalService.dismissAll();
 
     this.tokenService.trading = true;
-    alert('transactions are being made. Please wait and check Token order history');
+    
+    this.notify.showNotification('info', 'Transactions are being made. Please wait and check Token order history');
 
     this.tokenService.buyToken(this.f.amount.value, this.f.pair.value)
       .pipe(first())
       .subscribe(
         data => {
           this.tokenService.trading = false;
-          if (data == true) {
+          if (data === true) {
             this.walletService.getWalletInfo();
-            alert('Buy FCoin success');
-          }
-          else {
-            alert('Buy FCoin Error');
+            this.notify.showNotification('success', 'Buy FCoin Success');
+          } else {
+            this.notify.showNotification('warning', 'Buy FCoin Failed');
           }
         },
         error => {
           this.tokenService.trading = false;
-          alert('Buy FCoin error');
+          this.notify.showNotification('warning', 'Buy FCoin Failed');
         });
 
   }

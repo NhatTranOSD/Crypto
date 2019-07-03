@@ -1,4 +1,4 @@
-<div *ngIf="authenticationService.currentUserValue && authenticationService.currentUserValue.jwtRole === 'User'">
+<div>
     <br>
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
@@ -46,19 +46,12 @@
                 <!-- Paging -->
                 <div class="row">
                     <div class="col-2">
-                    <select class="form-control" [(ngModel)]="selectedSize" (change)="selected()">
+                        <select class="form-control" [(ngModel)]="selectedSize" (change)="selected()">
                         <option *ngFor="let item of limit" >{{item}}</option>
                     </select>
                     </div>
-                    <my-app-paging 
-                (goPage)="goToPage($event)"
-                (goNext)="onNext()"
-                (goPrev)="onPrev()"
-                [pagesToShow]="totalPage"
-                [page]="pageNumber"
-                [perPage]="pageSize"
-                [count]="total">
-                </my-app-paging>
+                    <my-app-paging (goPage)="goToPage($event)" (goNext)="onNext()" (goPrev)="onPrev()" [pagesToShow]="totalPage" [page]="pageNumber" [perPage]="pageSize" [count]="total">
+                    </my-app-paging>
                 </div>
             </div>
         </div>
@@ -113,5 +106,3 @@
             <button type="button" (click)="modal.dismiss('Close')" class="btn btn-outline-dark">Close</button>
         </div>
     </ng-template>
-   
-    
