@@ -88,6 +88,7 @@ namespace ShoppingService.Services
                     ProductId = requestModel.ProductId,
                     ProductName = requestModel.ProductName,
                     TotalProducts = requestModel.TotalProducts,
+                    RefundAmount = requestModel.RefundAmount,
                     OrderStatus = OrderStatus.Completed,
                     TotalPayment = totalPayment,
                     TxHash = requestModel.TxHash,
@@ -121,32 +122,33 @@ namespace ShoppingService.Services
                 if (order == null) return false;
                 // Create Order Refund
                 // Caculate totalPayment
-                decimal totalPayment = (order.TotalPayment / order.TotalProducts)*amount;
+                //decimal totalPayment = (order.TotalPayment / order.TotalProducts)*amount;
 
                 // Check TxHash before
 
                 // Init Order
-                Order orderRefund = new Order()
-                {
-                    Id = Guid.NewGuid(),
-                    UpdatedDate = DateTime.UtcNow,
-                    CreatedDate = DateTime.UtcNow,
-                    BuyerId = order.BuyerId,
-                    BuyerEmail = order.BuyerEmail,
-                    ProductId = order.ProductId,
-                    ProductName = order.ProductName,
-                    TotalProducts = amount,
-                    OrderStatus = OrderStatus.Refunding,
-                    TotalPayment = totalPayment,
-                    TxHash = order.TxHash,
-                };
+                //Order orderRefund = new Order()
+                //{
+                //    Id = Guid.NewGuid(),
+                //    UpdatedDate = DateTime.UtcNow,
+                //    CreatedDate = DateTime.UtcNow,
+                //    BuyerId = order.BuyerId,
+                //    BuyerEmail = order.BuyerEmail,
+                //    ProductId = order.ProductId,
+                //    ProductName = order.ProductName,
+                //    TotalProducts = amount,
+                //    OrderStatus = OrderStatus.Refunding,
+                //    TotalPayment = totalPayment,
+                //    TxHash = order.TxHash,
+                //};
 
-                await _shoppingContext.Orders.AddAsync(orderRefund);
+                //await _shoppingContext.Orders.AddAsync(orderRefund);
                 //await _shoppingContext.SaveChangesAsync();
 
-                //order.OrderStatus = OrderStatus.Refunding;
-                order.TotalPayment = order.TotalPayment - amount * (order.TotalPayment / order.TotalProducts);
-                order.TotalProducts = order.TotalProducts - amount;
+                order.OrderStatus = OrderStatus.Refunding;
+                //order.TotalPayment = order.TotalPayment - amount * (order.TotalPayment / order.TotalProducts);
+                //order.TotalProducts = order.TotalProducts - amount;
+                order.RefundAmount = amount;
 
                 _shoppingContext.Orders.Attach(order);
                 _shoppingContext.Entry(order).Property(x => x.OrderStatus).IsModified = true;
@@ -172,10 +174,14 @@ namespace ShoppingService.Services
 
                 if (order == null || product == null) return false;
 
-                product.Stock = product.Stock + order.TotalProducts;
+                product.Stock = product.Stock + order.RefundAmount;
 
                 _shoppingContext.Products.Attach(product);
                 _shoppingContext.Entry(product).Property(x => x.Stock).IsModified = true;
+
+                order.TotalPayment = order.TotalPayment - order.RefundAmount * (order.TotalPayment / order.TotalProducts);
+                order.TotalProducts = order.TotalProducts - order.RefundAmount;
+
 
                 // Refund Coin here
 
@@ -218,13 +224,13 @@ namespace ShoppingService.Services
                 _shoppingContext.Orders.Attach(order);
                 _shoppingContext.Entry(order).Property(x => x.OrderStatus).IsModified = true;
 
-                Order orderMain = await _shoppingContext.Orders.SingleOrDefaultAsync(x => x.TxHash == order.TxHash && x.OrderStatus == OrderStatus.Completed); //  && x.OrderStatus == OrderStatus.Completed
-                if (orderMain == null) return false;
-                orderMain.TotalProducts = orderMain.TotalProducts + order.TotalProducts;
-                orderMain.TotalPayment = orderMain.TotalPayment + order.TotalPayment;
+                //Order orderMain = await _shoppingContext.Orders.SingleOrDefaultAsync(x => x.TxHash == order.TxHash && x.OrderStatus == OrderStatus.Completed); //  && x.OrderStatus == OrderStatus.Completed
+                //if (orderMain == null) return false;
+                //orderMain.TotalProducts = orderMain.TotalProducts + order.TotalProducts;
+                //orderMain.TotalPayment = orderMain.TotalPayment + order.TotalPayment;
 
-                _shoppingContext.Orders.Attach(orderMain);
-                _shoppingContext.Entry(orderMain).Property(x => x.OrderStatus).IsModified = true;
+                //_shoppingContext.Orders.Attach(orderMain);
+                //_shoppingContext.Entry(orderMain).Property(x => x.OrderStatus).IsModified = true;
 
                 await _shoppingContext.SaveChangesAsync();
 

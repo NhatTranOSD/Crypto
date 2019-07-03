@@ -11,6 +11,7 @@
             <th scope="col">Name</th>
             <th scope="col">Price</th>
             <th scope="col">Total Products</th>
+            <th scope="col">Total Refund</th>
             <th scope="col">Total Payment</th>
             <th scope="col">Status</th>
             <th scope="col"></th>
@@ -23,7 +24,8 @@
             <td>{{ order.updatedDate | date: 'MM/dd/yyyy hh:mm:ss' }}</td>
             <td>{{ order.productName }}</td>
             <td>{{ order.totalPayment / order.totalProducts | number}}</td>
-            <td>{{ order.totalProducts | number}}</td>
+            <td>{{ order.totalProducts | number}} </td>
+            <td>{{order.refundAmount | number}}</td>
             <td class="float-right">{{ order.totalPayment | number }} <span
                     class="badge badge-secondary">{{order.currency}}</span></td>
             <td>

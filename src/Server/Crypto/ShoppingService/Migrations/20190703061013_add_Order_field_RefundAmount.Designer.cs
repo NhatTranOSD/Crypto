@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShoppingService.Data;
 
 namespace ShoppingService.Migrations
 {
     [DbContext(typeof(ShoppingContext))]
-    partial class ShoppingContextModelSnapshot : ModelSnapshot
+    [Migration("20190703061013_add_Order_field_RefundAmount")]
+    partial class add_Order_field_RefundAmount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

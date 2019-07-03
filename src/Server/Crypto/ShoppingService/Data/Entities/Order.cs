@@ -34,6 +34,9 @@ namespace ShoppingService.Data.Entities
         public int TotalProducts { get; set; }
 
         [Required]
+        public int RefundAmount { get; set; }
+
+        [Required]
         public decimal TotalPayment { get; set; }
 
         [Required]

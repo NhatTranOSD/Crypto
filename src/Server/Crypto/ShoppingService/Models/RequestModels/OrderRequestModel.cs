@@ -26,5 +26,8 @@ namespace ShoppingService.Models.RequestModels
 
         [Required]
         public int TotalProducts { get; set; }
+
+        [Required]
+        public int RefundAmount { get; set; }
     }
 }

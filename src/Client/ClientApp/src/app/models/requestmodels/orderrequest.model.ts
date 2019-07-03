@@ -5,4 +5,5 @@ export class OrderRequest {
     productId: string;
     productName: string;
     totalProducts: number;
+    refundAmount: number;
 }

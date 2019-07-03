@@ -107,6 +107,7 @@ export class ShopComponent implements OnInit {
       productId: this.selectedProduct.id,
       productName: this.selectedProduct.name,
       totalProducts: this.orderTotal,
+      refundAmount: 0
     };
 
     this.tokenService.trading = true;

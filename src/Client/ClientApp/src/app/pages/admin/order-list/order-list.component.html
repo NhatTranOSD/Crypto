@@ -8,6 +8,7 @@
             <th scope="col">BuyerEmail</th>
             <th scope="col">ProductName</th>
             <th scope="col">TotalProducts</th>
+            <th scope="col">TotalRefund</th>
             <th scope="col">TotalPayment</th>
             <th scope="col">OrderStatus</th>
             <th scope="col"></th>
@@ -20,6 +21,7 @@
             <td>{{ order.buyerEmail }}</td>
             <td>{{ order.productName }}</td>
             <td>{{ order.totalProducts | number}}</td>
+            <td>{{ order.refundAmount | number}}</td>
             <td class="float-right">{{ order.totalPayment | number }} <span class="badge badge-secondary">{{order.currency}}</span></td>
             <td>
                 <span *ngIf="order.orderStatus === 0" class="badge badge-light">{{ orderStatus[order.orderStatus] }}</span>

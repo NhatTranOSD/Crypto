@@ -1,4 +1,5 @@
-<div *ngIf="authenticationService.currentUserValue && authenticationService.currentUserValue.jwtRole === 'User'">
+<!-- <div *ngIf="authenticationService.currentUserValue && authenticationService.currentUserValue.jwtRole === 'User'"> -->
+  <div>
     <br>
     <!-- Breadcrumb -->
     <nav aria-label="breadcrumb">
@@ -50,7 +51,7 @@
                         <option *ngFor="let item of limit" >{{item}}</option>
                     </select>
                     </div>
-                    <my-app-paging 
+                    <my-app-paging
                 (goPage)="goToPage($event)"
                 (goNext)="onNext()"
                 (goPrev)="onPrev()"
@@ -113,5 +114,4 @@
             <button type="button" (click)="modal.dismiss('Close')" class="btn btn-outline-dark">Close</button>
         </div>
     </ng-template>
-   
-    
+

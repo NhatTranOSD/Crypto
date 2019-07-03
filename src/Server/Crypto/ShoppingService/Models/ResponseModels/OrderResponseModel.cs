@@ -26,6 +26,8 @@ namespace ShoppingService.Models.ResponseModels
 
         public int TotalProducts { get; set; }
 
+        public int RefundAmount { get; set; }
+
         public decimal TotalPayment { get; set; }
 
         public string Currency { get; set; } = "FCO";
