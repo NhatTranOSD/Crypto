@@ -96,34 +96,36 @@
                         <p *ngIf="tokenService.tokenTxs">Transfers: {{tokenService.tokenTxs.length}}</p>
                     </div>
                 </div>
-
                 <hr>
                 <h2>Transaction List</h2>
-                <table>
+                <div class="row">
+                <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th [class.active]="order === 'hash'"
-                                (click)="setOrder('hash')"
-                            >
-                              ID <span [hidden]="reverse">▼</span
-                              ><span [hidden]="!reverse">▲</span>
-                            </th>
-                            <th [class.active]="order === 'hash'"
-                                (click)="setOrder('timeStamp')"
-                                class="mdl-data-table__cell--non-numeric"
-                            >
-                              Name <span [hidden]="reverse">▼</span
-                              ><span [hidden]="!reverse">▲</span>
-                            </th>
+                            <th>TxHash</th>
+                            <th>Date </th>
+                            <th>Transfer Type </th>
+                            <th>Status </th>
+                            <th>Quantity</th>
                           </tr>
                           </thead>
                           <tbody>
-                          <tr *ngFor="let row of tokenService.tokenTxs | orderBy: order:reverse:'case-insensitive'">
-                            <td>{{ row.hash }}</td>
-                            <td>{{ row.timeStamp }}</td>
+                          <tr *ngFor="let row of tokenService.tokenTxs | orderBy: order:reverse:'case-insensitive' | slice:1:20">
+                            <td class="text-truncate">{{ row.hash | slice:0:9}}...</td>
+                            <td>{{comonFunctions.convertTimestampToDisplayTime(row.timeStamp)}}</td>
+                            <td *ngIf="comonFunctions.equalHash(row.to, selectedWallet.account.address)">
+                                    <span class="badge badge-success">Receive</span>
+                            </td>
+                            <td *ngIf="!comonFunctions.equalHash(row.to, selectedWallet.account.address)">
+                                    <span class="badge badge-primary">Send</span>
+                            </td>
+                            <td ><span class="badge badge-info">Confirmed</span></td>
+                            <td>{{row.value/1000000000000000000}}</td>
                           </tr>
+                        
                           </tbody>
                 </table>
+            </div>
             </div>
         </div>
     </div>

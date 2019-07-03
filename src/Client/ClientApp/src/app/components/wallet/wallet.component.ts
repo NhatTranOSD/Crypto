@@ -22,16 +22,16 @@ export class WalletComponent implements OnInit {
   public error = '';
   public selectedWallet: Wallet;
   public depositingWallet: Wallet;
-  order: string = 'hash';
-  reverse: boolean = false;
   public buyingWallet: Wallet;
   public buyForm: FormGroup;
   public submitted : boolean = false;
-  public sortedCollection: any[];
   public currencyDisplayName = CurrencyDisplayName;
-  public orderPipe: OrderPipe;
+  public orderPipe: OrderPipe = new OrderPipe();
   public isCollapsed = false;
   public selectedCurrencyType: number;
+  public order: string = 'timeStamp';
+  public reverse: boolean = true;
+  public sortedCollection: any[];
 
   constructor(private modalService: NgbModal,
     private walletService: WalletService,
@@ -79,19 +79,11 @@ export class WalletComponent implements OnInit {
         });
   }
 
-  setOrder(value: string) {
-    if (this.order === value) {
-      this.reverse = !this.reverse;
-    }
-    this.order = value;
-  }
-
   public selectWallet(selectedItem: Wallet) {
     this.selectedWallet = selectedItem;
     
     if (selectedItem.walletCurrency.currencyType === 0) {
       this.tokenService.getTokenTransactions(this.selectedWallet.account.address, environment.contractAddress, 'asc');
-      this.sortedCollection = this.orderPipe.transform(this.tokenService.tokenTxs, this.order);
     } else {
       this.tokenService.tokenTxs = null;
     }

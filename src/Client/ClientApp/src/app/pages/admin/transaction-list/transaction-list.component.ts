@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenService } from '../../../services/token.service';
 import { environment } from '../../../../environments/environment';
 import { TokenConfig } from '../../../models/TokenConfig.model';
+import { OrderPipe } from 'ngx-order-pipe';
 
 @Component({
   selector: 'app-transaction-list',
@@ -17,7 +18,10 @@ export class TransactionListComponent implements OnInit {
   public tokenConfigForm: FormGroup;
   public formSubmitted: boolean;
   public formLoading: boolean;
-
+  public order: string = 'timeStamp';
+  public orderPipe: OrderPipe = new OrderPipe();
+  public reverse: boolean = true;
+  public sortedCollection: any[];
   constructor(public tokenService: TokenService,private formBuilder: FormBuilder,private modalService: NgbModal,) {
     this.adminAddress = environment.adminAddress;
     this.contractAdress = environment.contractAddress;
@@ -26,7 +30,6 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit() {
     this.tokenService.getTokenConfig();
-
   }
 
   get f() { return this.tokenConfigForm.controls; }

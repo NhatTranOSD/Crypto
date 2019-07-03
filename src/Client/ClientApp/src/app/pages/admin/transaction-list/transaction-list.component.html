@@ -91,7 +91,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of tokenService.tokenTxs">
+        <tr *ngFor="let item of tokenService.tokenTxs | orderBy: order:reverse:'case-insensitive' | slice:1:20">
             <td class="text-truncate" style="max-width: 100px;">{{item.hash}}</td>
             <td>{{convertToDateTime(item.timeStamp)}}</td>
             <td [ngClass]="{'text-primary': equalString(item.from, adminAddress)}" class="text-truncate " style="max-width: 100px; ">{{item.from}}</td>

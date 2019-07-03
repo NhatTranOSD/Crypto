@@ -18,7 +18,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { TokenOrderHistoryComponent } from './components/token-orderhistory/token-orderhistory.component';
 import { NotifyModule } from './modules/notify/notify.module';
 import { EmailConfirmationComponent } from './components/emailconfirmation/emailconfirmation.component';
-import { OrderPipe } from 'ngx-order-pipe';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { OrderPipe } from 'ngx-order-pipe';
     WalletComponent,
     TokenOrderHistoryComponent,
     EmailConfirmationComponent,
-    OrderPipe
+    
 
   ],
   imports: [
@@ -40,7 +40,7 @@ import { OrderPipe } from 'ngx-order-pipe';
     NgbModule,
     QRCodeModule,
     NotifyModule,
-    OrderPipe
+    OrderModule
 
     
   ],

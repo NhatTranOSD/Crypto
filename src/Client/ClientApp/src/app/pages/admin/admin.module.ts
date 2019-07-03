@@ -14,6 +14,7 @@ import { ChartComponent } from './chart/chart.component';
 import { ProductOrderChartComponent } from './chart/product-order-chart/product-order-chart.component';
 import { TokenOrderChartComponent } from './chart/token-order-chart/token-order-chart.component';
 import { TokenOrderHistoryComponent } from './token-order-history/token-order-history.component';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [AdminComponent, CatalogComponent, HeaderComponent, OrderListComponent, TransactionListComponent, ChartComponent, ProductOrderChartComponent, TokenOrderChartComponent, TokenOrderHistoryComponent],
@@ -21,7 +22,9 @@ import { TokenOrderHistoryComponent } from './token-order-history/token-order-hi
     CommonModule,
     AdminRoutingModule,
     ChartsModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule,
+    OrderModule
+
   ],
   bootstrap: [AdminComponent]
 })
