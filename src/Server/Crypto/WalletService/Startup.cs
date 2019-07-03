@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using WalletService.Data;
 using WalletService.Interfaces;
+using WalletService.Services;
 
 namespace WalletService
 {
@@ -48,11 +49,14 @@ namespace WalletService
             services.AddAutoMapper();
 
             services.Configure<EtherscanSettings>(options => Configuration.GetSection("EtherscanSettings").Bind(options));
+            services.Configure<EthereumGatewaySettings>(options => Configuration.GetSection("EthereumGatewaySettings").Bind(options));
 
             services.AddHttpClient<IAccountService, AccountService>();
             services.AddTransient<IWalletService, Services.WalletService>();
             services.AddTransient<ITokenService, Services.TokenService>();
+            services.AddTransient<IChartService, ChartService>();
             services.AddHttpClient<ITransactionService, TransactionService>();
+            services.AddHttpClient<IWeb3Service, Web3Service>();
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");

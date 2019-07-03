@@ -63,7 +63,11 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           if (data.succeeded) {
-            this.router.navigate([this.returnUrl]);
+            if (data.jwtRole === 'Admin') {
+              this.router.navigate(['admin']);
+            } else {
+              this.router.navigate([this.returnUrl]);
+            }
           } else {
             this.error = 'Invalid UserName or PassWord';
           }

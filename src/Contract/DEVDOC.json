@@ -1,0 +1,39 @@
+{
+    "methods": {
+        "allowance(address,address)": {
+            "params": {
+                "_owner": "The address of the account owning tokens\r",
+                "_spender": "The address of the account able to transfer the tokens\r"
+            },
+            "return": "Amount of remaining tokens allowed to spent\r"
+        },
+        "approve(address,uint256)": {
+            "params": {
+                "_spender": "The address of the account able to transfer the tokens\r",
+                "_value": "The amount of tokens to be approved for transfer\r"
+            },
+            "return": "Whether the approval was successful or not\r"
+        },
+        "balanceOf(address)": {
+            "params": {
+                "_owner": "The address from which the balance will be retrieved\r"
+            },
+            "return": "The balance\r"
+        },
+        "transfer(address,uint256)": {
+            "params": {
+                "_to": "The address of the recipient\r",
+                "_value": "The amount of token to be transferred\r"
+            },
+            "return": "Whether the transfer was successful or not\r"
+        },
+        "transferFrom(address,address,uint256)": {
+            "params": {
+                "_from": "The address of the sender\r",
+                "_to": "The address of the recipient\r",
+                "_value": "The amount of token to be transferred\r"
+            },
+            "return": "Whether the transfer was successful or not\r"
+        }
+    }
+}

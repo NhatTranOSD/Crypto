@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShoppingService.Data;
 using ShoppingService.Interfaces;
 using ShoppingService.Models.RequestModels;
 
@@ -15,10 +17,13 @@ namespace ShoppingService.Controllers
     public class ProductController : ControllerBase
     {
         protected readonly IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IMapper mapper)
         {
             _productService = productService;
+            _mapper = mapper;
+            
         }
 
         [AllowAnonymous]
@@ -73,6 +78,16 @@ namespace ShoppingService.Controllers
             if (!ModelState.IsValid || string.IsNullOrEmpty(id)) return BadRequest();
 
             var result = await _productService.DeleteProduct(id);
+
+            return Ok(result);
+        }
+               
+        [HttpGet]
+        public async Task<ActionResult> GetProducts(int pageNumber, int pageSize)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _productService.GetProductLists(pageNumber, pageSize);
 
             return Ok(result);
         }

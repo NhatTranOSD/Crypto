@@ -16,6 +16,9 @@ namespace ShoppingService.Models.RequestModels
         public string BuyerEmail { get; set; }
 
         [Required]
+        public string TxHash { get; set; }
+
+        [Required]
         public Guid ProductId { get; set; }
 
         [Required]

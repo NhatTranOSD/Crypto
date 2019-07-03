@@ -2,14 +2,17 @@
     <div class="col-4">
         <div class="shadow p-3 mb-5 bg-white rounded">
             <div class="card border-0">
-                <img class="card-img-top" src="https://cdn3.iconfinder.com/data/icons/users-23/64/_Male_Profile_Round_Circle_Users-512.png" alt="Card image cap">
+                <img class="card-img-top"
+                    src="https://cdn3.iconfinder.com/data/icons/users-23/64/_Male_Profile_Round_Circle_Users-512.png"
+                    alt="Card image cap">
                 <div class="card-body">
                     <div class="form-group">
-                        <button *ngIf="this.walletService.wallets && this.walletService.wallets.length === 0" [disabled]="loading" (click)="makeDefaultWallets()" class="btn btn-info btn-sm">
+                        <button *ngIf="this.walletService.wallets && this.walletService.wallets.length === 0"
+                            [disabled]="loading" (click)="makeDefaultWallets()" class="btn btn-info btn-sm">
                             New wallet
                         </button>
-                        <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-                        />
+                        <img *ngIf="loading" class="pl-2"
+                            src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                     </div>
 
                     <p class="card-text text-truncate">
@@ -22,17 +25,33 @@
             <div *ngIf="walletService.wallets" class="card border-0">
                 <div class="list-group">
                     <div *ngFor="let wallet of walletService.wallets">
-                        <a *ngFor="let item of wallet.walletCurrencys" [ngClass]="{'bg-light': selectedWallet === wallet}" class="list-group-item list-group-item-action border-0">
-                            <div (click)="selectWallet(wallet)" class="row">
+                        <a [ngClass]="{'bg-light': selectedWallet === wallet}"
+                            class="list-group-item list-group-item-action border-0">
+                            <div class="row">
                                 <div class="col-4">
-                                    <img *ngIf="item.currencyType == 0" class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg" alt="Card image cap">
-                                    <img *ngIf="item.currencyType == 1" class="card-img-top" src="https://res.cloudinary.com/teepublic/image/private/s--cf-FFLgW--/t_Preview/b_rgb:fffffe,c_limit,f_jpg,h_630,q_90,w_630/v1513290036/production/designs/2179049_1.jpg" alt="Card image cap">
+                                    <img *ngIf="wallet.walletCurrency.currencyType == 0" class="card-img-top"
+                                        src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg"
+                                        alt="Card image cap">
+                                    <img *ngIf="wallet.walletCurrency.currencyType == 1" class="card-img-top"
+                                        src="https://res.cloudinary.com/teepublic/image/private/s--cf-FFLgW--/t_Preview/b_rgb:fffffe,c_limit,f_jpg,h_630,q_90,w_630/v1513290036/production/designs/2179049_1.jpg"
+                                        alt="Card image cap">
                                 </div>
                                 <div class="col-8">
-                                    <h4><b>{{currencyDisplayName[item.currencyType]}}</b></h4>
-                                    <h6>Balance: {{item.balance/1000000000000000000}}
+                                    <h4><b>{{currencyDisplayName[wallet.walletCurrency.currencyType]}}</b>
+                                        <span><img *ngIf="tokenService.trading" class="pl-2"
+                                                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                                        </span>
+                                    </h4>
+                                    <h6>Balance: {{wallet.walletCurrency.balance/1000000000000000000}}
                                     </h6>
-                                    <button (click)="depositCoin(depositContent, wallet)" class="btn btn-sm btn-success">Deposit</button>
+                                    <button *ngIf="wallet.walletCurrency.currencyType !== 0" type="button"
+                                        (click)="depositCoin(depositContent, wallet)"
+                                        class="btn btn-sm btn-success mr-1">Deposit</button>
+                                    <button *ngIf="wallet.walletCurrency.currencyType === 0" type="button"
+                                        (click)="buyCoin(buyContent, wallet)"
+                                        class="btn btn-sm btn-info mr-1">Buy</button>
+                                    <button type="button" (click)="selectWallet(wallet)"
+                                        class="btn btn-sm btn-warning mr-1 float-right">Transactions</button>
                                 </div>
                             </div>
                         </a>
@@ -61,15 +80,19 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-3">
-                        <img *ngIf="selectedWallet.walletCurrencys[0].currencyType == 0" class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg" alt="Card image cap">
-                        <img *ngIf="selectedWallet.walletCurrencys[0].currencyType == 1" class="card-img-top" src="https://res.cloudinary.com/teepublic/image/private/s--cf-FFLgW--/t_Preview/b_rgb:fffffe,c_limit,f_jpg,h_630,q_90,w_630/v1513290036/production/designs/2179049_1.jpg"
+                        <img *ngIf="selectedWallet.walletCurrency.currencyType == 0" class="card-img-top"
+                            src="https://upload.wikimedia.org/wikipedia/commons/9/9a/BTC_Logo.svg" alt="Card image cap">
+                        <img *ngIf="selectedWallet.walletCurrency.currencyType == 1" class="card-img-top"
+                            src="https://res.cloudinary.com/teepublic/image/private/s--cf-FFLgW--/t_Preview/b_rgb:fffffe,c_limit,f_jpg,h_630,q_90,w_630/v1513290036/production/designs/2179049_1.jpg"
                             alt="Card image cap">
                     </div>
                     <div class="col-9">
-                        <p>Address: <span class="text-highlight">{{selectedWallet.address}}</span></p>
-                        <p>Currency: {{currencyDisplayName[selectedWallet.walletCurrencys[0].currencyType]}}</p>
-                        <p>Balance: {{selectedWallet.walletCurrencys[0].balance/1000000000000000000}}</p>
-                        <p>Contract: <span class="text-highlight">0xd4048296e93478a31777e8d7ef2128e601a0eac5</span></p>
+                        <p>Address: <span class="text-highlight">{{selectedWallet.account.address}}</span></p>
+                        <p>Currency: {{currencyDisplayName[selectedWallet.walletCurrency.currencyType]}}</p>
+                        <p>Balance: {{selectedWallet.walletCurrency.balance/1000000000000000000}}</p>
+                        <p *ngIf="selectedWallet.walletCurrency.currencyType === 0 && tokenService.tokenConfig">
+                            Contract: <span class="text-highlight">{{tokenService.tokenConfig.contractAddress}}</span>
+                        </p>
                         <p *ngIf="tokenService.tokenTxs">Transfers: {{tokenService.tokenTxs.length}}</p>
                     </div>
                 </div>
@@ -80,17 +103,15 @@
                     <div *ngFor="let item of tokenService.tokenTxs; index as i">
                         <div class="list-group-item list-group-item-action">
                             <div class="row">
-                                <div class="col-2">
-                                    <img class="card-img-top" src="https://cdn0.iconfinder.com/data/icons/mobile-device/512/dollar-usd-round-keyboard-money-usa-latin-2-512.png" alt="Card image cap">
-                                </div>
                                 <div class="col-5">
-                                    <p *ngIf="comonFunctions.equalHash(item.to, selectedWallet.address)">
+                                    <p *ngIf="comonFunctions.equalHash(item.to, selectedWallet.account.address)">
                                         Receive
                                     </p>
-                                    <p *ngIf="!comonFunctions.equalHash(item.to, selectedWallet.address)">
+                                    <p *ngIf="!comonFunctions.equalHash(item.to, selectedWallet.account.address)">
                                         Sent
                                     </p>
-                                    <h6 class="text-left">#{{ i + 1 }} - {{comonFunctions.convertTimestampToDisplayTime(item.timeStamp)}}
+                                    <h6 class="text-left">#{{ i + 1 }} -
+                                        {{comonFunctions.convertTimestampToDisplayTime(item.timeStamp)}}
                                     </h6>
                                     <div class="alert alert-dark border-0" role="alert">
                                         <div class="text-truncate">
@@ -119,7 +140,7 @@
 <ng-template #depositContent let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">
-            <b>{{currencyDisplayName[depositingWallet.walletCurrencys[0].currencyType]}}</b> Deposit
+            <b>{{currencyDisplayName[depositingWallet.walletCurrency.currencyType]}}</b> Deposit
         </h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
@@ -129,7 +150,7 @@
 
         <div class="card border-0">
             <div class="card-body">
-                Address: {{depositingWallet.address}}
+                Address: {{depositingWallet.account.address}}
             </div>
         </div>
 
@@ -140,7 +161,7 @@
                 margin-left: auto;
                 margin-right: auto;
                 width: 50%;">
-                    <qrcode class="text-center" [qrdata]="depositingWallet.address" [size]="256" [level]="'M'">
+                    <qrcode class="text-center" [qrdata]="depositingWallet.account.address" [size]="256" [level]="'M'">
                     </qrcode>
                 </div>
             </div>
@@ -151,3 +172,90 @@
         <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Close')">Done</button>
     </div>
 </ng-template>
+
+<!-- Buy Modal -->
+<!-- Deposit Modal -->
+<ng-template #buyContent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+            <b>{{currencyDisplayName[buyingWallet.walletCurrency.currencyType]}}</b> Buy
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        <div class="card border-0">
+            <div class="card-body">
+                <form [formGroup]="buyForm" (ngSubmit)="buyNow()">
+                    <div class="form-group text-left">
+                        <label for="amount">Amount: </label>
+                        <input min="1" type="number" formControlName="amount" class="form-control"
+                            [ngClass]="{ 'is-invalid': f.amount.errors }" />
+                        <div *ngIf="f.amount.errors" class="invalid-feedback">
+                            <div *ngIf="f.amount.errors.required">Amount is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group text-left">
+                        <label for="pair">Pair: </label>
+                        <select formControlName="pair" class="form-control">
+                            <option value="0">ETH/FCO</option>
+                            <!-- <option value="1">1</option> -->
+                        </select>
+                    </div>
+                    <hr>
+                    <div class="form-group text-left">
+                        <div class="row">
+                            <div class="col-4">
+                                Transaction Fee:
+                            </div>
+                            <div class="col-6">
+                                {{tokenService.tokenConfig.gasLimit * tokenService.tokenConfig.gasPricesInGwei/1000000000}}
+                            </div>
+                            <div class="col-2">
+                                ETH
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-4">
+                                FCO Price:
+                            </div>
+                            <div class="col-6">
+                                {{tokenService.tokenConfig.priceUSD / walletService.ETHPrice.ethusd}}
+                            </div>
+                            <div class="col-2">
+                                ETH
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <b>Total Payment: </b>
+                            </div>
+                            <div class="col-6">
+                                {{tokenService.tokenConfig.priceUSD / walletService.ETHPrice.ethusd * f.amount.value + tokenService.tokenConfig.gasLimit * tokenService.tokenConfig.gasPricesInGwei/1000000000}}
+                            </div>
+                            <div class="col-2">
+                                ETH
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="alert alert-danger" *ngIf="error !== ''">{{error}}</div >
+                    <hr>
+                    <button class="btn btn-primary btn-sm pull-right">BuyNow</button>
+                    <button type="button" class="btn btn-outline-dark btn-sm pull-right mr-1"
+                        (click)="modal.dismiss('Close')">close</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Close')">Buy Now</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Close')">Done</button>
+    </div> -->
+</ng-template>
+<notifier-container></notifier-container>

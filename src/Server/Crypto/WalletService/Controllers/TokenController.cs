@@ -96,5 +96,76 @@ namespace WalletService.Controllers
 
             return Ok(result);
         }
+
+        [Route("UserOrderHistory")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<TokenOrderResponseModel>>> UserOrderHistory(Guid userId)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _tokenService.TokenOrderHistory(userId);
+
+            return Ok(result);
+        }
+
+        [Route("OrderHistory")]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<TokenOrderResponseModel>>> OrderHistory()
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _tokenService.TokenOrderHistory();
+
+            return Ok(result);
+        }
+
+        [Route("BuyToken")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> BuyToken(BuyTokenRequestModel requestModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _tokenService.BuyToken(requestModel.UserId, requestModel.Amount, requestModel.Pair);
+
+            return Ok(result);
+        }
+
+        [Route("TransferTokenToAdmin")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<TransferTokenResponseModel>> TransferTokenToAdmin(TransferTokenRequestModel requestModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            string result = await _tokenService.TransferTokenToAdmin(requestModel.UserId, requestModel.Amount);
+
+            TransferTokenResponseModel responseModel = new TransferTokenResponseModel() { TxHash = result };
+
+            return Ok(responseModel);
+        }
+
+        [Route("RefundUserToken")]
+        [HttpPost]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<TransferTokenResponseModel>> RefundUserToken(TransferTokenRequestModel requestModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            string result = await _tokenService.RefundUserToken(requestModel.UserId, requestModel.Amount);
+
+            TransferTokenResponseModel responseModel = new TransferTokenResponseModel() { TxHash = result };
+
+            return Ok(responseModel);
+        }
     }
 }

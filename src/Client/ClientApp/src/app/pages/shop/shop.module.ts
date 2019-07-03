@@ -5,13 +5,16 @@ import { ShopComponent } from '../shop/shop.component';
 
 import { ShopRoutingModule } from './shop-routing.module';
 import { OrderHistoryComponent } from './order-history/order-history.component';
+import { PagingComponent } from '../../components/paging/paging.component';
+import { NotifyModule } from '../../modules/notify/notify.module';
 
 @NgModule({
-  declarations: [ShopComponent, OrderHistoryComponent],
+  declarations: [ShopComponent, OrderHistoryComponent, PagingComponent],
   imports: [
     CommonModule,
     FormsModule, ReactiveFormsModule,
-    ShopRoutingModule
+    ShopRoutingModule,
+    NotifyModule
   ],
   bootstrap: [ShopComponent]
 })

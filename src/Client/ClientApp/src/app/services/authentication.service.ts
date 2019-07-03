@@ -33,6 +33,18 @@ export class AuthenticationService {
       }));
   }
 
+  public emailConfirmation(userid: string, code: string) {
+    const requestmodel = {
+      userId: userid,
+// tslint:disable-next-line: object-literal-shorthand
+      code: code,
+    }
+    return this.http.post<any>(`${environment.authApi}api/v1/Identity/ConfirmEmail/${userid}`, requestmodel)
+      .pipe(map(result => {
+        return result;
+      }));
+  }
+
   public login(username: string, password: string) {
 
     const requestmodel = {

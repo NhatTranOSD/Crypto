@@ -1,4 +1,6 @@
-<h3>Token <span *ngIf="tokenService.tokenConfig" class="text-secondary">[{{tokenService.tokenConfig.tokenSymbol}}]</span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></h3>
+<h3>Token <span *ngIf="tokenService.tokenConfig" class="text-secondary">[{{tokenService.tokenConfig.tokenSymbol}}]</span>
+    <button (click)="editOpen(editcontent, tokenService.tokenConfig)" type="button"  class="btn btn-success btn-sm">Edit</button>
+</h3>
 <hr>
 <div *ngIf="tokenService.tokenConfig" class="row">
     <div class="col">
@@ -47,7 +49,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-3">Contract:</div>
-                        <div class="col-9"><span class="text-highlight">{{tokenService.tokenConfig.contractAddress}}</span></div>
+                        <div class="col-9 text-truncate">{{tokenService.tokenConfig.contractAddress}}</div>
                     </div>
                 </li>
                 <li class="list-group-item">
@@ -102,3 +104,42 @@
 </table>
 
 <!-- Config Modal -->
+<ng-template #editcontent let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{productFormTitle}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <form [formGroup]="tokenConfigForm">
+                <div class="form-group">
+                    <label for="priceUSD">Price</label>
+                    <input type="number" formControlName="priceUSD" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.priceUSD.errors }" />
+               </div>
+                <div class="form-group">
+                    <label for="gasLimit">Gas Limit</label>
+                    <input type="number" formControlName="gasLimit" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.gasLimit.errors }" />
+                    
+                </div>
+                <div class="form-group">
+                    <label for="gasPricesInGwei">Gas Price</label>
+                    <input type="number" formControlName="gasPricesInGwei" class="form-control" [ngClass]="{ 'is-invalid': formSubmitted && f.gasPricesInGwei.errors }" />
+                </div>
+                <div class="form-group">
+                    <div class="modal-footer">
+                        <img *ngIf="formLoading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                        />
+                        <button [disabled]="formLoading" type="button" class="btn btn-outline-info" (click)="editSave()">Save</button>
+                        <button [disabled]="formLoading" type="button" class="btn btn-outline-dark" (click)="closeModal('CreateClose')">Close</button>
+                    </div>
+                </div>
+            </form>
+        </form>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info" (click)="modal.close('Save click')">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+    </div> -->
+</ng-template>

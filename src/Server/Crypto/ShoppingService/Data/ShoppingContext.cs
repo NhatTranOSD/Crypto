@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShoppingService.Data.Helpers;
 
 namespace ShoppingService.Data
 {
@@ -20,5 +21,6 @@ namespace ShoppingService.Data
         {
             base.OnModelCreating(builder);
         }
+        
     }
 }

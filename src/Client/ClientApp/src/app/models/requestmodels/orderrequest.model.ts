@@ -1,4 +1,5 @@
 export class OrderRequest {
+    txHash: string;
     buyerId: string;
     buyerEmail: string;
     productId: string;

@@ -9,6 +9,7 @@ using WalletService.Entities.RequestModels;
 using WalletService.Entities.ResponseModels;
 using Microsoft.AspNetCore.Authorization;
 using EtherscanApiModule.Interfaces;
+using WalletService.Models.RequestModels;
 
 namespace WalletService.Controllers
 {

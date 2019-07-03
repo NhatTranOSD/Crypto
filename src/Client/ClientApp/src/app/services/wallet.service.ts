@@ -16,6 +16,7 @@ export class WalletService {
 
   private currentUser: User;
   public wallets: Wallet[];
+  public ETHPrice: any;
 
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(x => {
@@ -24,6 +25,8 @@ export class WalletService {
         this.wallets = null;
       }
     });
+
+    this.getETHPrice();
   }
 
   public createWallet(currencytype: number) {
@@ -46,6 +49,20 @@ export class WalletService {
       .subscribe(
         data => {
           this.wallets = data;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  public getETHPrice(): any {
+
+    return this.http.get<any>(`${environment.walletApi}api/v1/ETH/ETHPrice`)
+      .subscribe(
+        data => {
+          if (data.status === '1') {
+            this.ETHPrice = data.result;
+          }
         },
         error => {
           console.log(error);

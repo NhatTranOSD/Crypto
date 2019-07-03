@@ -42,6 +42,8 @@ namespace ShoppingService.Data.Entities
         [Required]
         public string TxHash { get; set; }
 
+        public string RefundTxHash { get; set; }
+
         [Required]
         public OrderStatus OrderStatus { get; set; }
     }

@@ -1,0 +1,14 @@
+
+<div aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+		  <li class="page-item"><a class="page-link">{{ getMax() }} of {{ count }}</a></li>
+		  <li [className]="(page === 1 || loading) ? 'page-item disabled' : 'page-item'">
+			<a (click)="onPrev()" class="page-link">Previous</a>
+		  </li>
+		  <li *ngFor="let pageNum of getPages()" (click)="onPage(pageNum)" class="page-item">
+			  <a class="page-link" href="#">{{pageNum}}</a></li>
+		  <li [className]="(lastPage() || loading) ? 'page-item disabled' : 'page-item'">
+			<a class="page-link" (click)="onNext()" href="#" >Next</a>
+		  </li>
+		</ul>
+</div>

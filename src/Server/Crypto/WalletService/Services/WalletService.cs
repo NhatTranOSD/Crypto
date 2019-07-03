@@ -11,20 +11,25 @@ using WalletService.Entities.RequestModels;
 using WalletService.Entities.ResponseModels;
 using EtherscanApiModule.Interfaces;
 using EtherscanApiModule.Common;
+using WalletService.Data.Entities;
 
 namespace WalletService.Services
 {
     public class WalletService : IWalletService
     {
         private readonly WalletContext _walletContext;
+        private readonly IWeb3Service _web3Service;
+        private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
 
-        private IAccountService _accountService;
+        private readonly IAccountService _accountService;
 
-        public WalletService(WalletContext walletContext, IAccountService accountService, IMapper mapper)
+        public WalletService(IWeb3Service web3Service, WalletContext walletContext, IAccountService accountService, ITokenService tokenService, IMapper mapper)
         {
             _walletContext = walletContext;
             _accountService = accountService;
+            _web3Service = web3Service;
+            _tokenService = tokenService;
             _mapper = mapper;
         }
 
@@ -32,27 +37,72 @@ namespace WalletService.Services
         {
             try
             {
-                // Init ETH currency (Default)
-                WalletCurrency walletCurrency = new WalletCurrency()
+                // Create Ethereum Account
+                Account account = await _web3Service.CreateAccount();
+                if (account == null) return false;
+
+                ///////////// ETH Wallet /////////////
+                WalletCurrency ETHCurrency = new WalletCurrency()
                 {
                     Balance = "0",
-                    CurrencyType = (CurrencyType)requestModel.CurrencyType,
+                    CurrencyType = CurrencyType.ETH,
                     Id = Guid.NewGuid(),
                     UpdatedDate = DateTime.UtcNow,
                 };
 
-                await _walletContext.WalletCurrencys.AddAsync(walletCurrency);
+                await _walletContext.WalletCurrencys.AddAsync(ETHCurrency);
 
                 // Init wallet, will generate here
-                Wallet wallet = new Wallet()
+                Wallet ETHwallet = new Wallet()
                 {
-                    Address = "0x0B94369D5368acBB6674f11758Be01ae69CDc04f",
                     Id = Guid.NewGuid(),
                     UserId = requestModel.UserId,
-                    WalletCurrencys = new List<WalletCurrency>() { walletCurrency }
+                    WalletCurrency = ETHCurrency,
+                    CreatedDate = DateTime.UtcNow,
+                };
+                await _walletContext.Wallets.AddAsync(ETHwallet);
+
+                Account ETHAccount = new Account()
+                {
+                    Id = Guid.NewGuid(),
+                    Address = account.Address,
+                    PrivateKey = account.PrivateKey,
+                    Wallet = ETHwallet,
+                    WalletId = ETHwallet.Id,
+                };
+                await _walletContext.Accounts.AddAsync(ETHAccount);
+
+
+                ///////////// ETH Wallet /////////////
+                WalletCurrency ToKenCurrency = new WalletCurrency()
+                {
+                    Balance = "0",
+                    CurrencyType = CurrencyType.FCO,
+                    Id = Guid.NewGuid(),
+                    UpdatedDate = DateTime.UtcNow,
                 };
 
-                await _walletContext.Wallets.AddAsync(wallet);
+                await _walletContext.WalletCurrencys.AddAsync(ToKenCurrency);
+
+                // Init wallet, will generate here
+                Wallet TokenWallet = new Wallet()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = requestModel.UserId,
+                    WalletCurrency = ToKenCurrency,
+                    CreatedDate = DateTime.UtcNow,
+                };
+                await _walletContext.Wallets.AddAsync(TokenWallet);
+
+                Account TokenAccount = new Account()
+                {
+                    Id = Guid.NewGuid(),
+                    Address = account.Address,
+                    PrivateKey = account.PrivateKey,
+                    Wallet = TokenWallet,
+                    WalletId = TokenWallet.Id,
+                };
+                await _walletContext.Accounts.AddAsync(TokenAccount);
 
                 await _walletContext.SaveChangesAsync();
 
@@ -69,8 +119,10 @@ namespace WalletService.Services
         {
             try
             {
+
                 IList<Wallet> responseWallet = await _walletContext.Wallets
-                                                .Include(w => w.WalletCurrencys)
+                                                .Include(w => w.WalletCurrency)
+                                                .Include(a => a.Account)
                                                 .Where(x => x.UserId == userId).OrderByDescending(x => x.CreatedDate).ToListAsync();
 
                 IList<WalletResponseModel> responseModel = _mapper.Map<IList<WalletResponseModel>>(responseWallet);
@@ -78,16 +130,13 @@ namespace WalletService.Services
                 // Get Balance for per wallet
                 foreach (var wallet in responseModel)
                 {
-                    foreach (var currency in wallet.WalletCurrencys)
+                    if (wallet.WalletCurrency.CurrencyType == CurrencyType.FCO)
                     {
-                        if (currency.CurrencyType == CurrencyType.FCO)
-                        {
-                            currency.Balance = await _accountService.TokenBalance(wallet.Address, "", FCOToken.CONTRACT);
-                        }
-                        else if (currency.CurrencyType == CurrencyType.ETH)
-                        {
-                            currency.Balance = await _accountService.ETHBalance(wallet.Address);
-                        }
+                        wallet.WalletCurrency.Balance = await _accountService.TokenBalance(wallet.Account?.Address, "", FCOToken.CONTRACT);
+                    }
+                    else if (wallet.WalletCurrency.CurrencyType == CurrencyType.ETH)
+                    {
+                        wallet.WalletCurrency.Balance = await _accountService.ETHBalance(wallet.Account?.Address);
                     }
                 }
 
