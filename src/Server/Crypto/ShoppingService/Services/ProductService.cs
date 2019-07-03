@@ -133,7 +133,7 @@ namespace ShoppingService.Services
                 var totalCountAll = productAll.Count;
 
                 IList<ProductResponseModel> response = _mapper.Map<IList<ProductResponseModel>>(products);
-            
+
                 var paginationMetaData = new PagingHeader
                 {
                     TotalItems = totalCountAll,
@@ -142,6 +142,11 @@ namespace ShoppingService.Services
                     TotalPages = (int)Math.Ceiling(totalCountAll / (double)pageSize),
                 };
 
+                if(response.Count() == 0)
+                {
+                    pageNumber = 1;
+                    return await GetProductLists(pageNumber, pageSize);
+                }
                 var productList = new ProductListResponseModel
                 {
                     Paging = paginationMetaData,
