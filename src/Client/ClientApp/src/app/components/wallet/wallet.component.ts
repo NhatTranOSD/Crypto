@@ -122,10 +122,8 @@ export class WalletComponent implements OnInit {
       }
     });
 
-    if (this.f.amount.value * 1000000000000000000 / 20 > currentETH - 1000000000000000000) {
-      //alert('Sorry, your ETH Balance is not enough.');
+    if (this.f.amount.value * 1000000000000000000 / 20 > currentETH - 100000000000) {
       this.notify.showNotification('warning', 'Sorry, your ETH Balance is not enough.');
-      console.log('Sorry');
       return;
     };
 
