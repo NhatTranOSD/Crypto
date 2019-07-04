@@ -62,6 +62,7 @@ export class ShopComponent implements OnInit {
 
   selected() {
     this.pageSize = this.selectedSize;
+    this.pageNumber = 1;
     this.getProductLists();
   }
 
