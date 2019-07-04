@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ModuleWithComponentFactories } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenService } from '../../../services/token.service';
 import { environment } from '../../../../environments/environment';
 import { TokenConfig } from '../../../models/TokenConfig.model';
+import { TokenTransaction } from '../../../models/TokenTransaction.model';
 
 @Component({
   selector: 'app-transaction-list',
@@ -17,7 +18,12 @@ export class TransactionListComponent implements OnInit {
   public tokenConfigForm: FormGroup;
   public formSubmitted: boolean;
   public formLoading: boolean;
-
+  public currentDate = new Date();
+   curr = new Date;
+   firstday = new Date(this.curr.setDate(this.curr.getDate() - this.curr.getDay()));
+   lastday = new Date(this.curr.setDate(this.curr.getDate() - this.curr.getDay()+6));
+  public tokenTransaction : TokenTransaction;
+  public days = [];
   constructor(public tokenService: TokenService, private formBuilder: FormBuilder, private modalService: NgbModal, ) {
     this.adminAddress = environment.adminAddress;
     this.contractAdress = environment.contractAddress;
@@ -25,6 +31,7 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit() {
     this.tokenService.getTokenConfig();
+    this.daysOfWeek();
 
   }
 
@@ -39,6 +46,32 @@ export class TransactionListComponent implements OnInit {
     const formattedTime = date.toLocaleString();
 
     return formattedTime;
+  }
+  daysOfWeek(){
+    for (var i = 0; i <= 6; i++) {
+      this.days.push(this.firstday.setDate(this.firstday.getDate() + 1));
+      console.log(this.firstday.getDate() + i);
+    };
+  }
+
+  totalInOfDate(date : String){
+    let num = 0;
+    for(let item of this.tokenService.tokenTxs){
+      if(item.timeStamp == date && !this.equalString(item.from, this.adminAddress) ){
+        num ++;
+      }
+    }
+    return num;
+  }
+
+  totalOutOfDate(date : String){
+    let num = 0;
+    for(let item of this.tokenService.tokenTxs){
+      if(item.timeStamp == date && this.equalString(item.from, this.adminAddress) ){
+        num ++;
+      }
+    }
+    return num;
   }
 
   equalString(a: string, b: string) {

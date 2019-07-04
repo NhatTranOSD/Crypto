@@ -74,8 +74,56 @@
         </div>
     </div>
 </div>
-
 <br>
+<br>
+<div class="row">
+    <div class="col">
+        <h3>Token Transactions</h3>
+<hr>
+<table class="table table-striped bg-white">
+    <thead>
+        <tr>
+            <th scope="col-2">Date</th>
+            <th scope="col">Total In</th>
+            <th scope="col-2">Total Out</th>
+            <th scope="col">Total Fee</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of days; let i = index;">
+            <td class="text-truncate" style="max-width: 100px;">{{item | date: 'EEE-dd/MM/yyyy'}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">2</td>
+            <td class="text-truncate " style="max-width: 100px; ">3</td>
+            <td class="text-truncate " style="max-width: 100px; ">4</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+    </div>
+    <div class="col">
+        <h3>ETH Transactions</h3>
+<hr>
+<table class="table table-striped bg-white">
+    <thead>
+        <tr>
+            <th scope="col-2">Date</th>
+            <th scope="col">Total In</th>
+            <th scope="col-2">Total Out</th>
+            <th scope="col">Total Fee</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of days; let i = index;">
+            <td class="text-truncate" style="max-width: 100px;">{{item | date: 'EEE-dd/MM/yyyy'}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">2</td>
+            <td class="text-truncate " style="max-width: 100px; ">3</td>
+            <td class="text-truncate " style="max-width: 100px; ">4</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+    </div>
+  </div>
 
 <h3>Transactions</h3>
 <hr>
