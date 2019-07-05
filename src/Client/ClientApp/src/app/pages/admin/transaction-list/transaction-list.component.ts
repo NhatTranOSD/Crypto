@@ -5,6 +5,8 @@ import { TokenService } from '../../../services/token.service';
 import { environment } from '../../../../environments/environment';
 import { TokenConfig } from '../../../models/TokenConfig.model';
 import { TokenTransaction } from '../../../models/TokenTransaction.model';
+import { TokenTxResponse } from 'src/app/models/responsemodels/TokenTxResponse.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-transaction-list',
@@ -19,22 +21,35 @@ export class TransactionListComponent implements OnInit {
   public formSubmitted: boolean;
   public formLoading: boolean;
   public currentDate = new Date();
+  public tokenList : TokenTxResponse[];
+  public transactionType = [];
    curr = new Date;
    firstday = new Date(this.curr.setDate(this.curr.getDate() - this.curr.getDay()));
    lastday = new Date(this.curr.setDate(this.curr.getDate() - this.curr.getDay()+6));
-  public tokenTransaction : TokenTransaction;
+  
   public days = [];
+  public dataReport = [];
+  
+  
   constructor(public tokenService: TokenService, private formBuilder: FormBuilder, private modalService: NgbModal, ) {
     this.adminAddress = environment.adminAddress;
     this.contractAdress = environment.contractAddress;
   }
 
-  ngOnInit() {
+  ngOnInit ()  {
     this.tokenService.getTokenConfig();
-    this.daysOfWeek();
+    this.tokenService.getTokenTransactions(this.adminAddress, this.contractAdress, 'asc').subscribe(
+      data => {
+        this.tokenList = data.result;
+        this.daysOfWeek();
+        this.dataTokenTransactionReport();
+      },
+      error => {
+        console.log(error);
+      });
 
+   
   }
-
   get f() { return this.tokenConfigForm.controls; }
 
   public convertToDateTime(unixtimestamp: string): any {
@@ -47,32 +62,47 @@ export class TransactionListComponent implements OnInit {
 
     return formattedTime;
   }
+
+  dataTokenTransactionReport(){
+    for(var i = 0; i <= 6; i++){
+       var transactionTotal = this.totalTransType(this.days[i]);
+       var tokenTransaction = new TokenTransaction();
+       tokenTransaction.date = this.days[i];
+       tokenTransaction.totalIn = transactionTotal[0];
+       tokenTransaction.totalOut = transactionTotal[1];
+     
+       this.dataReport.push(tokenTransaction);
+    }
+   console.log(this.dataReport);
+  }
   daysOfWeek(){
     for (var i = 0; i <= 6; i++) {
-      this.days.push(this.firstday.setDate(this.firstday.getDate() + 1));
-      console.log(this.firstday.getDate() + i);
+      this.days.push((this.firstday.setDate(this.firstday.getDate() + 1)));
     };
   }
 
-  totalInOfDate(date : String){
-    let num = 0;
-    for(let item of this.tokenService.tokenTxs){
-      if(item.timeStamp == date && !this.equalString(item.from, this.adminAddress) ){
-        num ++;
+  totalTransType(date : number) : number[]{
+    var dateStr = new DatePipe("en-US").transform(date,'dd/MM/yyyy');
+    var numIn = 0;
+    var numOut = 0;
+    
+    
+    for(var item of this.tokenList){
+      var itemTimeStamp = new DatePipe("en-US").transform(Number(item.timeStamp)*1000,'dd/MM/yyyy');
+      if(itemTimeStamp == dateStr && !this.equalString(item.from, this.adminAddress)){
+        numIn ++;
+      }
+      else if(itemTimeStamp == dateStr && this.equalString(item.from, this.adminAddress)){
+        numOut ++;
       }
     }
-    return num;
+    this.transactionType.push(numIn,numOut);
+    console.log(this.transactionType);
+    //console.log(this.days[0]);
+    return this.transactionType;
+    
   }
-
-  totalOutOfDate(date : String){
-    let num = 0;
-    for(let item of this.tokenService.tokenTxs){
-      if(item.timeStamp == date && this.equalString(item.from, this.adminAddress) ){
-        num ++;
-      }
-    }
-    return num;
-  }
+  
 
   equalString(a: string, b: string) {
     if (a.toLowerCase() === b.toLowerCase()) {

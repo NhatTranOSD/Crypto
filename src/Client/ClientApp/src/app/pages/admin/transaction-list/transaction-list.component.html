@@ -90,11 +90,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of days; let i = index;">
-            <td class="text-truncate" style="max-width: 100px;">{{item | date: 'EEE-dd/MM/yyyy'}}</td>
-            <td class="text-truncate " style="max-width: 100px; ">2</td>
-            <td class="text-truncate " style="max-width: 100px; ">3</td>
-            <td class="text-truncate " style="max-width: 100px; ">4</td>
+        <tr *ngFor="let item of dataReport; let i = index;">
+            <td class="text-truncate" style="max-width: 100px;">{{item.date | date: 'EEE-dd/MM/yyyy'}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalIn}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalOut}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalFee}}</td>
         </tr>
     </tbody>
 </table>
@@ -139,9 +139,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of tokenService.tokenTxs">
+        <tr *ngFor="let item of tokenList">
             <td class="text-truncate" style="max-width: 100px;">{{item.hash}}</td>
-            <td>{{convertToDateTime(item.timeStamp)}}</td>
+            <td>{{convertToDateTime(item.timeStamp)}} - {{item.timeStamp}}</td>
             <td [ngClass]="{'text-primary': equalString(item.from, adminAddress)}" class="text-truncate " style="max-width: 100px; ">{{item.from}}</td>
             <td *ngIf="equalString(item.from, adminAddress) "><span class="badge badge-warning ">Out</span></td>
             <td *ngIf="!equalString(item.from, adminAddress) "><span class="badge badge-info ">In</span></td>
