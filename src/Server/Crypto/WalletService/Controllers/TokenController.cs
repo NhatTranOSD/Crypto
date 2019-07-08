@@ -83,6 +83,20 @@ namespace WalletService.Controllers
             return Ok(result);
         }
 
+        [Route("ETHTxList")]
+        [HttpGet]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> ETHTxList(string address, string startblock, string endblock, int page, int offset, string sort)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var result = await _accountService.ETHTxList(address, startblock, endblock,page, offset, sort);
+
+            return Ok(result);
+        }
+
         [Route("TokenSupply")]
         [HttpGet]
         [HttpPost]

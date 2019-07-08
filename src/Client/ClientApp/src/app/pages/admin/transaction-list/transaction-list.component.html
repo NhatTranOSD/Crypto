@@ -90,7 +90,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of dataReport; let i = index;">
+        <tr *ngFor="let item of dataReportToken; let i = index;">
             <td class="text-truncate" style="max-width: 100px;">{{item.date | date: 'EEE-dd/MM/yyyy'}}</td>
             <td class="text-truncate " style="max-width: 100px; ">{{item.totalIn}}</td>
             <td class="text-truncate " style="max-width: 100px; ">{{item.totalOut}}</td>
@@ -113,11 +113,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of days; let i = index;">
-            <td class="text-truncate" style="max-width: 100px;">{{item | date: 'EEE-dd/MM/yyyy'}}</td>
-            <td class="text-truncate " style="max-width: 100px; ">2</td>
-            <td class="text-truncate " style="max-width: 100px; ">3</td>
-            <td class="text-truncate " style="max-width: 100px; ">4</td>
+        <tr *ngFor="let item of dataReportETH; let i = index;">
+            <td class="text-truncate" style="max-width: 100px;">{{item.date | date: 'EEE-dd/MM/yyyy'}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalIn}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalOut}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalFee}}</td>
         </tr>
     </tbody>
 </table>

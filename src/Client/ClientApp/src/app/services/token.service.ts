@@ -74,6 +74,15 @@ export class TokenService {
     return this.http.get<any>(requestUri);
       
   }
+ 
+  public getETHTransactions(address: string, sort: string): Observable<any> {
+    // tslint:disable-next-line: max-line-length
+    const requestUri = `${environment.walletApi}api/v1/Token/ETHTxList?address=${address}&startblock=1&endblock=latest&page=1&offset=800&sort=${sort}`;
+
+    return this.http.get<any>(requestUri);
+      
+  }
+  
 
   public getUserTokenOrders() {
     const userId = this.authenticationService.currentUserValue.id;
