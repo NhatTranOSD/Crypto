@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 import { TokenTxResponse } from '../models/responsemodels/TokenTxResponse.model';
 import { TokenConfig } from '../models/TokenConfig.model';
 import { TokenOrder } from '../models/tokenorder.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,7 @@ export class TokenService {
         error => {
           console.log(error);
         });
+        
   }
 
   public updateTokenConfig(requestModel: TokenConfig): any {
@@ -65,19 +67,22 @@ export class TokenService {
       }));
   }
 
-  public getTokenTransactions(address: string, contractaddress: string, sort: string): void {
+  public getTokenTransactions(address: string, contractaddress: string, sort: string): Observable<any> {
     // tslint:disable-next-line: max-line-length
     const requestUri = `${environment.walletApi}api/v1/Token/TokenTxList?address=${address}&contractaddress=${contractaddress}&startblock=1&endblock=latest&sort=${sort}`;
 
-    this.http.get<any>(requestUri)
-      .subscribe(
-        data => {
-          this.tokenTxs = data.result;
-        },
-        error => {
-          console.log(error);
-        });
+    return this.http.get<any>(requestUri);
+      
   }
+ 
+  public getETHTransactions(address: string, sort: string): Observable<any> {
+    // tslint:disable-next-line: max-line-length
+    const requestUri = `${environment.walletApi}api/v1/Token/ETHTxList?address=${address}&startblock=1&endblock=latest&page=1&offset=800&sort=${sort}`;
+
+    return this.http.get<any>(requestUri);
+      
+  }
+  
 
   public getUserTokenOrders() {
     const userId = this.authenticationService.currentUserValue.id;
@@ -91,6 +96,7 @@ export class TokenService {
         error => {
           console.log(error);
         });
+        
   }
 
   public getTokenOrders() {

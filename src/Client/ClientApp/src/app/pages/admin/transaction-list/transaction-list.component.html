@@ -74,8 +74,56 @@
         </div>
     </div>
 </div>
-
 <br>
+<br>
+<div class="row">
+    <div class="col">
+        <h3>Token Transactions</h3>
+<hr>
+<table class="table table-striped bg-white">
+    <thead>
+        <tr>
+            <th scope="col-2">Date</th>
+            <th scope="col">Total In</th>
+            <th scope="col-2">Total Out</th>
+            <th scope="col">Total Fee</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of dataReportToken; let i = index;">
+            <td class="text-truncate" style="max-width: 100px;">{{item.date | date: 'EEE-dd/MM/yyyy'}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalIn}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalOut}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalFee}}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+    </div>
+    <div class="col">
+        <h3>ETH Transactions</h3>
+<hr>
+<table class="table table-striped bg-white">
+    <thead>
+        <tr>
+            <th scope="col-2">Date</th>
+            <th scope="col">Total In</th>
+            <th scope="col-2">Total Out</th>
+            <th scope="col">Total Fee</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of dataReportETH; let i = index;">
+            <td class="text-truncate" style="max-width: 100px;">{{item.date | date: 'EEE-dd/MM/yyyy'}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalIn}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalOut}}</td>
+            <td class="text-truncate " style="max-width: 100px; ">{{item.totalFee}}</td>
+        </tr>
+    </tbody>
+</table>
+<br>
+    </div>
+  </div>
 
 <h3>Transactions</h3>
 <hr>
@@ -91,9 +139,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let item of tokenService.tokenTxs">
+        <tr *ngFor="let item of tokenList">
             <td class="text-truncate" style="max-width: 100px;">{{item.hash}}</td>
-            <td>{{convertToDateTime(item.timeStamp)}}</td>
+            <td>{{convertToDateTime(item.timeStamp)}} - {{item.timeStamp}}</td>
             <td [ngClass]="{'text-primary': equalString(item.from, adminAddress)}" class="text-truncate " style="max-width: 100px; ">{{item.from}}</td>
             <td *ngIf="equalString(item.from, adminAddress) "><span class="badge badge-warning ">Out</span></td>
             <td *ngIf="!equalString(item.from, adminAddress) "><span class="badge badge-info ">In</span></td>
